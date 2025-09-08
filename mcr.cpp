@@ -31,11 +31,12 @@ int main(){
 			else
 				cout << "Player 2: ";
 			cout << "Which cell to mark? i:[1..3], j:[1..3]: "; 
-		   do{
+
+      do{
 			   cin >> i >> j;
 			   if(game[i][j] != ' ') cout << "The cell is invalid, please change another cell" << endl;
 		   } while(game[i][j] != ' ')
-			
+
 			if (turn == false)
 			   game[i][j] = 'X';
 			else 
