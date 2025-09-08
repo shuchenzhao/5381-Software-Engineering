@@ -34,7 +34,7 @@ int main(){
 
       do{
 			   cin >> i >> j;
-         i--; j--;
+		  	   i--; j--;
 			   if(game[i][j] != ' ') cout << "The cell is invalid, please change another cell" << endl;
 		   } while(game[i][j] != ' ')
 
@@ -58,3 +58,4 @@ int main(){
 	return 0;
 
 }
+
