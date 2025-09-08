@@ -19,6 +19,7 @@ bool isWin(char game[3][3]){
 int main(){
 	int i, j;
 	char game[3][3] = { {' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '} }; // Tic-tac-toe
+
 	char player1 = 'X';
 	char player2 = 'O';
 	bool turn = true; // false for player 1's turn, true for player 2's turn. Player 1 first.
@@ -30,8 +31,13 @@ int main(){
 			else
 				cout << "Player 2: ";
 			cout << "Which cell to mark? i:[1..3], j:[1..3]: "; 
-			cin >> i >> j;
-		    i--; j--;
+
+      do{
+			   cin >> i >> j;
+         i--; j--;
+			   if(game[i][j] != ' ') cout << "The cell is invalid, please change another cell" << endl;
+		   } while(game[i][j] != ' ')
+
 			if (turn == false)
 			   game[i][j] = 'X';
 			else 
@@ -41,10 +47,9 @@ int main(){
 				break; // need to terminate the problem
 			}
 		}
-	
-	if (n == 8 && !isWin(game)) {
-    cout << "Tie!" << endl;
-	}
+
+	if (n==9) // all celles with i=0 to 2 have been inputted above but no winner yet
+	   cout << "Tie!" << endl;
 
 	// show the game to console
 	cout << game[0][0] << " " << game[0][1] << " " << game[0][2] << endl;
