@@ -40,7 +40,7 @@ int main(){
 				break; // need to terminate the problem
 			}
 		}
-	if (i==3) // all celles with i=0 to 2 have been inputted above but no winner yet
+	if (n=>9) // 9步内没有决出胜负
 	   cout << "Tie!" << endl;
 
 	// show the game to console
@@ -49,3 +49,4 @@ int main(){
 	cout << game[2][0] << " " << game[2][1] << " " << game[2][2] << endl;
 	return 0;
 }
+
