@@ -7,3 +7,6 @@
 `docker compose up -d`
 访问地址： 在地址栏输入 http://localhost:8088
 默认帐密：admin/admin
+
+cd packages/superset-ui-plugins-demo
+yarn storybook:run
