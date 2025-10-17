@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# 5381-Software-Engineering
-SemA group project
-=======
 停止 Superset：
 当你需要关闭环境时，在 superset 目录下运行：
 `docker compose down`
@@ -14,4 +10,3 @@ SemA group project
 
 cd packages/superset-ui-plugins-demo
 yarn storybook:run
->>>>>>> origin/main
