@@ -170,7 +170,6 @@ def get_issues_data():
 
 
 # --- 4. 启动服务 ---
-
 if __name__ == '__main__':
     # 生产环境中请勿使用 debug=True
     app.run(debug=True, host='127.0.0.1', port=5000)
