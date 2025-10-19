@@ -21,9 +21,14 @@ import { dirname, join } from 'path';
 const customConfig = require('../webpack.config.js');
 
 module.exports = {
-  stories: [
+  // If PLUGIN_STORYBOOK=1 is set in the environment, only load the plugin's stories.
+  stories: process.env.PLUGIN_STORYBOOK === '1' ? [
+    '../superset-plugin-chart-collaboration-graph/src/stories/**/*.stories.@(js|jsx|ts|tsx)'
+  ] : [
     '../src/@(components|common|filters|explore|views|dashboard|features)/**/*.stories.@(tsx|jsx)',
     '../packages/superset-ui-demo/storybook/stories/**/*.*.@(tsx|jsx)',
+    // include plugin stories for local plugin development
+    '../superset-plugin-chart-collaboration-graph/src/stories/**/*.stories.@(js|jsx|ts|tsx)'
   ],
 
   addons: [

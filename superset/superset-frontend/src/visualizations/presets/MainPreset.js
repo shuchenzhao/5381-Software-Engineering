@@ -16,6 +16,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+import { SupersetPluginChartCollaborationGraph } from 'superset-plugin-chart-collaboration-graph';
+
 import {
   isFeatureEnabled,
   FeatureFlag,
@@ -97,6 +99,7 @@ export default class MainPreset extends Preset {
       name: 'Legacy charts',
       presets: [new DeckGLChartPreset()],
       plugins: [
+        new SupersetPluginChartCollaborationGraph().configure({ key: 'ext-collaboration-graph' }),
         new BigNumberChartPlugin().configure({ key: VizType.BigNumber }),
         new BigNumberTotalChartPlugin().configure({
           key: VizType.BigNumberTotal,
