@@ -1,0 +1,11 @@
+[
+  { "date": "2025-10-01", "remaining": 120 },
+  { "date": "2025-10-02", "remaining": 110 },
+  { "date": "2025-10-03", "remaining": 95 },
+  { "date": "2025-10-04", "remaining": 80 },
+  { "date": "2025-10-05", "remaining": 60 },
+  { "date": "2025-10-06", "remaining": 45 },
+  { "date": "2025-10-07", "remaining": 30 },
+  { "date": "2025-10-08", "remaining": 15 },
+  { "date": "2025-10-09", "remaining": 0 }
+]

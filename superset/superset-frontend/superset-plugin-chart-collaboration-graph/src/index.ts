@@ -18,6 +18,7 @@
  */
 // eslint-disable-next-line import/prefer-default-export
 export { default as SupersetPluginChartCollaborationGraph } from './plugin';
+
 /**
  * Note: this file exports the default export from SupersetPluginChartCollaborationGraph.tsx.
  * If you want to export multiple visualization modules, you will need to
