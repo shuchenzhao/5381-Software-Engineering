@@ -141,6 +141,22 @@ export default function transformProps(chartProps: ChartProps) {
   // weightDelta allows fractional contribution (used for co-edit commit weighting)
   function recordEventOnLink(a: string, b: string, ev: Event, typeKey: keyof Link['types'], weightDelta?: number) {
     const link = ensureLink(a, b);
+    // Avoid recording the same event twice on the same link. Some upstream
+    // aggregation paths can call this helper with the same event multiple
+    // times (for instance when co-edit pairs are generated in both orders).
+    // Use the event id when available to deduplicate; fall back to a JSON
+    // string compare if no id is present.
+    const evId = ev && (ev.id ?? null);
+    const already = link.sample_events!.some((se) => {
+      if (!se) return false;
+      if (evId && (se as any).id) return (se as any).id === evId;
+      return JSON.stringify(se) === JSON.stringify(ev);
+    });
+    if (already) {
+      // don't double-count or push duplicate sample events
+      return;
+    }
+
     const inc = typeof weightDelta === 'number' ? weightDelta : 1;
     link.types[typeKey] = (link.types[typeKey] || 0) + inc;
     const t = ev.timestamp ? Date.parse(ev.timestamp) : Date.now();
