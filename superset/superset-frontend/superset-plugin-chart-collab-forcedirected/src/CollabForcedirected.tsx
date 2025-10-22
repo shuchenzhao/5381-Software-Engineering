@@ -22,7 +22,7 @@ import { CollabForcedirectedProps, CollabForcedirectedStylesProps } from './type
 import { forceSimulation, forceLink, forceManyBody, forceCenter, forceX, forceY } from 'd3-force';
 
 type NodeDatum = { id: string; x?: number; y?: number; vx?: number; vy?: number; size?: number };
-type LinkDatum = { source: string; target: string; weight: number; types?: any };
+type LinkDatum = { source: string; target: string; weight: number; types?: any; sample_events?: any[] };
 
 // The following Styles component is a <div> element, which has been styled using Emotion
 // For docs, visit https://emotion.sh/docs/styled
@@ -116,7 +116,14 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
     // initialize sim nodes/links from props
     const n = (nodes as any[]).map((d) => ({ id: d.id, size: d.size || 4 }));
     // d3 expects link.source/link.target to be node objects or ids
-    const l = (links as any[]).map((d) => ({ source: d.source, target: d.target, weight: d.weight, types: d.types }));
+    const l = (links as any[]).map((d) => ({
+      source: d.source,
+      target: d.target,
+      weight: d.weight,
+      types: d.types,
+      // preserve sample events if provided under common keys
+      sample_events: d.sample_events || d.sampleEvents || d.events || undefined,
+    }));
     setSimNodes(n);
     setSimLinks(l);
 
@@ -803,6 +810,169 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
             <span style={{ marginLeft: 8 }}>{clusterDistance.toFixed(2)}</span>
           </div>
         </div>
+      </div>
+      {/* records table: show when node or link is selected */}
+      <div
+        style={{
+          marginTop: 12,
+          border: '1px solid rgba(0,0,0,0.08)',
+          borderRadius: 4,
+          padding: 8,
+          maxHeight: 300,
+          overflowY: 'auto',
+          background: 'white',
+        }}
+      >
+        {/* title */}
+        <div style={{ marginBottom: 8, fontWeight: 600 }}>
+          {selectedNodeId ? `Username: ${selectedNodeId}` : expandedLinkId ? `Link: ${expandedLinkId}` : 'Records'}
+        </div>
+        {
+          // compute rows for selected node or expanded link
+        }
+        {
+          (() => {
+            type Row = {
+              source: string | null;
+              target: string | null;
+              linkId: string | null;
+              kind: 'event' | 'aggregate';
+              type?: string;
+              count?: number;
+              actor?: string;
+              time?: string | number;
+              payload?: string;
+            };
+
+            const rows: Row[] = [];
+
+            // helper to normalize ids
+            const getIds = (ln: LinkDatum) => {
+              const a = typeof (ln as any).source === 'string' ? (ln as any).source : (ln as any).source?.id;
+              const b = typeof (ln as any).target === 'string' ? (ln as any).target : (ln as any).target?.id;
+              return { a: a || null, b: b || null };
+            };
+
+            if (selectedNodeId) {
+              // find all links touching the node
+              simLinks.forEach((ln) => {
+                const { a, b } = getIds(ln);
+                if (a === selectedNodeId || b === selectedNodeId) {
+                  const linkId = getLinkId(ln as LinkDatum);
+                  const sample = (ln as any).sample_events as any[] | undefined;
+                  if (Array.isArray(sample) && sample.length) {
+                    sample.forEach((ev) => {
+                      // prefer ISO timestamp fields if present
+                      const ts = ev.timestamp || ev.time || ev.t || ev.timestamp_ms || ev.ts;
+                      rows.push({
+                        source: a,
+                        target: b,
+                        linkId,
+                        kind: 'event',
+                        type: ev.type || ev.event_type || (ev.kind as any) || undefined,
+                        actor: ev.actor || ev.user || ev.actor_id || undefined,
+                        time: ts,
+                        payload: JSON.stringify(ev),
+                      });
+                    });
+                  } else if (ln.types) {
+                    const typeEntries = Object.entries(ln.types || {});
+                    typeEntries.forEach(([k, v]) => {
+                      rows.push({ source: a, target: b, linkId, kind: 'aggregate', type: k, count: v as number });
+                    });
+                  }
+                }
+              });
+            } else if (expandedLinkId) {
+              // find expanded link
+              const ln = simLinks.find((l) => getLinkId(l as LinkDatum) === expandedLinkId) as any | undefined;
+              if (ln) {
+                const { a, b } = getIds(ln as LinkDatum);
+                const linkId = getLinkId(ln as LinkDatum);
+                const sample = ln.sample_events as any[] | undefined;
+                if (Array.isArray(sample) && sample.length) {
+                  sample.forEach((ev) => {
+                    const ts = ev.timestamp || ev.time || ev.t || ev.timestamp_ms || ev.ts;
+                    rows.push({
+                      source: a,
+                      target: b,
+                      linkId,
+                      kind: 'event',
+                      type: ev.type || ev.event_type || undefined,
+                      actor: ev.actor || ev.user || undefined,
+                      time: ts,
+                      payload: JSON.stringify(ev),
+                    });
+                  });
+                } else if (ln.types) {
+                  Object.entries(ln.types || {}).forEach(([k, v]) => rows.push({ source: a, target: b, linkId, kind: 'aggregate', type: k, count: v as number }));
+                }
+              }
+            }
+
+            if (!rows.length) {
+              return <div style={{ color: 'rgba(0,0,0,0.6)' }}>No records to display</div>;
+            }
+
+            const formatTime = (t: any) => {
+              if (t === undefined || t === null) return '';
+              // try to parse numeric timestamp (seconds or ms)
+              if (typeof t === 'number') {
+                // assume ms if > 1e12, else seconds
+                const ms = t > 1e12 ? t : t > 1e9 ? t : t * 1000;
+                try {
+                  return new Date(ms).toLocaleString();
+                } catch (err) {
+                  return String(t);
+                }
+              }
+              // try ISO string
+              const s = String(t);
+              const parsed = Date.parse(s);
+              if (!Number.isNaN(parsed)) return new Date(parsed).toLocaleString();
+              return s;
+            };
+
+            // decide whether Actor column is redundant: if every row.actor equals source or target or is falsy, we can hide it
+            const showActor = rows.some((r) => {
+              if (!r.actor) return false;
+              const src = r.source || '';
+              const tgt = r.target || '';
+              return r.actor !== src && r.actor !== tgt;
+            });
+
+            return (
+              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
+                <thead>
+                  <tr>
+                    <th style={{ textAlign: 'left', padding: '4px 8px', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>Source</th>
+                    <th style={{ textAlign: 'left', padding: '4px 8px', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>Target</th>
+                    <th style={{ textAlign: 'left', padding: '4px 8px', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>Link</th>
+                    <th style={{ textAlign: 'left', padding: '4px 8px', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>Type</th>
+                    {showActor && (
+                      <th style={{ textAlign: 'left', padding: '4px 8px', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>Actor</th>
+                    )}
+                    <th style={{ textAlign: 'left', padding: '4px 8px', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>Time</th>
+                    <th style={{ textAlign: 'left', padding: '4px 8px', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>Payload</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map((r, i) => (
+                    <tr key={`rec-${i}`} style={{ borderBottom: '1px solid rgba(0,0,0,0.03)' }}>
+                      <td style={{ padding: '6px 8px' }}>{r.source}</td>
+                      <td style={{ padding: '6px 8px' }}>{r.target}</td>
+                      <td style={{ padding: '6px 8px' }}>{r.linkId}</td>
+                      <td style={{ padding: '6px 8px' }}>{r.type ?? (r.kind === 'aggregate' ? 'aggregate' : '')}</td>
+                      {showActor && <td style={{ padding: '6px 8px' }}>{r.actor ?? ''}</td>}
+                      <td style={{ padding: '6px 8px' }}>{formatTime(r.time ?? '')}</td>
+                      <td style={{ padding: '6px 8px', whiteSpace: 'normal', wordBreak: 'break-word' }}>{r.payload ?? (r.count !== undefined ? String(r.count) : '')}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            );
+          })()
+        }
       </div>
     </Styles>
   );
