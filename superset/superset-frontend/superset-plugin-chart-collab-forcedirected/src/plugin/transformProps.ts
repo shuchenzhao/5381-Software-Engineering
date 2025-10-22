@@ -96,11 +96,13 @@ export default function transformProps(chartProps: ChartProps) {
     } else {
       // eslint-disable-next-line global-require, import/no-extraneous-dependencies
       // @ts-ignore - import json
+      // events = require('../../../../superset-github-connector/fetch.json') as Event[];
       events = require('../mock/events_mock.json') as Event[];
     }
   } catch (e) {
     // eslint-disable-next-line global-require, import/no-extraneous-dependencies
     // @ts-ignore
+    // events = require('../../../../superset-github-connector/fetch.json') as Event[];
     events = require('../mock/events_mock.json') as Event[];
   }
 
@@ -136,25 +138,28 @@ export default function transformProps(chartProps: ChartProps) {
   }
 
   // Helper to push sample events and update first/last
-  function recordEventOnLink(a: string, b: string, ev: Event, typeKey: keyof Link['types']) {
+  // weightDelta allows fractional contribution (used for co-edit commit weighting)
+  function recordEventOnLink(a: string, b: string, ev: Event, typeKey: keyof Link['types'], weightDelta?: number) {
     const link = ensureLink(a, b);
-    link.types[typeKey] = (link.types[typeKey] || 0) + 1;
+    const inc = typeof weightDelta === 'number' ? weightDelta : 1;
+    link.types[typeKey] = (link.types[typeKey] || 0) + inc;
     const t = ev.timestamp ? Date.parse(ev.timestamp) : Date.now();
     link.first = link.first === undefined ? t : Math.min(link.first, t);
     link.last = link.last === undefined ? t : Math.max(link.last, t);
-    if (link.sample_events!.length < 3) link.sample_events!.push(ev);
+    // preserve all sample events (no 3-item cap) so we can inspect full history
+    link.sample_events!.push(ev);
   }
 
-  // 1) Build file->authors map for commits
-  const fileAuthors: Map<string, Set<string>> = new Map();
+  // 1) Build file->commits map for commits (preserve individual commit records)
+  const fileCommits: Map<string, Event[]> = new Map();
   events.forEach((ev) => {
     if (ev.type === 'commit' && ev.files && Array.isArray(ev.files)) {
       const actor = ev.actor;
       if (!actor) return;
       addNode(actor);
       ev.files.forEach((f) => {
-        if (!fileAuthors.has(f)) fileAuthors.set(f, new Set());
-        fileAuthors.get(f)!.add(actor);
+        if (!fileCommits.has(f)) fileCommits.set(f, []);
+        fileCommits.get(f)!.push(ev);
       });
     } else {
       // other event: count actor and target as nodes
@@ -163,12 +168,24 @@ export default function transformProps(chartProps: ChartProps) {
     }
   });
 
-  // 2) For each file, add commit co-edit links between all pairs
-  fileAuthors.forEach((authors) => {
-    const arr = Array.from(authors);
-    for (let i = 0; i < arr.length; i += 1) {
-      for (let j = i + 1; j < arr.length; j += 1) {
-        recordEventOnLink(arr[i], arr[j], { id: 'commit-coedit', type: 'commit' }, 'commits');
+  // 2) For each file, when there are multiple commits, record each commit as a separate co-edit event
+  //    and assign a small fractional weight based on lines added/deleted
+  fileCommits.forEach((commits) => {
+    if (!Array.isArray(commits) || commits.length < 2) return;
+    for (let i = 0; i < commits.length; i += 1) {
+      const ev = commits[i];
+      const a = ev.actor;
+      if (!a) continue;
+      for (let j = 0; j < commits.length; j += 1) {
+        if (i === j) continue;
+        const other = commits[j].actor;
+        if (!other || other === a) continue;
+        // create unique id for this coedit commit to avoid merging
+        const coeditEvent = { ...ev, id: `${ev.id}-commit-coedit` } as Event;
+        const la = Number(ev.lines_added) || 0;
+        const ld = Number(ev.lines_deleted) || 0;
+        const extraWeight = 0.001 * (la + ld);
+        recordEventOnLink(a, other, coeditEvent, 'commits', extraWeight);
       }
     }
   });
