@@ -493,20 +493,33 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
             const t = simNodes.find((n) => n.id === targetId) as NodeDatum | undefined;
             if (!s || !t) return null;
             return (
-              <line
-                key={`link-${i}`}
-                x1={s.x}
-                y1={s.y}
-                x2={t.x}
-                y2={t.y}
-                stroke="#999"
-                strokeWidth={Math.max(1, ln.weight)}
-                opacity={0.8}
-                onMouseEnter={() => setHoveredLink(ln)}
-                onMouseLeave={() => setHoveredLink(null)}
-                onClick={(e) => onLinkClick(e, ln)}
-                style={{ cursor: 'pointer' }}
-              />
+              <g key={`link-${i}`}>
+                {/* visual line (keeps original strokeWidth) */}
+                <line
+                  x1={s.x}
+                  y1={s.y}
+                  x2={t.x}
+                  y2={t.y}
+                  stroke="#999"
+                  strokeWidth={Math.max(1, ln.weight)}
+                  opacity={0.8}
+                  style={{ pointerEvents: 'none' }}
+                />
+                {/* invisible, thicker hit area for easier interaction */}
+                <line
+                  x1={s.x}
+                  y1={s.y}
+                  x2={t.x}
+                  y2={t.y}
+                  stroke="transparent"
+                  strokeWidth={Math.max(12, Math.max(1, ln.weight) * 6)}
+                  opacity={0.0001}
+                  onMouseEnter={() => setHoveredLink(ln)}
+                  onMouseLeave={() => setHoveredLink(null)}
+                  onClick={(e) => onLinkClick(e, ln)}
+                  style={{ cursor: 'pointer', pointerEvents: 'stroke' }}
+                />
+              </g>
             );
           })}
 
@@ -531,22 +544,38 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
                     const typeEntries = Object.entries(types);
                     return (
                       <g key={`conn-${idx}`}>
-                        {typeEntries.map(([k, v], j) => (
-                          <line
-                            key={`conn-${idx}-sub-${k}`}
-                            x1={s.x}
-                            y1={s.y}
-                            x2={t.x}
-                            y2={t.y}
-                            stroke={k === 'commits' ? 'green' : k === 'reviews' ? 'blue' : k === 'assigns' ? 'orange' : 'gray'}
-                            strokeWidth={Math.max(1, (v as number) / 1.5)}
-                            opacity={0.95}
-                            strokeDasharray={k === 'assigns' ? '4 2' : undefined}
-                            transform={`translate(0, ${j * 3 - (typeEntries.length * 3) / 2})`}
-                            onClick={(e) => onLinkClick(e, ln)}
-                            style={{ cursor: 'pointer' }}
-                          />
-                        ))}
+                        {typeEntries.map(([k, v], j) => {
+                          const visualStroke = Math.max(1, (v as number) / 1.5);
+                          const hitWidth = Math.max(10, visualStroke * 6);
+                          return (
+                            <g key={`conn-${idx}-sub-${k}`}>
+                              <line
+                                x1={s.x}
+                                y1={s.y}
+                                x2={t.x}
+                                y2={t.y}
+                                stroke={k === 'commits' ? 'green' : k === 'reviews' ? 'blue' : k === 'assigns' ? 'orange' : 'gray'}
+                                strokeWidth={visualStroke}
+                                opacity={0.95}
+                                strokeDasharray={k === 'assigns' ? '4 2' : undefined}
+                                transform={`translate(0, ${j * 3 - (typeEntries.length * 3) / 2})`}
+                                style={{ pointerEvents: 'none' }}
+                              />
+                              <line
+                                x1={s.x}
+                                y1={s.y}
+                                x2={t.x}
+                                y2={t.y}
+                                stroke="transparent"
+                                strokeWidth={hitWidth}
+                                opacity={0.0001}
+                                transform={`translate(0, ${j * 3 - (typeEntries.length * 3) / 2})`}
+                                onClick={(e) => onLinkClick(e, ln)}
+                                style={{ cursor: 'pointer', pointerEvents: 'stroke' }}
+                              />
+                            </g>
+                          );
+                        })}
                       </g>
                     );
                   })}
@@ -574,22 +603,38 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
             const typeEntries = Object.entries(types);
             return (
               <g>
-                {typeEntries.map(([k, v], idx) => (
-                  <line
-                    key={`sub-${k}`}
-                    x1={s.x}
-                    y1={s.y}
-                    x2={t.x}
-                    y2={t.y}
-                    stroke={k === 'commits' ? 'green' : k === 'reviews' ? 'blue' : k === 'assigns' ? 'orange' : 'gray'}
-                    strokeWidth={Math.max(1, (v as number) / 1.5)}
-                    opacity={0.9}
-                    strokeDasharray={k === 'assigns' ? '4 2' : undefined}
-                    transform={`translate(0, ${idx * 3 - (typeEntries.length * 3) / 2})`}
-                    onClick={(e) => onLinkClick(e, activeLink as LinkDatum)}
-                    style={{ cursor: 'pointer' }}
-                  />
-                ))}
+                {typeEntries.map(([k, v], idx) => {
+                  const visualStroke = Math.max(1, (v as number) / 1.5);
+                  const hitWidth = Math.max(10, visualStroke * 6);
+                  return (
+                    <g key={`sub-${k}`}>
+                      <line
+                        x1={s.x}
+                        y1={s.y}
+                        x2={t.x}
+                        y2={t.y}
+                        stroke={k === 'commits' ? 'green' : k === 'reviews' ? 'blue' : k === 'assigns' ? 'orange' : 'gray'}
+                        strokeWidth={visualStroke}
+                        opacity={0.9}
+                        strokeDasharray={k === 'assigns' ? '4 2' : undefined}
+                        transform={`translate(0, ${idx * 3 - (typeEntries.length * 3) / 2})`}
+                        style={{ pointerEvents: 'none' }}
+                      />
+                      <line
+                        x1={s.x}
+                        y1={s.y}
+                        x2={t.x}
+                        y2={t.y}
+                        stroke="transparent"
+                        strokeWidth={hitWidth}
+                        opacity={0.0001}
+                        transform={`translate(0, ${idx * 3 - (typeEntries.length * 3) / 2})`}
+                        onClick={(e) => onLinkClick(e, activeLink as LinkDatum)}
+                        style={{ cursor: 'pointer', pointerEvents: 'stroke' }}
+                      />
+                    </g>
+                  );
+                })}
                 {/* show sample events text when expanded */}
                 {expandedLinkId && (activeLink as any).sample_events && (
                   <g>
