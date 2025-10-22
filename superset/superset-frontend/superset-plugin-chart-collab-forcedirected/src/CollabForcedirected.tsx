@@ -716,20 +716,7 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
                     </g>
                   );
                 })}
-                {/* show sample events text when expanded */}
-                {expandedLinkId && (activeLink as any).sample_events && (
-                  <g>
-                    {(activeLink as any).sample_events.slice(0, 3).map((ev: any, i: number) => {
-                      const cx = ((s.x || 0) + (t.x || 0)) / 2;
-                      const cy = ((s.y || 0) + (t.y || 0)) / 2 + 12 + i * 12;
-                      return (
-                        <text key={`ev-${i}`} x={cx} y={cy} fontSize={10} textAnchor="middle">
-                          {ev.type}: {ev.actor}
-                        </text>
-                      );
-                    })}
-                  </g>
-                )}
+                {/* When a link is expanded we intentionally do not render inline sample event text (no type or actor) */}
               </g>
             );
           })()}
