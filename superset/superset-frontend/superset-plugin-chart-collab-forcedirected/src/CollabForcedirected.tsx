@@ -19,7 +19,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { styled } from '@superset-ui/core';
 import { CollabForcedirectedProps, CollabForcedirectedStylesProps } from './types';
-import { forceSimulation, forceLink, forceManyBody, forceCenter } from 'd3-force';
+import { forceSimulation, forceLink, forceManyBody, forceCenter, forceX, forceY } from 'd3-force';
 
 type NodeDatum = { id: string; x?: number; y?: number; vx?: number; vy?: number; size?: number };
 type LinkDatum = { source: string; target: string; weight: number; types?: any };
@@ -81,6 +81,12 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
   // control for link distance (lower => nodes cluster closer)
   // default reduced so nodes start more clustered
   const [distanceScale, setDistanceScale] = useState<number>(20);
+  // control for cluster distance: slider value (0..max) where larger = more separation
+  // internally we map this to a pull strength = maxStrength - clusterDistance so
+  // moving the slider right (increasing clusterDistance) will reduce pull (clusters disperse)
+  const MAX_CLUSTER_STRENGTH = 0.5;
+  const DEFAULT_PULL = 0.08;
+  const [clusterDistance, setClusterDistance] = useState<number>(MAX_CLUSTER_STRENGTH - DEFAULT_PULL);
 
   // pan / zoom state
   const [viewTransform, setViewTransform] = useState({ x: 0, y: 0, k: 1 });
@@ -107,13 +113,22 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
     setSimNodes(n);
     setSimLinks(l);
 
+  // use the state-driven clusterPullStrength
     const simulation = forceSimulation(n as any)
-      .force('link', forceLink(l as any).id((d: any) => d.id).distance((d: any) => distanceScale / ((d && d.weight) || 1)))
-  .force('charge', forceManyBody().strength(-200))
-  // use a neutral simulation center (0,0). We'll compute a viewTransform
-  // that maps the node cloud to the canvas center, so forceCenter should
-  // not use absolute canvas coordinates which conflicts with our transform.
-  .force('center', forceCenter(0, 0))
+      .force(
+        'link',
+        forceLink(l as any)
+          .id((d: any) => d.id)
+          .distance((d: any) => distanceScale / ((d && d.weight) || 1)),
+      )
+      .force('charge', forceManyBody().strength(-200))
+      // gentle centering forces to pull separated clusters closer together
+  .force('x', forceX(0).strength(MAX_CLUSTER_STRENGTH - clusterDistance))
+  .force('y', forceY(0).strength(MAX_CLUSTER_STRENGTH - clusterDistance))
+      // use a neutral simulation center (0,0). We'll compute a viewTransform
+      // that maps the node cloud to the canvas center, so forceCenter should
+      // not use absolute canvas coordinates which conflicts with our transform.
+      .force('center', forceCenter(0, 0))
       .on('tick', () => {
         // update local state to re-render
         setSimNodes([...n]);
@@ -204,6 +219,22 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
       // ignore
     }
   }, [distanceScale]);
+
+  // update cluster pull strength when user changes slider
+  useEffect(() => {
+    const sim = simulationRef.current;
+    if (!sim) return;
+    try {
+      const fx: any = sim.force && sim.force('x');
+      const fy: any = sim.force && sim.force('y');
+      const eff = MAX_CLUSTER_STRENGTH - clusterDistance;
+      if (fx && typeof fx.strength === 'function') fx.strength(eff);
+      if (fy && typeof fy.strength === 'function') fy.strength(eff);
+      sim.alpha(0.3).restart();
+    } catch (err) {
+      // ignore
+    }
+  }, [clusterDistance]);
 
   // Convert screen coordinates to graph coordinates (accounting for pan/zoom)
   const screenToGraph = (clientX: number, clientY: number) => {
@@ -690,6 +721,21 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
           style={{ width: 140 }}
         />
         <span style={{ marginLeft: 8 }}>{distanceScale}</span>
+      </div>
+      {/* control: cluster pull strength */}
+      <div style={{ marginTop: 8 }}>
+        <label htmlFor="clusterRange">Cluster distance: </label>
+        <input
+          id="clusterRange"
+          type="range"
+          min={0}
+          max={MAX_CLUSTER_STRENGTH}
+          step={0.01}
+          value={clusterDistance}
+          onChange={(e) => setClusterDistance(Number(e.target.value))}
+          style={{ width: 200 }}
+        />
+        <span style={{ marginLeft: 8 }}>{clusterDistance.toFixed(2)}</span>
       </div>
     </Styles>
   );
