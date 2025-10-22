@@ -88,6 +88,16 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
   const MAX_CLUSTER_STRENGTH = 0.5;
   const [clusterDistance, setClusterDistance] = useState<number>(MAX_CLUSTER_STRENGTH * 0.7);
 
+  // time-range filter state
+  type TimeUnit = 'year' | 'month' | 'week';
+  const [timeUnit, setTimeUnit] = useState<TimeUnit>('month');
+  // time buckets: array of { startMs, label }
+  const [timeBuckets, setTimeBuckets] = useState<{ startMs: number; label: string }[]>([]);
+  // selected bucket index (single slider selecting one bucket)
+  const [timeIndex, setTimeIndex] = useState<number>(0);
+  // computed window start/end based on selected bucket
+  const [windowRange, setWindowRange] = useState<{ startMs: number; endMs: number } | null>(null);
+
   // pan / zoom state
   const [viewTransform, setViewTransform] = useState({ x: 0, y: 0, k: 1 });
   const viewTransformRef = useRef(viewTransform);
@@ -218,6 +228,110 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
       simulation.stop();
     };
   }, [nodes, links, width, height]);
+
+  // compute time buckets from simLinks' sample_events when simLinks change
+  useEffect(() => {
+    try {
+      const allTimestamps: number[] = [];
+      (simLinks || []).forEach((ln) => {
+        const sample = (ln as any).sample_events as any[] | undefined;
+        if (Array.isArray(sample)) {
+          sample.forEach((ev) => {
+            const s = ev && (ev.timestamp || ev.time || ev.t || ev.ts || ev.timestamp_ms);
+            const parsed = s ? Date.parse(String(s)) : NaN;
+            if (!Number.isNaN(parsed)) allTimestamps.push(parsed);
+          });
+        }
+      });
+      if (!allTimestamps.length) {
+        setTimeBuckets([]);
+        setTimeIndex(0);
+        setWindowRange(null);
+        return;
+      }
+      const min = Math.min(...allTimestamps);
+      const max = Math.max(...allTimestamps);
+      const buckets: { startMs: number; label: string }[] = [];
+      // helper to build buckets per unit
+      const buildBuckets = (unit: TimeUnit) => {
+        buckets.length = 0;
+        const startDate = new Date(min);
+        const endDate = new Date(max);
+        if (unit === 'year') {
+          for (let y = startDate.getUTCFullYear(); y <= endDate.getUTCFullYear(); y += 1) {
+            const s = Date.UTC(y, 0, 1);
+            buckets.push({ startMs: s, label: String(y) });
+          }
+        } else if (unit === 'month') {
+          let y = startDate.getUTCFullYear();
+          let m = startDate.getUTCMonth();
+          while (y < endDate.getUTCFullYear() || (y === endDate.getUTCFullYear() && m <= endDate.getUTCMonth())) {
+            const s = Date.UTC(y, m, 1);
+            const label = `${y}-${String(m + 1).padStart(2, '0')}`;
+            buckets.push({ startMs: s, label });
+            m += 1;
+            if (m > 11) {
+              m = 0; y += 1;
+            }
+          }
+        } else if (unit === 'week') {
+          // Week buckets that restart at W1 each year. We compute Monday-start weeks.
+          const date = new Date(min);
+          // normalize to UTC midnight
+          date.setUTCHours(0, 0, 0, 0);
+          // shift back to Monday of that week
+          const day = date.getUTCDay();
+          const diff = ((day + 6) % 7); // 0 => Monday
+          date.setUTCDate(date.getUTCDate() - diff);
+          while (date.getTime() <= max) {
+            const wkStart = date.getTime();
+            const y = new Date(wkStart).getUTCFullYear();
+            // compute week number relative to the start of the year
+            const yearStart = Date.UTC(y, 0, 1);
+            const daysSinceYearStart = Math.floor((wkStart - yearStart) / 86400000);
+            const weekNum = Math.floor(daysSinceYearStart / 7) + 1;
+            const label = `${y}-W${weekNum}`;
+            buckets.push({ startMs: wkStart, label });
+            date.setUTCDate(date.getUTCDate() + 7);
+          }
+        }
+      };
+      buildBuckets(timeUnit);
+      setTimeBuckets(buckets);
+      // clamp timeIndex
+      setTimeIndex((idx) => Math.min(Math.max(0, idx || 0), Math.max(0, buckets.length - 1)));
+    } catch (err) {
+      setTimeBuckets([]);
+      setWindowRange(null);
+    }
+  }, [simLinks, timeUnit]);
+
+  // compute windowRange from selected bucket index
+  useEffect(() => {
+    if (!timeBuckets || timeBuckets.length === 0) {
+      setWindowRange(null);
+      return;
+    }
+    const idx = Math.min(Math.max(0, timeIndex), timeBuckets.length - 1);
+    const start = timeBuckets[idx].startMs;
+    // compute end based on unit by looking at next bucket start or adding unit duration
+    let end = start;
+    if (idx + 1 < timeBuckets.length) {
+      end = timeBuckets[idx + 1].startMs - 1;
+    } else {
+      // last bucket: extend based on unit
+      if (timeUnit === 'year') end = Date.UTC(new Date(start).getUTCFullYear() + 1, 0, 1) - 1;
+      else if (timeUnit === 'month') {
+        const d = new Date(start);
+        const y = d.getUTCFullYear();
+        const m = d.getUTCMonth();
+        end = Date.UTC(y, m + 1, 1) - 1;
+      } else if (timeUnit === 'week') {
+        end = start + 7 * 24 * 3600 * 1000 - 1;
+      }
+    }
+    setWindowRange({ startMs: start, endMs: end });
+  }, [timeIndex, timeBuckets, timeUnit]);
 
   // update link force distance when distanceScale changes (without recreating simulation)
   useEffect(() => {
@@ -798,6 +912,47 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
           </div>
         </div>
       </div>
+          {/* time-range selector: unit select + single slider */}
+          <div style={{ display: 'flex', gap: 16, marginTop: 12, alignItems: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <label htmlFor="timeUnit">Time unit:</label>
+              <select id="timeUnit" value={timeUnit} onChange={(e) => setTimeUnit(e.target.value as any)} style={{ width: 120 }}>
+                <option value="year">Year</option>
+                <option value="month">Month</option>
+                <option value="week">Week</option>
+              </select>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+              <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+                <label >Selected interval: </label>
+                <div style={{ fontSize: 12, textAlign: 'right', marginBottom: '3px' }}>
+                  {windowRange ? (
+                    <div>
+                      {timeBuckets[timeIndex] ? timeBuckets[timeIndex].label : '—'}
+                      {' '}
+                      <span style={{ color: 'rgba(0,0,0,0.6)', marginLeft: 8 }}>
+                        {new Date(windowRange.startMs).toLocaleDateString()} — {new Date(windowRange.endMs).toLocaleDateString()}
+                      </span>
+                    </div>
+                  ) : (
+                    <div style={{ color: 'rgba(0,0,0,0.5)' }}>No time buckets</div>
+                  )}
+                </div>
+              </div>
+              <div style={{ marginTop: 6 }}>
+                <input
+                  type="range"
+                  min={0}
+                  max={Math.max(0, timeBuckets.length - 1)}
+                  step={1}
+                  value={timeIndex}
+                  onChange={(e) => setTimeIndex(Number(e.target.value))}
+                  style={{ width: 300 }}
+                />
+              </div>
+            </div>
+          </div>
       {/* records table: show when node or link is selected */}
       <div
         style={{
