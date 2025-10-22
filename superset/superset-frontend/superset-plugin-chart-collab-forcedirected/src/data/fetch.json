@@ -1,0 +1,1132 @@
+[
+  {
+    "id": "i-513",
+    "type": "issue",
+    "actor": "Yj66666",
+    "repo": "index-tts/index-tts",
+    "issue_id": "ISSUE-513",
+    "timestamp": "2025-10-22T09:42:06Z",
+    "title": "按照模板生成的语音只有0.几秒且全是噪声",
+    "body": "<img width=\"1522\" height=\"555\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/723b6132-75ad-407c-9e96-c52c16021200\" />"
+  },
+  {
+    "id": "cmt-3431126331",
+    "type": "comment",
+    "actor": "githubzhangfei",
+    "target": "githubzhangfei",
+    "repo": "index-tts/index-tts",
+    "issue_id": "ISSUE-512",
+    "comment_id": 3431126331,
+    "timestamp": "2025-10-22T08:42:05Z",
+    "body": "哪位大神说说什么情况😳"
+  },
+  {
+    "id": "i-512",
+    "type": "issue",
+    "actor": "githubzhangfei",
+    "repo": "index-tts/index-tts",
+    "issue_id": "ISSUE-512",
+    "timestamp": "2025-10-22T08:41:43Z",
+    "title": "生成语音有噪声",
+    "body": "下载源码，下载模型，运行webui，指定模型路径。启动成功，访问，上参考音频，生成语音。超算服务器。A800 80G"
+  },
+  {
+    "id": "i-511",
+    "type": "issue",
+    "actor": "zhusy09",
+    "repo": "index-tts/index-tts",
+    "issue_id": "ISSUE-511",
+    "timestamp": "2025-10-22T04:49:24Z",
+    "title": "indextts2运行报gpt generate时出现了inf、nan值",
+    "body": "indextts2运行报gpt generate时出现了inf、nan值，导致device assert，我是在A100上运行出错的，安装的包都是严格按照说明来的，这个咋解决？"
+  },
+  {
+    "id": "i-510",
+    "type": "issue",
+    "actor": "jjmlovesgit",
+    "repo": "index-tts/index-tts",
+    "issue_id": "ISSUE-510",
+    "timestamp": "2025-10-21T14:44:18Z",
+    "title": "Training Index-tts2 with Japanses",
+    "body": "Jarod is a special TTS community member... his work is worth consideration... he shares his  Index-tts2 Training repo and reviews how he trained Japanese langauge:\n\nhttps://youtu.be/fu3S2n0bwUc"
+  },
+  {
+    "id": "i-509",
+    "type": "issue",
+    "actor": "sutungpo",
+    "repo": "index-tts/index-tts",
+    "issue_id": "ISSUE-509",
+    "timestamp": "2025-10-21T10:51:07Z",
+    "title": "speech duration control",
+    "body": "The inference code currently supports only one generation mode. Could you please add another mode as described in the paper, which “explicitly specifies the number of generated tokens to precisely control the speech duration”?"
+  },
+  {
+    "id": "i-508",
+    "type": "issue",
+    "actor": "OliverBryant",
+    "repo": "index-tts/index-tts",
+    "issue_id": "ISSUE-508",
+    "timestamp": "2025-10-21T07:27:16Z",
+    "title": "Transformers run indextts2 error : cannot import name 'QuantizedCacheConfig' from 'transformers.cache_utils'",
+    "body": "new transformers 4.57.1 not support this class"
+  },
+  {
+    "id": "i-507",
+    "type": "issue",
+    "actor": "hjj-lmx",
+    "repo": "index-tts/index-tts",
+    "issue_id": "ISSUE-507",
+    "timestamp": "2025-10-21T07:02:04Z",
+    "title": "是否可以直接返回MP3格式的",
+    "body": null
+  },
+  {
+    "id": "i-506",
+    "type": "issue",
+    "actor": "wrteww",
+    "repo": "index-tts/index-tts",
+    "issue_id": "ISSUE-506",
+    "timestamp": "2025-10-21T06:02:29Z",
+    "title": "是否可以给一个 适用于XPU的 pyproject文件。",
+    "body": "我看代码里已经有了 xpu的支持，但是 pyproject.toml还是 cuda版本的，，有好心人给一个 xpu版本的 pyproject.toml吗？"
+  },
+  {
+    "id": "pr-505",
+    "type": "pull_request",
+    "actor": "mefich",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-505",
+    "timestamp": "2025-10-21T00:15:19Z",
+    "title": "feat: added support for target audio duration via speech_length parameter",
+    "files": [
+      "indextts/infer_v2.py"
+    ]
+  },
+  {
+    "id": "i-504",
+    "type": "issue",
+    "actor": "BernardMonge",
+    "repo": "index-tts/index-tts",
+    "issue_id": "ISSUE-504",
+    "timestamp": "2025-10-20T21:24:33Z",
+    "title": "Installation error",
+    "body": "I got this message:\n>> GPT weights restored from: ./checkpoints\\gpt.pth\nGPT2InferenceModel has generative capabilities, as `prepare_inputs_for_generation` is explicitly overwritten. However, it doesn't directly inherit from `GenerationMixin`. From 👉v4.50👈 onwards, `PreTrainedModel` will NOT inherit from `GenerationMixin`, and this model will lose the ability to call `generate` and other related functions.\n  - If you're using `trust_remote_code=True`, you can get rid of this warning by loading the model with an auto class. See https://huggingface.co/docs/transformers/en/model_doc/auto#auto-classes\n  - If you are the owner of the model architecture code, please modify your model class such that it inherits from `GenerationMixin` (after `PreTrainedModel`, otherwise you'll get an exception).\n  - If you are not the owner of the model architecture class, please contact the model code owner to update it.\n  \nPlease help how to proceed."
+  },
+  {
+    "id": "pr-498",
+    "type": "pull_request",
+    "actor": "stellaria-universum",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-498",
+    "timestamp": "2025-10-18T16:19:51Z",
+    "title": "Docker support",
+    "files": [
+      "Dockerfile",
+      "README.md",
+      "docker-compose.yaml"
+    ]
+  },
+  {
+    "id": "pr-492",
+    "type": "pull_request",
+    "actor": "Redtash1",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-492",
+    "timestamp": "2025-10-14T19:33:08Z",
+    "title": "Added --launch argument to Webui.py to allow auto-launch if chosen",
+    "files": [
+      "webui.py"
+    ]
+  },
+  {
+    "id": "pr-479",
+    "type": "pull_request",
+    "actor": "zhushizi",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-479",
+    "timestamp": "2025-10-11T06:40:18Z",
+    "title": "2025/10/11",
+    "files": [
+      "MANIFEST.in",
+      "checkpoints/config.yaml",
+      "dist/indextts/BigVGAN/ECAPA_TDNN.py",
+      "dist/indextts/BigVGAN/alias_free_activation/torch/filter.py",
+      "dist/indextts/BigVGAN/alias_free_torch/filter.py",
+      "dist/indextts/BigVGAN/bigvgan.py",
+      "dist/indextts/BigVGAN/nnet/CNN.py",
+      "dist/indextts/gpt/conformer/attention.py",
+      "dist/indextts/gpt/conformer/embedding.py",
+      "dist/indextts/gpt/conformer_encoder.py",
+      "dist/indextts/infer.py",
+      "dist/indextts/utils/arch_util.py",
+      "dist/indextts/utils/feature_extractors.py",
+      "dist/indextts/utils/front.py",
+      "indextts/BigVGAN/alias_free_activation/cuda/load.py",
+      "indextts/infer.py",
+      "indextts/utils/front.py",
+      "requirements.txt",
+      "w2v.py",
+      "webui.py"
+    ]
+  },
+  {
+    "id": "pr-476",
+    "type": "pull_request",
+    "actor": "BaimingX",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-476",
+    "timestamp": "2025-10-10T21:20:09Z",
+    "title": "feat(srt,ui): auto-generate SRT from inference segments; preview & download in Web UI",
+    "files": [
+      "indextts/infer_v2.py",
+      "webui.py"
+    ]
+  },
+  {
+    "id": "pr-473",
+    "type": "pull_request",
+    "actor": "nanaoto",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-473",
+    "timestamp": "2025-10-10T06:01:07Z",
+    "title": "doc: update chat groups",
+    "files": [
+      "README.md",
+      "docs/README_zh.md"
+    ]
+  },
+  {
+    "id": "c-bde7d0b",
+    "type": "commit",
+    "actor": "wangyining02",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-10-10T05:58:04Z",
+    "files": [
+      "README.md",
+      "docs/README_zh.md"
+    ],
+    "lines_added": 2,
+    "lines_deleted": 2,
+    "message": "doc: update chat groups"
+  },
+  {
+    "id": "pr-462",
+    "type": "pull_request",
+    "actor": "SiriusAhu",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-462",
+    "timestamp": "2025-10-01T17:36:19Z",
+    "title": "fix: ensure infer_generator runs fully and return output path",
+    "files": [
+      "indextts/infer_v2.py"
+    ]
+  },
+  {
+    "id": "c-db5b39b",
+    "type": "commit",
+    "actor": "nanaoto",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-10-01T17:09:44Z",
+    "files": [
+      "indextts/infer_v2.py"
+    ],
+    "lines_added": 12,
+    "lines_deleted": 9,
+    "message": "Merge pull request #461 from Yttrin/main\n\nfix: Empty generator -> IndexError problem on non-streaming infer()"
+  },
+  {
+    "id": "pr-461",
+    "type": "pull_request",
+    "actor": "Yttrin",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-461",
+    "timestamp": "2025-09-30T19:39:34Z",
+    "title": "fix: Empty generator -> IndexError problem on non-streaming infer()",
+    "files": [
+      "indextts/infer_v2.py"
+    ]
+  },
+  {
+    "id": "c-750d9d9",
+    "type": "commit",
+    "actor": "Yttrin",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-09-30T19:25:28Z",
+    "files": [
+      "indextts/infer_v2.py"
+    ],
+    "lines_added": 12,
+    "lines_deleted": 9,
+    "message": "fix: Empty generator -> IndexError problem on non-streaming infer()"
+  },
+  {
+    "id": "c-b0c6ab8",
+    "type": "commit",
+    "actor": "Yttrin",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-09-30T06:05:39Z",
+    "files": [
+      "indextts/infer_v2.py",
+      "indextts/utils/front.py"
+    ],
+    "lines_added": 72,
+    "lines_deleted": 18,
+    "message": "Simple streaming return implementation, lower latency for the first sound. (#417)\n\n* Add stream_return switch to get wavs from yield\n\n* Add more_segment_before arg for more segmenting.\n\nmore_segment_before is a int, for token_index < more_segment_before, more segmenting will be applied.\r\n0: no effect; 80 is recommended for better first-wav-latency\n\n* Uncomment silence insertion\n\n* fix: rename quick streaming tokens argument\n\n* fix: rename quick streaming tokens argument\n\n* fix: Add a wrapper for the yield function. It will not return a generator in normal condition."
+  },
+  {
+    "id": "pr-451",
+    "type": "pull_request",
+    "actor": "olu4wealth",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-451",
+    "timestamp": "2025-09-29T14:52:03Z",
+    "title": "feat: Add audiobook creation suite",
+    "files": [
+      "indextts/infer_v2.py",
+      "pyproject.toml",
+      "sample_book.txt",
+      "tools/create_audiobook.py"
+    ]
+  },
+  {
+    "id": "c-2ca41d7",
+    "type": "commit",
+    "actor": "nanaoto",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-09-29T08:15:48Z",
+    "files": [
+      "indextts/infer_v2.py"
+    ],
+    "lines_added": 7,
+    "lines_deleted": 0,
+    "message": "Merge pull request #441 from coezbek/patch-3\n\nFeat: Warn if input text contains UNK tokens"
+  },
+  {
+    "id": "r-3273382564",
+    "type": "review",
+    "actor": "Arcitec",
+    "target": "coezbek",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-442",
+    "timestamp": "2025-09-26T18:33:11Z",
+    "state": "CHANGES_REQUESTED",
+    "comments": 0,
+    "body": "Overall good ideas but there are many remaining issues."
+  },
+  {
+    "id": "pr-442",
+    "type": "pull_request",
+    "actor": "coezbek",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-442",
+    "timestamp": "2025-09-26T11:37:20Z",
+    "title": "Fix: de_tokenized_by_CJK_char would fail on apostrophy",
+    "files": [
+      "indextts/utils/common.py"
+    ]
+  },
+  {
+    "id": "pr-441",
+    "type": "pull_request",
+    "actor": "coezbek",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-441",
+    "timestamp": "2025-09-26T11:36:21Z",
+    "title": "Feat: Warn if input text contains UNK tokens",
+    "files": [
+      "indextts/infer_v2.py"
+    ]
+  },
+  {
+    "id": "c-34be9bf",
+    "type": "commit",
+    "actor": "coezbek",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-09-26T11:36:11Z",
+    "files": [
+      "indextts/infer_v2.py"
+    ],
+    "lines_added": 7,
+    "lines_deleted": 0,
+    "message": "feat: Warn if input text contains UNK tokens\n\nAdded warnings for unknown tokens in input text."
+  },
+  {
+    "id": "pr-438",
+    "type": "pull_request",
+    "actor": "coezbek",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-438",
+    "timestamp": "2025-09-26T06:57:53Z",
+    "title": "fix: Unknown token check needs to use integer comparison",
+    "files": [
+      "indextts/utils/front.py"
+    ]
+  },
+  {
+    "id": "pr-431",
+    "type": "pull_request",
+    "actor": "Arcitec",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-431",
+    "timestamp": "2025-09-24T20:57:03Z",
+    "title": "IndexTTS2 Container Workflow for Podman/Docker",
+    "files": [
+      ".gitignore",
+      "container/Containerfile",
+      "container/README.md",
+      "container/compose.example.yml",
+      "container/justfile",
+      "container/scripts/actions/launch.sh",
+      "container/scripts/actions/update.sh",
+      "container/scripts/entrypoint.sh"
+    ]
+  },
+  {
+    "id": "c-84a5ef9",
+    "type": "commit",
+    "actor": "invalid-email-address",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-09-23T09:52:52Z",
+    "files": [
+      "README.md"
+    ],
+    "lines_added": 1,
+    "lines_deleted": 1,
+    "message": "update."
+  },
+  {
+    "id": "c-c7602c1",
+    "type": "commit",
+    "actor": "nanaoto",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-09-23T07:58:55Z",
+    "files": [
+      "README.md",
+      "docs/README_zh.md",
+      "pyproject.toml"
+    ],
+    "lines_added": 17,
+    "lines_deleted": 6,
+    "message": "Merge pull request #397 from Arcitec/indextts2-arc\n\nIndexTTS2 Documentation Update"
+  },
+  {
+    "id": "pr-417",
+    "type": "pull_request",
+    "actor": "Yttrin",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-417",
+    "timestamp": "2025-09-21T16:09:59Z",
+    "title": "Simple streaming return implementation, lower latency for the first sound.",
+    "files": [
+      "indextts/infer_v2.py",
+      "indextts/utils/front.py"
+    ]
+  },
+  {
+    "id": "c-5471d82",
+    "type": "commit",
+    "actor": "Arcitec",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-09-19T19:11:31Z",
+    "files": [
+      "README.md",
+      "docs/README_zh.md"
+    ],
+    "lines_added": 2,
+    "lines_deleted": 2,
+    "message": "docs: Install HuggingFace CLI with high-speed download feature\n\nThe Xet storage method uses de-duplication and chunked downloads to speed up transfers in some situations:\n\nhttps://pypi.org/project/hf-xet/\n\nBut most importantly, installing the Xet support gets rid of some annoying HuggingFace CLI messages about missing the feature."
+  },
+  {
+    "id": "pr-409",
+    "type": "pull_request",
+    "actor": "jjmlovesgit",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-409",
+    "timestamp": "2025-09-19T14:50:16Z",
+    "title": "feat: Add Gradio web UI with streaming playback",
+    "files": [
+      ".gitattributes",
+      ".github/workflows/docker-publish.yml",
+      ".gitignore",
+      ".python-version",
+      "DISCLAIMER",
+      "LICENSE",
+      "LICENSE_ZH.txt",
+      "MANIFEST.in",
+      "README.md",
+      "archive/README_INDEXTTS_1_5.md",
+      "assets/.DS_Store",
+      "assets/IndexTTS.png",
+      "assets/IndexTTS2-video-pic.png",
+      "assets/IndexTTS2.mp4",
+      "assets/IndexTTS2.png",
+      "assets/IndexTTS2_banner.png",
+      "assets/img.png",
+      "assets/index_icon.png",
+      "checkpoints/config.yaml",
+      "checkpoints/pinyin.vocab",
+      "docs/README_zh.md",
+      "examples/cases.jsonl",
+      "examples/emo_hate.wav",
+      "examples/emo_sad.wav",
+      "examples/voice_01.wav",
+      "examples/voice_02.wav",
+      "examples/voice_03.wav",
+      "examples/voice_04.wav",
+      "examples/voice_05.wav",
+      "examples/voice_06.wav",
+      "examples/voice_07.wav",
+      "examples/voice_08.wav",
+      "examples/voice_09.wav",
+      "examples/voice_10.wav",
+      "examples/voice_11.wav",
+      "examples/voice_12.wav",
+      "indextts/BigVGAN/ECAPA_TDNN.py",
+      "indextts/BigVGAN/__init__.py",
+      "indextts/BigVGAN/activations.py",
+      "indextts/BigVGAN/alias_free_activation/__init__.py",
+      "indextts/BigVGAN/alias_free_activation/cuda/.gitignore",
+      "indextts/BigVGAN/alias_free_activation/cuda/__init__.py",
+      "indextts/BigVGAN/alias_free_activation/cuda/activation1d.py",
+      "indextts/BigVGAN/alias_free_activation/cuda/anti_alias_activation.cpp",
+      "indextts/BigVGAN/alias_free_activation/cuda/anti_alias_activation_cuda.cu",
+      "indextts/BigVGAN/alias_free_activation/cuda/compat.h",
+      "indextts/BigVGAN/alias_free_activation/cuda/load.py",
+      "indextts/BigVGAN/alias_free_activation/cuda/type_shim.h",
+      "indextts/BigVGAN/alias_free_activation/torch/__init__.py",
+      "indextts/BigVGAN/alias_free_activation/torch/act.py",
+      "indextts/BigVGAN/alias_free_activation/torch/filter.py",
+      "indextts/BigVGAN/alias_free_activation/torch/resample.py",
+      "indextts/BigVGAN/alias_free_torch/__init__.py",
+      "indextts/BigVGAN/alias_free_torch/act.py",
+      "indextts/BigVGAN/alias_free_torch/filter.py",
+      "indextts/BigVGAN/alias_free_torch/resample.py",
+      "indextts/BigVGAN/bigvgan.py",
+      "indextts/BigVGAN/models.py",
+      "indextts/BigVGAN/nnet/CNN.py",
+      "indextts/BigVGAN/nnet/__init__.py",
+      "indextts/BigVGAN/nnet/linear.py",
+      "indextts/BigVGAN/nnet/normalization.py",
+      "indextts/BigVGAN/utils.py",
+      "indextts/__init__.py",
+      "indextts/cli.py",
+      "indextts/gpt/__init__.py",
+      "indextts/gpt/conformer/__init__.py",
+      "indextts/gpt/conformer/attention.py",
+      "indextts/gpt/conformer/embedding.py",
+      "indextts/gpt/conformer/subsampling.py",
+      "indextts/gpt/conformer_encoder.py",
+      "indextts/gpt/model.py",
+      "indextts/gpt/model_v2.py",
+      "indextts/gpt/perceiver.py",
+      "indextts/gpt/transformers_beam_search.py",
+      "indextts/gpt/transformers_generation_utils.py",
+      "indextts/gpt/transformers_gpt2.py",
+      "indextts/gpt/transformers_modeling_utils.py",
+      "indextts/infer.py",
+      "indextts/infer_v2.py",
+      "indextts/s2mel/dac/__init__.py",
+      "indextts/s2mel/dac/__main__.py",
+      "indextts/s2mel/dac/model/__init__.py",
+      "indextts/s2mel/dac/model/base.py",
+      "indextts/s2mel/dac/model/dac.py",
+      "indextts/s2mel/dac/model/discriminator.py",
+      "indextts/s2mel/dac/model/encodec.py",
+      "indextts/s2mel/dac/nn/__init__.py",
+      "indextts/s2mel/dac/nn/layers.py",
+      "indextts/s2mel/dac/nn/loss.py",
+      "indextts/s2mel/dac/nn/quantize.py",
+      "indextts/s2mel/dac/utils/__init__.py",
+      "indextts/s2mel/dac/utils/decode.py",
+      "indextts/s2mel/dac/utils/encode.py",
+      "indextts/s2mel/hf_utils.py",
+      "indextts/s2mel/modules/.ipynb_checkpoints/audio-checkpoint.py",
+      "indextts/s2mel/modules/.ipynb_checkpoints/commons-checkpoint.py",
+      "indextts/s2mel/modules/.ipynb_checkpoints/diffusion_transformer-checkpoint.py",
+      "indextts/s2mel/modules/.ipynb_checkpoints/flow_matching-checkpoint.py",
+      "indextts/s2mel/modules/.ipynb_checkpoints/length_regulator-checkpoint.py"
+    ]
+  },
+  {
+    "id": "c-ae56539",
+    "type": "commit",
+    "actor": "Arcitec",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-09-19T00:35:27Z",
+    "files": [
+      "pyproject.toml"
+    ],
+    "lines_added": 4,
+    "lines_deleted": 0,
+    "message": "chore: Note why package build isolation was disabled for DeepSpeed"
+  },
+  {
+    "id": "pr-397",
+    "type": "pull_request",
+    "actor": "Arcitec",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-397",
+    "timestamp": "2025-09-18T17:04:05Z",
+    "title": "IndexTTS2 Documentation Update",
+    "files": [
+      "README.md",
+      "docs/README_zh.md",
+      "pyproject.toml"
+    ]
+  },
+  {
+    "id": "c-cc9c6b6",
+    "type": "commit",
+    "actor": "Arcitec",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-09-18T16:51:43Z",
+    "files": [
+      "README.md"
+    ],
+    "lines_added": 11,
+    "lines_deleted": 4,
+    "message": "docs: Clarify that UV handles Python and the environment creation\n\n- Some users have been confused and were manually creating and activating Python venvs, which is not good since it can lead to the wrong Python version or dependency conflicts.\n\n- Therefore, we add more detailed guidance to explain that `uv` manages the whole environment, the Python version, all dependencies and automatic environment activation.\n\n- A few users were also confused about where `uv tool` installs binaries, but instead of explaining that in depth, we now add a link to the documentation page which explains how it works, and also instruct users to carefully read the `uv tool` output since it tells them how to add the installation to the system's path."
+  },
+  {
+    "id": "c-64cb31a",
+    "type": "commit",
+    "actor": "kj863257",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-09-18T05:59:45Z",
+    "files": [
+      "indextts/infer_v2.py"
+    ],
+    "lines_added": 9,
+    "lines_deleted": 0,
+    "message": "Update infer_v2.py: solve the problem of persistent cache buildup (#382)\n\n* Update infer_v2.py\n\nclear old cache\n\n* Update infer_v2.py: solve the problem of persistent cache buildup\n\nclear old cache"
+  },
+  {
+    "id": "c-9e391a9",
+    "type": "commit",
+    "actor": "nanaoto",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-09-18T05:58:23Z",
+    "files": [
+      "examples/cases.jsonl",
+      "indextts/infer_v2.py",
+      "pyproject.toml",
+      "tools/i18n/locale/en_US.json",
+      "tools/i18n/locale/zh_CN.json",
+      "uv.lock",
+      "webui.py"
+    ],
+    "lines_added": 330,
+    "lines_deleted": 261,
+    "message": "Merge pull request #354 from Arcitec/indextts2-arc\n\nIndexTTS2 Maintenance Patches"
+  },
+  {
+    "id": "pr-382",
+    "type": "pull_request",
+    "actor": "kj863257",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-382",
+    "timestamp": "2025-09-18T01:30:32Z",
+    "title": "Update infer_v2.py: solve the problem of persistent cache buildup",
+    "files": [
+      "indextts/infer_v2.py"
+    ]
+  },
+  {
+    "id": "r-3236078177",
+    "type": "review",
+    "actor": "Arcitec",
+    "target": "Arcitec",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-354",
+    "timestamp": "2025-09-17T19:58:43Z",
+    "state": "COMMENTED",
+    "comments": 0,
+    "body": ""
+  },
+  {
+    "id": "c-c24d73e",
+    "type": "commit",
+    "actor": "Arcitec",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-09-17T19:55:44Z",
+    "files": [
+      "uv.lock"
+    ],
+    "lines_added": 109,
+    "lines_deleted": 106,
+    "message": "chore: Small dependency updates"
+  },
+  {
+    "id": "c-cb5c980",
+    "type": "commit",
+    "actor": "index-tts",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-09-17T03:39:05Z",
+    "files": [
+      "README.md"
+    ],
+    "lines_added": 1,
+    "lines_deleted": 1,
+    "message": "Merge pull request #378 from index-tts/tts2dev\n\nupdate Contributors"
+  },
+  {
+    "id": "pr-378",
+    "type": "pull_request",
+    "actor": "index-tts",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-378",
+    "timestamp": "2025-09-17T03:38:57Z",
+    "title": "update Contributors",
+    "files": [
+      "README.md"
+    ]
+  },
+  {
+    "id": "c-d50340a",
+    "type": "commit",
+    "actor": "bilisjc",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-09-17T03:37:20Z",
+    "files": [
+      "README.md"
+    ],
+    "lines_added": 1,
+    "lines_deleted": 1,
+    "message": "update Contributors"
+  },
+  {
+    "id": "c-12ee399",
+    "type": "commit",
+    "actor": "index-tts",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-09-16T12:22:52Z",
+    "files": [
+      "README.md",
+      "docs/README_zh.md"
+    ],
+    "lines_added": 2,
+    "lines_deleted": 6,
+    "message": "Merge pull request #375 from index-tts/tts2dev\n\nupdate Contributors"
+  },
+  {
+    "id": "pr-375",
+    "type": "pull_request",
+    "actor": "index-tts",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-375",
+    "timestamp": "2025-09-16T12:22:44Z",
+    "title": "update Contributors",
+    "files": [
+      "README.md",
+      "docs/README_zh.md"
+    ]
+  },
+  {
+    "id": "c-a37d808",
+    "type": "commit",
+    "actor": "bilisjc",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-09-16T12:20:50Z",
+    "files": [
+      "README.md",
+      "docs/README_zh.md"
+    ],
+    "lines_added": 2,
+    "lines_deleted": 6,
+    "message": "update Contributors"
+  },
+  {
+    "id": "c-02c1e5a",
+    "type": "commit",
+    "actor": "index-tts",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-09-16T11:45:47Z",
+    "files": [
+      "README.md",
+      "docs/README_zh.md"
+    ],
+    "lines_added": 18,
+    "lines_deleted": 14,
+    "message": "Merge pull request #374 from index-tts/tts2dev\n\nUpdate contributors"
+  },
+  {
+    "id": "pr-374",
+    "type": "pull_request",
+    "actor": "index-tts",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-374",
+    "timestamp": "2025-09-16T11:45:30Z",
+    "title": "Update contributors",
+    "files": [
+      "README.md",
+      "docs/README_zh.md"
+    ]
+  },
+  {
+    "id": "c-901a5a4",
+    "type": "commit",
+    "actor": "bilisjc",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-09-16T11:43:32Z",
+    "files": [
+      "README.md",
+      "docs/README_zh.md"
+    ],
+    "lines_added": 2,
+    "lines_deleted": 2,
+    "message": "update Contributors"
+  },
+  {
+    "id": "c-1361244",
+    "type": "commit",
+    "actor": "bilisjc",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-09-16T11:38:33Z",
+    "files": [
+      "README.md",
+      "docs/README_zh.md"
+    ],
+    "lines_added": 5,
+    "lines_deleted": 5,
+    "message": "update Contributors"
+  },
+  {
+    "id": "c-c248214",
+    "type": "commit",
+    "actor": "bilisjc",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-09-16T11:28:59Z",
+    "files": [],
+    "lines_added": 0,
+    "lines_deleted": 0,
+    "message": "Merge remote-tracking branch 'origin/main' into tts2dev"
+  },
+  {
+    "id": "c-3e416dc",
+    "type": "commit",
+    "actor": "bilisjc",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-09-16T11:28:09Z",
+    "files": [
+      "README.md",
+      "docs/README_zh.md"
+    ],
+    "lines_added": 13,
+    "lines_deleted": 9,
+    "message": "update Contributors"
+  },
+  {
+    "id": "pr-372",
+    "type": "pull_request",
+    "actor": "index-tts",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-372",
+    "timestamp": "2025-09-16T07:54:49Z",
+    "title": "update readme",
+    "files": [
+      "README.md",
+      "docs/README_zh.md"
+    ]
+  },
+  {
+    "id": "r-3228132740",
+    "type": "review",
+    "actor": "nanaoto",
+    "target": "Arcitec",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-354",
+    "timestamp": "2025-09-16T07:46:35Z",
+    "state": "COMMENTED",
+    "comments": 0,
+    "body": ""
+  },
+  {
+    "id": "pr-371",
+    "type": "pull_request",
+    "actor": "nanaoto",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-371",
+    "timestamp": "2025-09-16T07:44:46Z",
+    "title": "fix(webui): replace gr.Examples with gr.Dataset to implement dynamic …",
+    "files": [
+      "webui.py"
+    ]
+  },
+  {
+    "id": "pr-368",
+    "type": "pull_request",
+    "actor": "index-tts",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-368",
+    "timestamp": "2025-09-16T05:20:42Z",
+    "title": "Include usage notes for Pinyin",
+    "files": [
+      "README.md",
+      "checkpoints/pinyin.vocab",
+      "docs/README_zh.md"
+    ]
+  },
+  {
+    "id": "r-3222364393",
+    "type": "review",
+    "actor": "Arcitec",
+    "target": "Arcitec",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-354",
+    "timestamp": "2025-09-14T19:13:27Z",
+    "state": "COMMENTED",
+    "comments": 0,
+    "body": ""
+  },
+  {
+    "id": "c-ec368de",
+    "type": "commit",
+    "actor": "Arcitec",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-09-14T19:04:20Z",
+    "files": [
+      "examples/cases.jsonl",
+      "tools/i18n/locale/en_US.json",
+      "tools/i18n/locale/zh_CN.json",
+      "webui.py"
+    ],
+    "lines_added": 108,
+    "lines_deleted": 45,
+    "message": "fix(webui): Experimental checkbox bugfixes and add visual warning label\n\n- We can't use the original \"Show experimental features\" checkbox implementation, because it *deeply* breaks Gradio.\n\n- Gradio's `gr.Examples()` API binds itself to the original state of the user interface. Gradio crashes and causes various bugs if we try to change the available UI controls later.\n\n- Instead, we must use `gr.Dataset()` which acts like a custom input/output control and doesn't directly bind itself to the target control. We must also provide a secret, hidden \"all mode choices\" component so that it knows the names of all \"control modes\" that are possible in examples.\n\n- We now also have a very visible warning label in the user interface, to clearly mark the experimental features.\n\n- Bugs fixed:\n\n* The code was unable to toggle the visibility of Experimental demos in the Examples list. It was not possible with Examples (since it's a wrapper around Dataset, but Examples contains its own internal state/copy of all data). Instead, we use a Dataset and manipulate its list directly.\n\n* Gradio crashes with a `gradio.exceptions.Error` exception if you try to load an example that tries to use an experimental feature if we have removed its UI element. This is because Examples binds to the original user interface and *remembers* the list of choices, and it *cannot* dynamically select something that did not exist when the `gr.Examples()` was initially created. This problem is fixed by switching to `gr.Dataset()`.\n\n* Furthermore, Gradio's `gr.Examples()` handler actually remembers and caches the list of UI options. So every time we load an example, it rewrites the \"Emotion Control Mode\" selection menu to only show the options that were available when the Examples table was created. This means that even if we keep the \"Show experimental features\" checkbox, Gradio itself will erase the experimental mode from the Control Mode selection menu every time the user loads an example. There are no callbacks or \"update\" functions to allow us to override this automatic Gradio behavior. But by switching to `gr.Dataset()`, we completely avoid this deep binding.\n\n* The \"Show experimental features\" checkbox is no longer tied to a column in the examples-table, to avoid fighting between Gradio's example table trying to set the mode, and the experimental checkbox being toggled and also trying to set the mode.\n\n* Lastly, the \"Show experimental features\" checkbox now remembers and restores the user's current mode selection when toggling the checkbox, instead of constantly resetting to the default mode (\"same as voice reference\"), to make the UI more convenient for users."
+  },
+  {
+    "id": "r-3222252184",
+    "type": "review",
+    "actor": "Arcitec",
+    "target": "Arcitec",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-354",
+    "timestamp": "2025-09-14T17:06:03Z",
+    "state": "COMMENTED",
+    "comments": 0,
+    "body": ""
+  },
+  {
+    "id": "r-3222241116",
+    "type": "review",
+    "actor": "mingyi456",
+    "target": "Arcitec",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-354",
+    "timestamp": "2025-09-14T17:02:27Z",
+    "state": "COMMENTED",
+    "comments": 0,
+    "body": ""
+  },
+  {
+    "id": "r-3222230362",
+    "type": "review",
+    "actor": "Arcitec",
+    "target": "Arcitec",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-354",
+    "timestamp": "2025-09-14T16:46:30Z",
+    "state": "COMMENTED",
+    "comments": 0,
+    "body": ""
+  },
+  {
+    "id": "r-3222206726",
+    "type": "review",
+    "actor": "Arcitec",
+    "target": "Arcitec",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-354",
+    "timestamp": "2025-09-14T16:09:51Z",
+    "state": "COMMENTED",
+    "comments": 0,
+    "body": ""
+  },
+  {
+    "id": "r-3222204874",
+    "type": "review",
+    "actor": "mingyi456",
+    "target": "Arcitec",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-354",
+    "timestamp": "2025-09-14T16:06:10Z",
+    "state": "COMMENTED",
+    "comments": 0,
+    "body": ""
+  },
+  {
+    "id": "pr-354",
+    "type": "pull_request",
+    "actor": "Arcitec",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-354",
+    "timestamp": "2025-09-13T23:24:46Z",
+    "title": "IndexTTS2 Maintenance Patches",
+    "files": [
+      "examples/cases.jsonl",
+      "indextts/infer_v2.py",
+      "pyproject.toml",
+      "tools/i18n/locale/en_US.json",
+      "tools/i18n/locale/zh_CN.json",
+      "uv.lock",
+      "webui.py"
+    ]
+  },
+  {
+    "id": "c-c5f9a31",
+    "type": "commit",
+    "actor": "Arcitec",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-09-13T23:22:34Z",
+    "files": [
+      "webui.py"
+    ],
+    "lines_added": 1,
+    "lines_deleted": 1,
+    "message": "fix(webui): Make the Emotion Control Weight slider visible again\n\n- The emotion weight is always applied in every mode except \"Same as voice reference\", so we must make the slider visible so that users can control the value. Otherwise it would silently apply the last-set value without the user knowing, which is very confusing.\n\n- Furthermore, having the slider even on the Emotion Vectors page is *very* useful, because it allows users to rapidly change the total strength of the current emotion vectors without having to manually/carefully move every individual emotion slider."
+  },
+  {
+    "id": "c-e185fa1",
+    "type": "commit",
+    "actor": "Arcitec",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-09-13T22:35:38Z",
+    "files": [
+      "webui.py"
+    ],
+    "lines_added": 4,
+    "lines_deleted": 4,
+    "message": "fix(webui): Make the Advanced Settings visible by default again\n\n- The Advanced Settings contains some very advanced features which users shouldn't tweak, but it also contains important insight into segmentation generations, and the \"max tokens per generation segment\" feature which users must tweak if they have low VRAM.\n\n- Therefore it's very important that users notice the \"Advanced Settings\" section so that they can read the VRAM help text and reduce the segment length if they have VRAM issues. So let's make the advanced category visible by default again until a better solution is determined."
+  },
+  {
+    "id": "c-c266910",
+    "type": "commit",
+    "actor": "Arcitec",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-09-13T22:33:42Z",
+    "files": [
+      "webui.py"
+    ],
+    "lines_added": 9,
+    "lines_deleted": 16,
+    "message": "refactor(webui): Remove repeated code in Examples loader"
+  },
+  {
+    "id": "c-8aa8064",
+    "type": "commit",
+    "actor": "Arcitec",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-09-13T22:22:41Z",
+    "files": [
+      "indextts/infer_v2.py",
+      "webui.py"
+    ],
+    "lines_added": 17,
+    "lines_deleted": 11,
+    "message": "feat: Add reusable Emotion Vector normalization helper\n\n- The WebUI was secretly squashing all emotion vectors and re-scaling them. It's a good idea for user friendliness, but it makes it harder to learn what values will work in Python when using the WebUI for testing.\n\n- Instead, let's move the normalization code into IndexTTS2 as a helper function which is used by Gradio and can be used from other people's code too.\n\n- The emotion bias (which reduces the influence of certain emotions) has also been converted into an optional feature, which can be turned off if such biasing isn't wanted. And all biasing values have been re-scaled to use 1.0 as the reference, to avoid scaling relative to 0.8 (which previously meant that it applied double scaling)."
+  },
+  {
+    "id": "c-1520d06",
+    "type": "commit",
+    "actor": "Arcitec",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-09-13T21:55:53Z",
+    "files": [
+      "examples/cases.jsonl",
+      "webui.py"
+    ],
+    "lines_added": 3,
+    "lines_deleted": 5,
+    "message": "fix(webui): New default emo_alpha recommendation instead of scaling\n\n- Silently scaling the value internally is confusing for users. They may be tuning their settings via the Web UI before putting the same values into their Python code, and would then get a different result since the Web UI \"lies\" about the slider values.\n\n- Instead, let's remove the silent scaling, and just change the default weight to a better recommendation."
+  },
+  {
+    "id": "c-ef09710",
+    "type": "commit",
+    "actor": "Arcitec",
+    "repo": "index-tts/index-tts",
+    "timestamp": "2025-09-13T21:44:53Z",
+    "files": [
+      "pyproject.toml",
+      "uv.lock",
+      "webui.py"
+    ],
+    "lines_added": 93,
+    "lines_deleted": 87,
+    "message": "fix(webui): Add support for Gradio 5.45.0 and higher\n\n- We were using \".select\" to detect when tabs are changed, but Gradio has modified behavior in 5.45.0 to only trigger from user clicks. They now require that we use \".change\" to detect tab changes from code. This fix makes the Examples work when loading on new Gradio versions."
+  },
+  {
+    "id": "pr-347",
+    "type": "pull_request",
+    "actor": "nanaoto",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-347",
+    "timestamp": "2025-09-12T08:46:38Z",
+    "title": "feat: 裁剪过长的输入音频至15s,减少爆内存和显存",
+    "files": [
+      "indextts/infer_v2.py"
+    ]
+  },
+  {
+    "id": "pr-345",
+    "type": "pull_request",
+    "actor": "nanaoto",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-345",
+    "timestamp": "2025-09-12T06:22:59Z",
+    "title": "feat: 归一化参数到推荐的范围，改善用户体验",
+    "files": [
+      "examples/cases.jsonl",
+      "tools/i18n/locale/en_US.json",
+      "tools/i18n/locale/zh_CN.json",
+      "webui.py"
+    ]
+  },
+  {
+    "id": "pr-338",
+    "type": "pull_request",
+    "actor": "yrom",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-338",
+    "timestamp": "2025-09-11T09:01:38Z",
+    "title": "Correct the import path of BigVGAN's custom cuda kernel",
+    "files": [
+      "indextts/infer_v2.py"
+    ]
+  },
+  {
+    "id": "pr-335",
+    "type": "pull_request",
+    "actor": "yrom",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-335",
+    "timestamp": "2025-09-11T07:48:10Z",
+    "title": "Supporting hybrid CPU/GPU inference when GPU memory is limited",
+    "files": [
+      "indextts/gpt/model_v2.py",
+      "indextts/infer_v2.py",
+      "indextts/s2mel/modules/commons.py"
+    ]
+  },
+  {
+    "id": "pr-333",
+    "type": "pull_request",
+    "actor": "Arcitec",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-333",
+    "timestamp": "2025-09-11T05:07:13Z",
+    "title": "docs: Add FP16 usage advice for faster inference",
+    "files": [
+      "README.md"
+    ]
+  },
+  {
+    "id": "pr-331",
+    "type": "pull_request",
+    "actor": "TBXark",
+    "repo": "index-tts/index-tts",
+    "pr_id": "PR-331",
+    "timestamp": "2025-09-11T03:33:37Z",
+    "title": "feat: 独立音频特征提取，支持预计算特征输入",
+    "files": []
+  }
+]

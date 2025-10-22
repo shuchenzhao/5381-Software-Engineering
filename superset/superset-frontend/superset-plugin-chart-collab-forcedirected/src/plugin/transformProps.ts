@@ -94,15 +94,24 @@ export default function transformProps(chartProps: ChartProps) {
     if (Array.isArray(q) && q.length > 0 && (q[0].type || q[0].actor)) {
       events = q as Event[];
     } else {
-      // eslint-disable-next-line global-require, import/no-extraneous-dependencies
-      // @ts-ignore - import json
-      // events = require('../../../../superset-github-connector/fetch.json') as Event[];
-      events = require('../mock/events_mock.json') as Event[];
+      // prefer external data written by github_connector to src/data/fetch.json
+      let raw: any = null;
+      try {
+        // eslint-disable-next-line global-require, import/no-extraneous-dependencies
+        // @ts-ignore
+        raw = require('../data/fetch.json');
+      } catch (err) {
+        // fallback to bundled mock
+        // eslint-disable-next-line global-require, import/no-extraneous-dependencies
+        // @ts-ignore
+        raw = require('../mock/events_mock.json');
+      }
+      events = Array.isArray(raw) ? raw as Event[] : raw.events || raw.data || [];
     }
   } catch (e) {
+    // fallback in case require/parse failed
     // eslint-disable-next-line global-require, import/no-extraneous-dependencies
     // @ts-ignore
-    // events = require('../../../../superset-github-connector/fetch.json') as Event[];
     events = require('../mock/events_mock.json') as Event[];
   }
 

@@ -22,7 +22,7 @@ import { CollabForcedirectedProps, CollabForcedirectedStylesProps } from './type
 import { forceSimulation, forceLink, forceManyBody, forceCenter, forceX, forceY } from 'd3-force';
 
 type NodeDatum = { id: string; x?: number; y?: number; vx?: number; vy?: number; size?: number };
-type LinkDatum = { source: string; target: string; weight: number; types?: any; sample_events?: any[] };
+type LinkDatum = { source: string; target: string; weight: number; types?: any; sample_events?: any[]; first?: number; last?: number };
 
 // The following Styles component is a <div> element, which has been styled using Emotion
 // For docs, visit https://emotion.sh/docs/styled
@@ -69,6 +69,9 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const svgRef = useRef<SVGSVGElement | null>(null);
   const simulationRef = useRef<any>(null);
+  // keep original full dataset so filtering can re-aggregate from source
+  const originalLinksRef = useRef<LinkDatum[] | null>(null);
+  const originalNodesRef = useRef<NodeDatum[] | null>(null);
   const [simNodes, setSimNodes] = useState<NodeDatum[]>([]);
   const [simLinks, setSimLinks] = useState<LinkDatum[]>([]);
   const [hoveredLink, setHoveredLink] = useState<LinkDatum | null>(null);
@@ -95,6 +98,9 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
   const [timeBuckets, setTimeBuckets] = useState<{ startMs: number; label: string }[]>([]);
   // selected bucket index (single slider selecting one bucket)
   const [timeIndex, setTimeIndex] = useState<number>(0);
+  // local slider value (debounced into timeIndex to avoid frequent re-aggregation)
+  const [sliderIndex, setSliderIndex] = useState<number>(0);
+  const sliderDebounceRef = useRef<number | null>(null);
   // computed window start/end based on selected bucket
   const [windowRange, setWindowRange] = useState<{ startMs: number; endMs: number } | null>(null);
 
@@ -136,6 +142,9 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
     }));
     setSimNodes(n);
     setSimLinks(l);
+  // store originals for later time-based filtering
+  originalLinksRef.current = l.map((x) => ({ ...x }));
+  originalNodesRef.current = n.map((x) => ({ ...x }));
 
   // use the state-driven clusterPullStrength
     const simulation = forceSimulation(n as any)
@@ -161,8 +170,8 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
     simulationRef.current = simulation;
 
     // Run a few synchronous ticks so nodes get initial x/y coordinates immediately
-    // This makes the graph visible right away in Storybook instead of waiting for RAF ticks.
-    for (let i = 0; i < 120; i += 1) {
+    // Reduced to avoid blocking the main thread when many rebuilds occur.
+    for (let i = 0; i < 60; i += 1) {
       simulation.tick();
     }
     // ensure initial render has positions
@@ -229,11 +238,12 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
     };
   }, [nodes, links, width, height]);
 
-  // compute time buckets from simLinks' sample_events when simLinks change
+  // compute time buckets from originalLinks' sample_events when originalLinks or unit change
   useEffect(() => {
     try {
       const allTimestamps: number[] = [];
-      (simLinks || []).forEach((ln) => {
+      const sourceLinks = originalLinksRef.current || [];
+      (sourceLinks || []).forEach((ln) => {
         const sample = (ln as any).sample_events as any[] | undefined;
         if (Array.isArray(sample)) {
           sample.forEach((ev) => {
@@ -251,24 +261,31 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
       }
       const min = Math.min(...allTimestamps);
       const max = Math.max(...allTimestamps);
-      const buckets: { startMs: number; label: string }[] = [];
+  const buckets: { startMs: number; label: string }[] = [];
       // helper to build buckets per unit
       const buildBuckets = (unit: TimeUnit) => {
         buckets.length = 0;
         const startDate = new Date(min);
         const endDate = new Date(max);
+        // We'll only create buckets that actually contain at least one event.
         if (unit === 'year') {
           for (let y = startDate.getUTCFullYear(); y <= endDate.getUTCFullYear(); y += 1) {
             const s = Date.UTC(y, 0, 1);
-            buckets.push({ startMs: s, label: String(y) });
+            const e = Date.UTC(y + 1, 0, 1) - 1;
+            // include this year only if any timestamp falls within [s,e]
+            const has = allTimestamps.some((ts) => ts >= s && ts <= e);
+            if (has) buckets.push({ startMs: s, label: String(y) });
           }
         } else if (unit === 'month') {
           let y = startDate.getUTCFullYear();
           let m = startDate.getUTCMonth();
           while (y < endDate.getUTCFullYear() || (y === endDate.getUTCFullYear() && m <= endDate.getUTCMonth())) {
             const s = Date.UTC(y, m, 1);
+            const next = Date.UTC(y, m + 1, 1) - 1;
             const label = `${y}-${String(m + 1).padStart(2, '0')}`;
-            buckets.push({ startMs: s, label });
+            // only push month if it has any timestamps
+            const has = allTimestamps.some((ts) => ts >= s && ts <= next);
+            if (has) buckets.push({ startMs: s, label });
             m += 1;
             if (m > 11) {
               m = 0; y += 1;
@@ -285,13 +302,15 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
           date.setUTCDate(date.getUTCDate() - diff);
           while (date.getTime() <= max) {
             const wkStart = date.getTime();
+            const wkEnd = wkStart + 7 * 24 * 3600 * 1000 - 1;
             const y = new Date(wkStart).getUTCFullYear();
             // compute week number relative to the start of the year
             const yearStart = Date.UTC(y, 0, 1);
             const daysSinceYearStart = Math.floor((wkStart - yearStart) / 86400000);
             const weekNum = Math.floor(daysSinceYearStart / 7) + 1;
             const label = `${y}-W${weekNum}`;
-            buckets.push({ startMs: wkStart, label });
+            const has = allTimestamps.some((ts) => ts >= wkStart && ts <= wkEnd);
+            if (has) buckets.push({ startMs: wkStart, label });
             date.setUTCDate(date.getUTCDate() + 7);
           }
         }
@@ -304,7 +323,184 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
       setTimeBuckets([]);
       setWindowRange(null);
     }
-  }, [simLinks, timeUnit]);
+  }, [timeUnit]);
+
+  // keep sliderIndex in sync if timeIndex is updated programmatically
+  useEffect(() => {
+    setSliderIndex(timeIndex);
+  }, [timeIndex]);
+
+  // debounce sliderIndex -> timeIndex so we don't recreate simulation on every small move
+  useEffect(() => {
+    if (sliderDebounceRef.current) window.clearTimeout(sliderDebounceRef.current);
+    // eslint-disable-next-line no-restricted-globals
+    sliderDebounceRef.current = window.setTimeout(() => {
+      setTimeIndex(sliderIndex);
+    }, 250);
+    return () => {
+      if (sliderDebounceRef.current) window.clearTimeout(sliderDebounceRef.current);
+    };
+  }, [sliderIndex]);
+
+  // When windowRange changes, re-aggregate links from originalLinksRef and recreate simulation
+  useEffect(() => {
+    // if no original data, nothing to do
+    const src = originalLinksRef.current;
+    const srcNodes = originalNodesRef.current;
+    if (!src || !srcNodes) return;
+
+    // if no range selected, use original full dataset
+    const startMs = windowRange ? windowRange.startMs : Number.NEGATIVE_INFINITY;
+    const endMs = windowRange ? windowRange.endMs : Number.POSITIVE_INFINITY;
+
+    const factors = {
+      commits: 1,
+      reviews: 2,
+      pullRequests: 2,
+      assigns: 1,
+      discussion: 0.5,
+    };
+
+    const newLinks: LinkDatum[] = [];
+    const nodeCounts: Map<string, number> = new Map();
+
+    src.forEach((ln) => {
+      const a = typeof (ln as any).source === 'string' ? (ln as any).source : (ln as any).source?.id;
+      const b = typeof (ln as any).target === 'string' ? (ln as any).target : (ln as any).target?.id;
+      if (!a || !b) return;
+      const types: any = {};
+      let first: number | undefined = undefined;
+      let last: number | undefined = undefined;
+      const sampleFiltered: any[] = [];
+      const sample = (ln as any).sample_events as any[] | undefined;
+      if (Array.isArray(sample)) {
+        sample.forEach((ev) => {
+          const s = ev && (ev.timestamp || ev.time || ev.t || ev.ts || ev.timestamp_ms);
+          const parsed = s ? Date.parse(String(s)) : NaN;
+          if (Number.isNaN(parsed)) return;
+          if (parsed < startMs || parsed > endMs) return;
+          // include
+          sampleFiltered.push(ev);
+          // determine type key
+          let key: keyof LinkDatum['types'] | null = null as any;
+          if (ev.type === 'commit') key = 'commits';
+          else if (ev.type === 'review') key = 'reviews';
+          else if (ev.type === 'assign') key = 'assigns';
+          else if (ev.type === 'comment') key = 'discussion';
+          else if (ev.type === 'pull_request') key = 'pullRequests';
+          if (!key) return;
+          // compute increment: for coedit commit events we assign fractional weight
+          let inc = 1;
+          if (ev.type === 'commit' && typeof ev.id === 'string' && ev.id.endsWith('-commit-coedit')) {
+            const la = Number(ev.lines_added) || 0;
+            const ld = Number(ev.lines_deleted) || 0;
+            inc = 0.001 * (la + ld);
+            if (inc <= 0) inc = 0.001; // minimal
+          }
+          types[key] = (types[key] || 0) + inc;
+          first = first === undefined ? parsed : Math.min(first, parsed);
+          last = last === undefined ? parsed : Math.max(last, parsed);
+          // node counts
+          if (ev.actor) nodeCounts.set(ev.actor, (nodeCounts.get(ev.actor) || 0) + 1);
+          if (ev.target) nodeCounts.set(ev.target, (nodeCounts.get(ev.target) || 0) + 1);
+        });
+      }
+      // include link if it has any filtered sample events or non-zero types
+      const hasTypes = Object.keys(types).length > 0 && Object.values(types).some((v) => (v as number) > 0);
+      if (sampleFiltered.length || hasTypes) {
+        const linkObj: LinkDatum = { source: a, target: b, weight: 0, types, sample_events: sampleFiltered };
+        // compute weight same as transformProps
+        let w = 0;
+        w += (types.commits || 0) * factors.commits;
+        w += (types.reviews || 0) * factors.reviews;
+        w += (types.pullRequests || 0) * factors.pullRequests;
+        w += (types.assigns || 0) * factors.assigns;
+        w += (types.discussion || 0) * factors.discussion;
+        linkObj.weight = w;
+        linkObj.first = first;
+        linkObj.last = last;
+        newLinks.push(linkObj);
+      }
+    });
+
+    // build nodes from counts. When a windowRange is active we only show nodes
+    // that appear in the filtered events (this hides nodes with no collaboration
+    // in the selected interval). If windowRange is null (no filtering) fall back
+    // to showing original nodes.
+    const newNodesMap: Map<string, NodeDatum> = new Map();
+    if (nodeCounts.size) {
+      nodeCounts.forEach((count, id) => newNodesMap.set(id, { id, size: count || 1 }));
+    } else if (!windowRange) {
+      // no active window: show original nodes
+      (srcNodes || []).forEach((n) => newNodesMap.set(n.id, { id: n.id, size: n.size || 1 }));
+    }
+
+    const newNodes = Array.from(newNodesMap.values());
+
+    // update state and rebuild simulation
+    setSimNodes(newNodes);
+    setSimLinks(newLinks);
+
+    // stop old simulation
+    try {
+      if (simulationRef.current) simulationRef.current.stop();
+    } catch (err) {
+      // ignore
+    }
+
+    // create new simulation for filtered data
+    try {
+      const sim = forceSimulation(newNodes as any)
+        .force(
+          'link',
+          forceLink(newLinks as any)
+            .id((d: any) => d.id)
+            .distance((d: any) => distanceScale / ((d && d.weight) || 1)),
+        )
+        .force('charge', forceManyBody().strength(-200))
+        .force('x', forceX(0).strength(MAX_CLUSTER_STRENGTH - clusterDistance))
+        .force('y', forceY(0).strength(MAX_CLUSTER_STRENGTH - clusterDistance))
+        .force('center', forceCenter(0, 0))
+        .on('tick', () => {
+          setSimNodes([...newNodes]);
+        });
+
+      // run initial ticks
+      for (let i = 0; i < 80; i += 1) sim.tick();
+      setSimNodes([...newNodes]);
+      setSimLinks([...newLinks]);
+      simulationRef.current = sim;
+
+      // fit view
+      try {
+        if (newNodes.length) {
+          const xs = newNodes.map((d) => d.x || 0);
+          const ys = newNodes.map((d) => d.y || 0);
+          const minX = Math.min(...xs);
+          const maxX = Math.max(...xs);
+          const minY = Math.min(...ys);
+          const maxY = Math.max(...ys);
+          const contentW = Math.max(1, maxX - minX);
+          const contentH = Math.max(1, maxY - minY);
+          const margin = 40;
+          const availableW = Math.max(10, width - margin * 2);
+          const availableH = Math.max(10, height - margin * 2);
+          let k = Math.min(availableW / contentW, availableH / contentH);
+          k = Math.max(0.2, Math.min(4, k));
+          const centerX = (minX + maxX) / 2;
+          const centerY = (minY + maxY) / 2;
+          const tx = width / 2 - k * centerX;
+          const ty = height / 2 - k * centerY;
+          setViewTransform({ x: tx, y: ty, k });
+          initialViewRef.current = { x: tx, y: ty, k };
+        }
+      } catch (err) {
+        // ignore
+      }
+    } catch (err) {
+      // ignore
+    }
+  }, [windowRange, distanceScale, clusterDistance, width, height]);
 
   // compute windowRange from selected bucket index
   useEffect(() => {
@@ -946,8 +1142,8 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
                   min={0}
                   max={Math.max(0, timeBuckets.length - 1)}
                   step={1}
-                  value={timeIndex}
-                  onChange={(e) => setTimeIndex(Number(e.target.value))}
+                  value={sliderIndex}
+                  onChange={(e) => setSliderIndex(Number(e.target.value))}
                   style={{ width: 300 }}
                 />
               </div>

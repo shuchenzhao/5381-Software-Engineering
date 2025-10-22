@@ -6,7 +6,18 @@ import transformProps from '../plugin/transformProps';
 let events = [];
 try {
   // eslint-disable-next-line global-require, import/no-extraneous-dependencies
-  const raw = require('../mock/events_mock.json');
+  // prefer plugin data/fetch.json (written by github_connector), fallback to bundled mock
+  // eslint-disable-next-line global-require, import/no-extraneous-dependencies
+  let raw = null;
+  try {
+    // plugin data may be present at ../data/fetch.json
+    // @ts-ignore
+    raw = require('../data/fetch.json');
+  } catch (err) {
+    // fallback to mock
+    // eslint-disable-next-line global-require, import/no-extraneous-dependencies
+    raw = require('../mock/events_mock.json');
+  }
   events = Array.isArray(raw) ? raw : raw.events || [];
 } catch (e) {
   events = [];
