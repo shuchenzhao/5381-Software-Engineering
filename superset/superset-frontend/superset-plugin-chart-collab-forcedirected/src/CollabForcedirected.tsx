@@ -352,11 +352,15 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
   const onNodeClick = (e: React.MouseEvent, nodeId: string) => {
     e.stopPropagation();
     // if we just dragged the node, don't treat this as a click
-      if (dragMovedRef.current && lastDragTimeRef.current && (Date.now() - lastDragTimeRef.current) < 200) {
+    if (dragMovedRef.current && lastDragTimeRef.current && Date.now() - lastDragTimeRef.current < 200) {
       dragMovedRef.current = false;
       return;
     }
     const next = selectedNodeId === nodeId ? null : nodeId;
+    // if selecting a node, clear any expanded link but do NOT restore initial view
+    if (next) {
+      setExpandedLinkId(null);
+    }
     setSelectedNodeId(next);
     // if selecting, compute neighbor nodes and center view on them
     if (next) {
@@ -454,12 +458,14 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
       console.debug('CollabForcedirected expandedLinkId ->', next);
       // if selecting this link, center on its endpoints
       if (next) {
+        // clear any selected node when user selects a link
+        setSelectedNodeId(null);
         const a = typeof (ln as any).source === 'string' ? (ln as any).source : (ln as any).source?.id;
         const b = typeof (ln as any).target === 'string' ? (ln as any).target : (ln as any).target?.id;
         const ids = Array.from(new Set([...(a ? [a] : []), ...(b ? [b] : [])]));
         if (ids.length) centerOnNodeIds(ids);
       } else {
-        // deselecting: restore initial view
+        // deselecting by clicking the same link: restore initial view
         if (initialViewRef.current) animateTo(initialViewRef.current);
       }
       return next;
