@@ -32,6 +32,7 @@ type LinkDatum = { source: string; target: string; weight: number; types?: any }
 // https://github.com/apache-superset/superset-ui/blob/master/packages/superset-ui-core/src/style/index.ts
 
 const Styles = styled.div<CollabForcedirectedStylesProps>`
+  position: relative;
   background-color: ${({ theme }) => theme.colors.secondary.light2};
   padding: ${({ theme }) => theme.gridUnit * 4}px;
   border-radius: ${({ theme }) => theme.gridUnit * 2}px;
@@ -80,13 +81,12 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
 
   // control for link distance (lower => nodes cluster closer)
   // default reduced so nodes start more clustered
-  const [distanceScale, setDistanceScale] = useState<number>(20);
+  const [distanceScale, setDistanceScale] = useState<number>(10);
   // control for cluster distance: slider value (0..max) where larger = more separation
   // internally we map this to a pull strength = maxStrength - clusterDistance so
   // moving the slider right (increasing clusterDistance) will reduce pull (clusters disperse)
   const MAX_CLUSTER_STRENGTH = 0.5;
-  const DEFAULT_PULL = 0.08;
-  const [clusterDistance, setClusterDistance] = useState<number>(MAX_CLUSTER_STRENGTH - DEFAULT_PULL);
+  const [clusterDistance, setClusterDistance] = useState<number>(MAX_CLUSTER_STRENGTH * 0.7);
 
   // pan / zoom state
   const [viewTransform, setViewTransform] = useState({ x: 0, y: 0, k: 1 });
@@ -104,6 +104,13 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
   const dragMovedRef = useRef(false);
   const lastDragTimeRef = useRef<number | null>(null);
   const [dragActiveId, setDragActiveId] = useState<string | null>(null);
+  // tooltip state for showing full user info on hover
+  const [tooltip, setTooltip] = useState<{ visible: boolean; x: number; y: number; content: string }>({
+    visible: false,
+    x: 0,
+    y: 0,
+    content: '',
+  });
 
   useEffect(() => {
     // initialize sim nodes/links from props
@@ -377,6 +384,36 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
     } catch (err) {
       // ignore
     }
+  };
+
+  // Tooltip handlers: show full info when hovering nodes
+  const formatNodeTooltip = (nd: NodeDatum) => {
+    const lines: string[] = [];
+    lines.push(`Username: ${nd.id}`);
+    // if (nd.size !== undefined) lines.push(`Size: ${nd.size}`);
+    // include any other properties if present
+    const extra = { ...((nd as any).meta || {}) };
+    const extraKeys = Object.keys(extra).filter((k) => k !== 'id' && k !== 'size');
+    extraKeys.forEach((k) => lines.push(`${k}: ${JSON.stringify((extra as any)[k])}`));
+    return lines.join('\n');
+  };
+
+  const onNodeMouseEnter = (e: React.MouseEvent, nd: NodeDatum) => {
+    const rect = containerRef.current?.getBoundingClientRect();
+    const x = e.clientX - (rect?.left ?? 0) + 8;
+    const y = e.clientY - (rect?.top ?? 0) + 8;
+    setTooltip({ visible: true, x, y, content: formatNodeTooltip(nd) });
+  };
+
+  const onNodeMouseMove = (e: React.MouseEvent) => {
+    const rect = containerRef.current?.getBoundingClientRect();
+    const x = e.clientX - (rect?.left ?? 0) + 8;
+    const y = e.clientY - (rect?.top ?? 0) + 8;
+    setTooltip((t) => ({ ...t, x, y }));
+  };
+
+  const onNodeMouseLeave = () => {
+    setTooltip((t) => ({ ...t, visible: false }));
   };
 
   // Node click: select/deselect and center view on node + its neighbors
@@ -697,45 +734,75 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
               transform={`translate(${n.x}, ${n.y})`}
               onMouseDown={(e) => onNodeMouseDown(e, n.id)}
               onClick={(e) => onNodeClick(e, n.id)}
+              onMouseEnter={(e) => onNodeMouseEnter(e, n)}
+              onMouseMove={onNodeMouseMove}
+              onMouseLeave={onNodeMouseLeave}
               style={{ cursor: dragActiveId === n.id ? 'grabbing' : 'grab' }}
             >
               <circle r={Math.max(4, n.size || 4)} fill="#3182bd" />
               <text x={8} y={4} fontSize={10}>
-                {n.id}
+                {String(n.id).slice(0, 3)}
               </text>
             </g>
           ))}
         </g>
       </svg>
-      {/* control: distance slider */}
-      <div style={{ marginTop: 8 }}>
-        <label htmlFor="distanceRange">Node distance: </label>
-        <input
-          id="distanceRange"
-          type="range"
-          min={8}
-          max={40}
-          step={1}
-          value={distanceScale}
-          onChange={(e) => setDistanceScale(Number(e.target.value))}
-          style={{ width: 140 }}
-        />
-        <span style={{ marginLeft: 8 }}>{distanceScale}</span>
-      </div>
-      {/* control: cluster pull strength */}
-      <div style={{ marginTop: 8 }}>
-        <label htmlFor="clusterRange">Cluster distance: </label>
-        <input
-          id="clusterRange"
-          type="range"
-          min={0}
-          max={MAX_CLUSTER_STRENGTH}
-          step={0.01}
-          value={clusterDistance}
-          onChange={(e) => setClusterDistance(Number(e.target.value))}
-          style={{ width: 200 }}
-        />
-        <span style={{ marginLeft: 8 }}>{clusterDistance.toFixed(2)}</span>
+      {/* tooltip: absolute positioned element inside Styles */}
+      {tooltip.visible && (
+        <div
+          style={{
+            position: 'absolute',
+            left: tooltip.x,
+            top: tooltip.y,
+            background: 'rgba(0,0,0,0.8)',
+            color: 'white',
+            padding: '6px 8px',
+            borderRadius: 4,
+            fontSize: 12,
+            pointerEvents: 'none',
+            whiteSpace: 'pre',
+            maxWidth: 300,
+            zIndex: 10,
+          }}
+        >
+          {tooltip.content}
+        </div>
+      )}
+      {/* controls: both sliders side-by-side, each control uses two lines */}
+  <div style={{ display: 'flex', gap: 24, marginTop: 18, alignItems: 'flex-start' }}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <label htmlFor="distanceRange">Node distance: </label>
+          <div>
+            <input
+              id="distanceRange"
+              type="range"
+              min={1}
+              max={20}
+              step={1}
+              value={distanceScale}
+              onChange={(e) => setDistanceScale(Number(e.target.value))}
+              style={{ width: 140 }}
+            />
+            <span style={{ marginLeft: 8 }}>{distanceScale}</span>
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <label htmlFor="clusterRange">Cluster distance: </label>
+          <div>
+            <input
+              id="clusterRange"
+              type="range"
+              min={0}
+              max={MAX_CLUSTER_STRENGTH}
+              step={0.01}
+              value={clusterDistance}
+              onChange={(e) => setClusterDistance(Number(e.target.value))}
+              style={{ width: 140 }}
+            />
+            <span style={{ marginLeft: 8 }}>{clusterDistance.toFixed(2)}</span>
+          </div>
+        </div>
       </div>
     </Styles>
   );
