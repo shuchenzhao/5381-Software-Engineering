@@ -1,0 +1,645 @@
+/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+import React, { useEffect, useRef, useState } from 'react';
+import { styled } from '@superset-ui/core';
+import { CollabForcedirectedProps, CollabForcedirectedStylesProps } from './types';
+import { forceSimulation, forceLink, forceManyBody, forceCenter } from 'd3-force';
+
+type NodeDatum = { id: string; x?: number; y?: number; vx?: number; vy?: number; size?: number };
+type LinkDatum = { source: string; target: string; weight: number; types?: any };
+
+// The following Styles component is a <div> element, which has been styled using Emotion
+// For docs, visit https://emotion.sh/docs/styled
+
+// Theming variables are provided for your use via a ThemeProvider
+// imported from @superset-ui/core. For variables available, please visit
+// https://github.com/apache-superset/superset-ui/blob/master/packages/superset-ui-core/src/style/index.ts
+
+const Styles = styled.div<CollabForcedirectedStylesProps>`
+  background-color: ${({ theme }) => theme.colors.secondary.light2};
+  padding: ${({ theme }) => theme.gridUnit * 4}px;
+  border-radius: ${({ theme }) => theme.gridUnit * 2}px;
+  height: ${({ height }) => height}px;
+  width: ${({ width }) => width}px;
+
+  h3 {
+    /* You can use your props to control CSS! */
+    margin-top: 0;
+    margin-bottom: ${({ theme }) => theme.gridUnit * 3}px;
+    font-size: ${({ theme, headerFontSize }) =>
+      theme.typography.sizes[headerFontSize]}px;
+    font-weight: ${({ theme, boldText }) =>
+      theme.typography.weights[boldText ? 'bold' : 'normal']};
+  }
+
+  pre {
+    height: ${({ theme, headerFontSize, height }) =>
+      height - theme.gridUnit * 12 - theme.typography.sizes[headerFontSize]}px;
+  }
+`;
+
+/**
+ * ******************* WHAT YOU CAN BUILD HERE *******************
+ *  In essence, a chart is given a few key ingredients to work with:
+ *  * Data: provided via `props.data`
+ *  * A DOM element
+ *  * FormData (your controls!) provided as props by transformProps.ts
+ */
+
+export default function CollabForcedirected(props: CollabForcedirectedProps) {
+  const { nodes = [], links = [], height, width, headerText } = props as any;
+
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const svgRef = useRef<SVGSVGElement | null>(null);
+  const simulationRef = useRef<any>(null);
+  const [simNodes, setSimNodes] = useState<NodeDatum[]>([]);
+  const [simLinks, setSimLinks] = useState<LinkDatum[]>([]);
+  const [hoveredLink, setHoveredLink] = useState<LinkDatum | null>(null);
+  // store expanded link as a stable id ("source||target") so clicks work
+  // even if d3 mutates link objects
+  const [expandedLinkId, setExpandedLinkId] = useState<string | null>(null);
+
+  // selected node (when user clicks a node) — used to expand all adjacent aggregated links
+  const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
+
+  // control for link distance (lower => nodes cluster closer)
+  // default reduced so nodes start more clustered
+  const [distanceScale, setDistanceScale] = useState<number>(20);
+
+  // pan / zoom state
+  const [viewTransform, setViewTransform] = useState({ x: 0, y: 0, k: 1 });
+  const viewTransformRef = useRef(viewTransform);
+  useEffect(() => {
+    viewTransformRef.current = viewTransform;
+  }, [viewTransform]);
+  // store initial view so we can return to it on deselect
+  const initialViewRef = useRef<{ x: number; y: number; k: number } | null>(null);
+  // animation raf id
+  const animRef = useRef<number | null>(null);
+  const panningRef = useRef(false);
+  const panStartRef = useRef<{ x: number; y: number } | null>(null);
+  const dragNodeRef = useRef<string | null>(null);
+  const dragMovedRef = useRef(false);
+  const lastDragTimeRef = useRef<number | null>(null);
+  const [dragActiveId, setDragActiveId] = useState<string | null>(null);
+
+  useEffect(() => {
+    // initialize sim nodes/links from props
+    const n = (nodes as any[]).map((d) => ({ id: d.id, size: d.size || 4 }));
+    // d3 expects link.source/link.target to be node objects or ids
+    const l = (links as any[]).map((d) => ({ source: d.source, target: d.target, weight: d.weight, types: d.types }));
+    setSimNodes(n);
+    setSimLinks(l);
+
+    const simulation = forceSimulation(n as any)
+      .force('link', forceLink(l as any).id((d: any) => d.id).distance((d: any) => distanceScale / ((d && d.weight) || 1)))
+  .force('charge', forceManyBody().strength(-200))
+  // use a neutral simulation center (0,0). We'll compute a viewTransform
+  // that maps the node cloud to the canvas center, so forceCenter should
+  // not use absolute canvas coordinates which conflicts with our transform.
+  .force('center', forceCenter(0, 0))
+      .on('tick', () => {
+        // update local state to re-render
+        setSimNodes([...n]);
+      });
+
+    simulationRef.current = simulation;
+
+    // Run a few synchronous ticks so nodes get initial x/y coordinates immediately
+    // This makes the graph visible right away in Storybook instead of waiting for RAF ticks.
+    for (let i = 0; i < 120; i += 1) {
+      simulation.tick();
+    }
+    // ensure initial render has positions
+    setSimNodes([...n]);
+    // Also capture links after d3 may have replaced link.source/target with node objects
+    setSimLinks([...l]);
+
+    // compute bounding box of nodes and set a viewTransform that fits all nodes
+    try {
+      const nn = n as NodeDatum[];
+      const xs = nn.map((d) => d.x || 0);
+      const ys = nn.map((d) => d.y || 0);
+      if (xs.length && ys.length) {
+        const minX = Math.min(...xs);
+        const maxX = Math.max(...xs);
+        const minY = Math.min(...ys);
+        const maxY = Math.max(...ys);
+        const contentW = Math.max(1, maxX - minX);
+        const contentH = Math.max(1, maxY - minY);
+        const margin = 40; // pixels
+        const availableW = Math.max(10, width - margin * 2);
+        const availableH = Math.max(10, height - margin * 2);
+        let k = Math.min(availableW / contentW, availableH / contentH);
+        // clamp k to reasonable range
+        k = Math.max(0.2, Math.min(4, k));
+        const centerX = (minX + maxX) / 2;
+        const centerY = (minY + maxY) / 2;
+          // We'll use transform: scale(k) translate(tx,ty) so final = k*p + t
+          // Want final center = (width/2, height/2) => t = (width/2, height/2) - k*center
+          const tx = width / 2 - k * centerX;
+          const ty = height / 2 - k * centerY;
+          setViewTransform({ x: tx, y: ty, k });
+          // record the initial view immediately so deselect can restore reliably
+          initialViewRef.current = { x: tx, y: ty, k };
+      }
+    } catch (err) {
+      // ignore
+    }
+
+    // (initial view already saved above when we computed tx/ty/k)
+
+    // Debug helper: log unresolved links where source/target node can't be found
+    // Non-critical debug: detect any links whose source/target id couldn't be resolved
+    setTimeout(() => {
+      try {
+        const missing = (l as any[])
+          .map((ln) => {
+            const sourceId = typeof ln.source === 'string' ? ln.source : ln.source?.id;
+            const targetId = typeof ln.target === 'string' ? ln.target : ln.target?.id;
+            const s = n.find((x) => x.id === sourceId);
+            const t = n.find((x) => x.id === targetId);
+            return { sourceId, targetId, hasSource: !!s, hasTarget: !!t };
+          })
+          .filter((r) => !r.hasSource || !r.hasTarget);
+        // eslint-disable-next-line no-console
+        console.debug('CollabForcedirected unresolved links', missing);
+      } catch (err) {
+        // ignore
+      }
+    }, 0);
+
+    return () => {
+      simulation.stop();
+    };
+  }, [nodes, links, width, height]);
+
+  // update link force distance when distanceScale changes (without recreating simulation)
+  useEffect(() => {
+    const sim = simulationRef.current;
+    if (!sim) return;
+    try {
+      const linkForce: any = sim.force && sim.force('link');
+      if (linkForce && typeof linkForce.distance === 'function') {
+        linkForce.distance((d: any) => distanceScale / ((d && d.weight) || 1));
+        sim.alpha(0.3).restart();
+      }
+    } catch (err) {
+      // ignore
+    }
+  }, [distanceScale]);
+
+  // Convert screen coordinates to graph coordinates (accounting for pan/zoom)
+  const screenToGraph = (clientX: number, clientY: number) => {
+    const svg = svgRef.current;
+    if (!svg) return { x: clientX, y: clientY };
+    const rect = svg.getBoundingClientRect();
+    const x = (clientX - rect.left - viewTransform.x) / viewTransform.k;
+    const y = (clientY - rect.top - viewTransform.y) / viewTransform.k;
+    return { x, y };
+  };
+
+  // Background pan handlers
+  const onSvgMouseDown = (e: React.MouseEvent<SVGSVGElement>) => {
+    // only start pan when clicking the background (svg itself)
+    if (e.target === svgRef.current) {
+      panningRef.current = true;
+      panStartRef.current = { x: e.clientX, y: e.clientY };
+      // clicking background clears any node selection
+      setSelectedNodeId(null);
+      setExpandedLinkId(null);
+    }
+  };
+  const onWindowMouseMove = (e: MouseEvent) => {
+    if (panningRef.current && panStartRef.current) {
+      const dx = e.clientX - panStartRef.current.x;
+      const dy = e.clientY - panStartRef.current.y;
+      panStartRef.current = { x: e.clientX, y: e.clientY };
+      setViewTransform((t) => ({ ...t, x: t.x + dx, y: t.y + dy }));
+    } else if (dragNodeRef.current) {
+      // dragging a node
+      dragMovedRef.current = true;
+      lastDragTimeRef.current = Date.now();
+      const id = dragNodeRef.current;
+      const graphPos = screenToGraph(e.clientX, e.clientY);
+      setSimNodes((cur) => {
+        const next = cur.map((nd) => {
+          if (nd.id === id) {
+            return { ...nd, x: graphPos.x, y: graphPos.y, fx: graphPos.x, fy: graphPos.y } as any;
+          }
+          return nd;
+        });
+        return next;
+      });
+      // Also update the simulation's internal node object so the force layout uses the dragged position
+      try {
+        const sim = simulationRef.current;
+        if (sim && typeof sim.nodes === 'function') {
+          const simNodesArr = sim.nodes();
+          const sn = simNodesArr.find((n: any) => n.id === id);
+          if (sn) {
+            sn.x = graphPos.x;
+            sn.y = graphPos.y;
+            sn.fx = graphPos.x;
+            sn.fy = graphPos.y;
+            // nudge simulation so it responds immediately
+            if (typeof sim.alpha === 'function') sim.alpha(0.3).restart();
+          }
+        }
+      } catch (err) {
+        // ignore
+      }
+    }
+  };
+  const onWindowMouseUp = () => {
+    if (panningRef.current) {
+      panningRef.current = false;
+      panStartRef.current = null;
+    }
+    if (dragNodeRef.current) {
+      const id = dragNodeRef.current;
+      dragNodeRef.current = null;
+  // don't immediately clear dragMovedRef here; use timestamp-based suppression in click handler
+  // dragMovedRef.current = false; // Commented out to prevent immediate clearing
+      setDragActiveId(null);
+      // release fixed position in React state
+      setSimNodes((cur) => cur.map((nd) => (nd.id === id ? { ...nd, fx: undefined, fy: undefined } : nd)));
+      // release fixed position in the simulation's internal node
+      try {
+        const sim = simulationRef.current;
+        if (sim && typeof sim.nodes === 'function') {
+          const simNodesArr = sim.nodes();
+          const sn = simNodesArr.find((n: any) => n.id === id);
+          if (sn) {
+            sn.fx = undefined;
+            sn.fy = undefined;
+          }
+          // nudge simulation so it relaxes
+          if (typeof sim.alphaTarget === 'function') sim.alphaTarget(0.1).restart();
+          else if (typeof sim.alpha === 'function') sim.alpha(0.1).restart();
+        }
+      } catch (err) {
+        // ignore
+      }
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('mousemove', onWindowMouseMove);
+    window.addEventListener('mouseup', onWindowMouseUp);
+    return () => {
+      window.removeEventListener('mousemove', onWindowMouseMove);
+      window.removeEventListener('mouseup', onWindowMouseUp);
+    };
+  }, [viewTransform]);
+
+  // Wheel zoom
+  const onSvgWheel = (e: React.WheelEvent<SVGSVGElement>) => {
+    e.preventDefault();
+    const delta = -e.deltaY * 0.001;
+    const newK = Math.min(4, Math.max(0.2, viewTransform.k * (1 + delta)));
+    const rect = svgRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    const newX = mx - (mx - viewTransform.x) * (newK / viewTransform.k);
+    const newY = my - (my - viewTransform.y) * (newK / viewTransform.k);
+    setViewTransform({ x: newX, y: newY, k: newK });
+  };
+
+  // Node dragging: start
+  const onNodeMouseDown = (e: React.MouseEvent, nodeId: string) => {
+    e.stopPropagation();
+    dragNodeRef.current = nodeId;
+    dragMovedRef.current = false;
+    setDragActiveId(nodeId);
+    // fix node position
+    setSimNodes((cur) => cur.map((nd) => (nd.id === nodeId ? { ...nd, fx: nd.x, fy: nd.y } : nd)));
+    // also set fx/fy on the simulation node so the layout respects the fixed state immediately
+    try {
+      const sim = simulationRef.current;
+      if (sim && typeof sim.nodes === 'function') {
+        const simNodesArr = sim.nodes();
+        const sn = simNodesArr.find((n: any) => n.id === nodeId);
+        if (sn) {
+          sn.fx = sn.x;
+          sn.fy = sn.y;
+        }
+        if (typeof sim.alpha === 'function') sim.alpha(0.3).restart();
+      }
+    } catch (err) {
+      // ignore
+    }
+  };
+
+  // Node click: select/deselect and center view on node + its neighbors
+  const onNodeClick = (e: React.MouseEvent, nodeId: string) => {
+    e.stopPropagation();
+    // if we just dragged the node, don't treat this as a click
+      if (dragMovedRef.current && lastDragTimeRef.current && (Date.now() - lastDragTimeRef.current) < 200) {
+      dragMovedRef.current = false;
+      return;
+    }
+    const next = selectedNodeId === nodeId ? null : nodeId;
+    setSelectedNodeId(next);
+    // if selecting, compute neighbor nodes and center view on them
+    if (next) {
+      // collect neighbor ids from current simLinks
+      const neigh = simLinks
+        .map((l) => {
+          const a = typeof (l as any).source === 'string' ? (l as any).source : (l as any).source?.id;
+          const b = typeof (l as any).target === 'string' ? (l as any).target : (l as any).target?.id;
+          return { a, b, id: getLinkId(l as LinkDatum) };
+        })
+        .filter((x) => x.a === nodeId || x.b === nodeId)
+        .reduce<string[]>((acc, cur) => {
+          const other = cur.a === nodeId ? cur.b : cur.a;
+          if (other) acc.push(other);
+          return acc;
+        }, []);
+      const ids = Array.from(new Set([nodeId, ...neigh]));
+      centerOnNodeIds(ids);
+    } else {
+      // deselect: restore initial view if we have it
+      if (initialViewRef.current) {
+        animateTo(initialViewRef.current);
+      }
+    }
+  };
+
+  // Center view on a set of node ids (ensure they are visible and centered)
+  const centerOnNodeIds = (ids: string[]) => {
+    const nodesForBox = ids
+      .map((id) => simNodes.find((n) => n.id === id))
+      .filter(Boolean) as NodeDatum[];
+    if (!nodesForBox.length) return;
+    const xs = nodesForBox.map((d) => d.x || 0);
+    const ys = nodesForBox.map((d) => d.y || 0);
+    const minX = Math.min(...xs);
+    const maxX = Math.max(...xs);
+    const minY = Math.min(...ys);
+    const maxY = Math.max(...ys);
+    const contentW = Math.max(1, maxX - minX);
+    const contentH = Math.max(1, maxY - minY);
+    const margin = 40;
+    const availableW = Math.max(10, width - margin * 2);
+    const availableH = Math.max(10, height - margin * 2);
+  let k = Math.min(availableW / contentW, availableH / contentH);
+  k = Math.max(0.2, Math.min(4, k));
+  const centerX = (minX + maxX) / 2;
+  const centerY = (minY + maxY) / 2;
+  // use scale(k) translate(tx,ty): final = k*p + t -> t = targetCenter - k*center
+  const tx = width / 2 - k * centerX;
+  const ty = height / 2 - k * centerY;
+    // animate to target view
+    animateTo({ x: tx, y: ty, k });
+  };
+
+  // animate viewTransform to target over duration ms
+  const animateTo = (target: { x: number; y: number; k: number }, duration = 300) => {
+    if (animRef.current) cancelAnimationFrame(animRef.current);
+    const start = performance.now();
+    const from = viewTransformRef.current || { x: 0, y: 0, k: 1 };
+    const ease = (t: number) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t); // easeInOutQuad
+    const step = (now: number) => {
+      const t = Math.min(1, (now - start) / duration);
+      const tt = ease(t);
+      const nx = from.x + (target.x - from.x) * tt;
+      const ny = from.y + (target.y - from.y) * tt;
+      const nk = from.k + (target.k - from.k) * tt;
+      setViewTransform({ x: nx, y: ny, k: nk });
+      if (t < 1) {
+        animRef.current = requestAnimationFrame(step);
+      } else {
+        animRef.current = null;
+      }
+    };
+    animRef.current = requestAnimationFrame(step);
+  };
+
+  const getLinkId = (ln: LinkDatum) => {
+    const a = typeof (ln as any).source === 'string' ? (ln as any).source : (ln as any).source?.id;
+    const b = typeof (ln as any).target === 'string' ? (ln as any).target : (ln as any).target?.id;
+    if (!a || !b) return null;
+    return a < b ? `${a}||${b}` : `${b}||${a}`;
+  };
+
+  // Toggle expanded link on click using stable id
+  const onLinkClick = (e: React.MouseEvent, ln: LinkDatum) => {
+    e.stopPropagation();
+    const id = getLinkId(ln);
+    if (!id) return;
+    // debug
+    // eslint-disable-next-line no-console
+    console.debug('CollabForcedirected link clicked', { clickedId: id, ln });
+    setExpandedLinkId((cur) => {
+      const next = cur === id ? null : id;
+      // eslint-disable-next-line no-console
+      console.debug('CollabForcedirected expandedLinkId ->', next);
+      // if selecting this link, center on its endpoints
+      if (next) {
+        const a = typeof (ln as any).source === 'string' ? (ln as any).source : (ln as any).source?.id;
+        const b = typeof (ln as any).target === 'string' ? (ln as any).target : (ln as any).target?.id;
+        const ids = Array.from(new Set([...(a ? [a] : []), ...(b ? [b] : [])]));
+        if (ids.length) centerOnNodeIds(ids);
+      } else {
+        // deselecting: restore initial view
+        if (initialViewRef.current) animateTo(initialViewRef.current);
+      }
+      return next;
+    });
+  };
+
+  return (
+    <Styles
+      ref={containerRef}
+      boldText={props.boldText}
+      headerFontSize={props.headerFontSize}
+      height={height}
+      width={width}
+    >
+      <h3>{headerText}</h3>
+      <svg
+        ref={svgRef}
+        width={width}
+        height={height}
+        onMouseDown={onSvgMouseDown}
+        onWheel={onSvgWheel}
+        style={{ cursor: panningRef.current ? 'grabbing' : 'default' }}
+      >
+        <g transform={`translate(${viewTransform.x}, ${viewTransform.y}) scale(${viewTransform.k})`}>
+          {/* aggregated links (baseline) - hide when a node or link is selected */}
+          {!(selectedNodeId || expandedLinkId) && simLinks.map((ln, i) => {
+            // ln.source/ln.target may be node objects (from d3) or id strings; normalize to ids
+            const sourceId = typeof (ln as any).source === 'string' ? (ln as any).source : (ln as any).source?.id;
+            const targetId = typeof (ln as any).target === 'string' ? (ln as any).target : (ln as any).target?.id;
+            const s = simNodes.find((n) => n.id === sourceId) as NodeDatum | undefined;
+            const t = simNodes.find((n) => n.id === targetId) as NodeDatum | undefined;
+            if (!s || !t) return null;
+            return (
+              <line
+                key={`link-${i}`}
+                x1={s.x}
+                y1={s.y}
+                x2={t.x}
+                y2={t.y}
+                stroke="#999"
+                strokeWidth={Math.max(1, ln.weight)}
+                opacity={0.8}
+                onMouseEnter={() => setHoveredLink(ln)}
+                onMouseLeave={() => setHoveredLink(null)}
+                onClick={(e) => onLinkClick(e, ln)}
+                style={{ cursor: 'pointer' }}
+              />
+            );
+          })}
+
+          {/* overlay sub-edges when hovering a link, when it's expanded, or when a node is selected */}
+          {(() => {
+            // If a node is selected, show overlays for all connected links
+            if (selectedNodeId) {
+              const connected = simLinks.filter((l) => {
+                const a = typeof (l as any).source === 'string' ? (l as any).source : (l as any).source?.id;
+                const b = typeof (l as any).target === 'string' ? (l as any).target : (l as any).target?.id;
+                return a === selectedNodeId || b === selectedNodeId;
+              });
+              return (
+                <g>
+                  {connected.map((ln, idx) => {
+                    const sourceId = typeof (ln as any).source === 'string' ? (ln as any).source : (ln as any).source?.id;
+                    const targetId = typeof (ln as any).target === 'string' ? (ln as any).target : (ln as any).target?.id;
+                    const s = simNodes.find((n) => n.id === sourceId) as NodeDatum | undefined;
+                    const t = simNodes.find((n) => n.id === targetId) as NodeDatum | undefined;
+                    if (!s || !t) return null;
+                    const types = (ln as any).types || {};
+                    const typeEntries = Object.entries(types);
+                    return (
+                      <g key={`conn-${idx}`}>
+                        {typeEntries.map(([k, v], j) => (
+                          <line
+                            key={`conn-${idx}-sub-${k}`}
+                            x1={s.x}
+                            y1={s.y}
+                            x2={t.x}
+                            y2={t.y}
+                            stroke={k === 'commits' ? 'green' : k === 'reviews' ? 'blue' : k === 'assigns' ? 'orange' : 'gray'}
+                            strokeWidth={Math.max(1, (v as number) / 1.5)}
+                            opacity={0.95}
+                            strokeDasharray={k === 'assigns' ? '4 2' : undefined}
+                            transform={`translate(0, ${j * 3 - (typeEntries.length * 3) / 2})`}
+                            onClick={(e) => onLinkClick(e, ln)}
+                            style={{ cursor: 'pointer' }}
+                          />
+                        ))}
+                      </g>
+                    );
+                  })}
+                </g>
+              );
+            }
+
+            // fallback: single-active link (hover or expanded)
+            let activeLink: LinkDatum | null = hoveredLink as LinkDatum | null;
+            // if nothing hovered, but expandedLinkId set, find that link
+            if (!activeLink && expandedLinkId) {
+              const ln = simLinks.find((l) => getLinkId(l as LinkDatum) === expandedLinkId) as LinkDatum | undefined;
+              if (ln) {
+                // show expanded link from simLinks (may be mutated by d3)
+                activeLink = ln;
+              }
+            }
+            if (!activeLink) return null;
+            const sourceId = typeof (activeLink as any).source === 'string' ? (activeLink as any).source : (activeLink as any).source?.id;
+            const targetId = typeof (activeLink as any).target === 'string' ? (activeLink as any).target : (activeLink as any).target?.id;
+            const s = simNodes.find((n) => n.id === sourceId) as NodeDatum | undefined;
+            const t = simNodes.find((n) => n.id === targetId) as NodeDatum | undefined;
+            if (!s || !t) return null;
+            const types = (activeLink as any).types || {};
+            const typeEntries = Object.entries(types);
+            return (
+              <g>
+                {typeEntries.map(([k, v], idx) => (
+                  <line
+                    key={`sub-${k}`}
+                    x1={s.x}
+                    y1={s.y}
+                    x2={t.x}
+                    y2={t.y}
+                    stroke={k === 'commits' ? 'green' : k === 'reviews' ? 'blue' : k === 'assigns' ? 'orange' : 'gray'}
+                    strokeWidth={Math.max(1, (v as number) / 1.5)}
+                    opacity={0.9}
+                    strokeDasharray={k === 'assigns' ? '4 2' : undefined}
+                    transform={`translate(0, ${idx * 3 - (typeEntries.length * 3) / 2})`}
+                    onClick={(e) => onLinkClick(e, activeLink as LinkDatum)}
+                    style={{ cursor: 'pointer' }}
+                  />
+                ))}
+                {/* show sample events text when expanded */}
+                {expandedLinkId && (activeLink as any).sample_events && (
+                  <g>
+                    {(activeLink as any).sample_events.slice(0, 3).map((ev: any, i: number) => {
+                      const cx = ((s.x || 0) + (t.x || 0)) / 2;
+                      const cy = ((s.y || 0) + (t.y || 0)) / 2 + 12 + i * 12;
+                      return (
+                        <text key={`ev-${i}`} x={cx} y={cy} fontSize={10} textAnchor="middle">
+                          {ev.type}: {ev.actor}
+                        </text>
+                      );
+                    })}
+                  </g>
+                )}
+              </g>
+            );
+          })()}
+
+          {/* nodes */}
+          {simNodes.map((n) => (
+            <g
+              key={`node-${n.id}`}
+              transform={`translate(${n.x}, ${n.y})`}
+              onMouseDown={(e) => onNodeMouseDown(e, n.id)}
+              onClick={(e) => onNodeClick(e, n.id)}
+              style={{ cursor: dragActiveId === n.id ? 'grabbing' : 'grab' }}
+            >
+              <circle r={Math.max(4, n.size || 4)} fill="#3182bd" />
+              <text x={8} y={4} fontSize={10}>
+                {n.id}
+              </text>
+            </g>
+          ))}
+        </g>
+      </svg>
+      {/* control: distance slider */}
+      <div style={{ marginTop: 8 }}>
+        <label htmlFor="distanceRange">Node distance: </label>
+        <input
+          id="distanceRange"
+          type="range"
+          min={8}
+          max={40}
+          step={1}
+          value={distanceScale}
+          onChange={(e) => setDistanceScale(Number(e.target.value))}
+          style={{ width: 140 }}
+        />
+        <span style={{ marginLeft: 8 }}>{distanceScale}</span>
+      </div>
+    </Styles>
+  );
+}

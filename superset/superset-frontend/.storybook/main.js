@@ -21,15 +21,27 @@ import { dirname, join } from 'path';
 const customConfig = require('../webpack.config.js');
 
 module.exports = {
-  // If PLUGIN_STORYBOOK=1 is set in the environment, only load the plugin's stories.
-  stories: process.env.PLUGIN_STORYBOOK === '1' ? [
-    '../superset-plugin-chart-collaboration-graph/src/stories/**/*.stories.@(js|jsx|ts|tsx)'
-  ] : [
-    '../src/@(components|common|filters|explore|views|dashboard|features)/**/*.stories.@(tsx|jsx)',
-    '../packages/superset-ui-demo/storybook/stories/**/*.*.@(tsx|jsx)',
-    // include plugin stories for local plugin development
-    '../superset-plugin-chart-collaboration-graph/src/stories/**/*.stories.@(js|jsx|ts|tsx)'
-  ],
+    // If PLUGIN_STORYBOOK is set in the environment, only load that plugin's stories.
+    // Supported values:
+    //  - '1' -> superset-plugin-chart-collaboration-graph
+    //  - '2' -> superset-plugin-chart-collab-forcedirected
+    stories: (() => {
+      const plugin = process.env.PLUGIN_STORYBOOK;
+      const map = {
+        '1': '../superset-plugin-chart-collaboration-graph/src/stories/**/*.stories.@(js|jsx|ts|tsx)',
+        '2': '../superset-plugin-chart-collab-forcedirected/src/stories/**/*.stories.@(js|jsx|ts|tsx)',
+      };
+      if (plugin && map[plugin]) {
+        return [map[plugin]];
+      }
+      return [
+        '../src/@(components|common|filters|explore|views|dashboard|features)/**/*.stories.@(tsx|jsx)',
+        '../packages/superset-ui-demo/storybook/stories/**/*.*.@(tsx|jsx)',
+        // include plugin stories for local plugin development
+        '../superset-plugin-chart-collaboration-graph/src/stories/**/*.stories.@(js|jsx|ts|tsx)',
+        '../superset-plugin-chart-collab-forcedirected/src/stories/**/*.stories.@(js|jsx|ts|tsx)'
+      ];
+    })(),
 
   addons: [
     getAbsolutePath('@storybook/addon-essentials'),
