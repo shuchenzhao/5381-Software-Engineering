@@ -483,8 +483,8 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
       <h3>{headerText}</h3>
       <svg
         ref={svgRef}
-        width={width}
-        height={height}
+        width={width * 0.95}
+        height={height * 0.875}
         onMouseDown={onSvgMouseDown}
         onWheel={onSvgWheel}
         style={{ cursor: panningRef.current ? 'grabbing' : 'default' }}
