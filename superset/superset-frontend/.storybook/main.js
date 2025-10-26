@@ -25,11 +25,13 @@ module.exports = {
     // Supported values:
     //  - '1' -> superset-plugin-chart-collaboration-graph
     //  - '2' -> superset-plugin-chart-collab-forcedirected
+    //  - '3' -> superset-plugin-chart-health-radar
     stories: (() => {
       const plugin = process.env.PLUGIN_STORYBOOK;
       const map = {
         '1': '../superset-plugin-chart-collaboration-graph/src/stories/**/*.stories.@(js|jsx|ts|tsx)',
         '2': '../superset-plugin-chart-collab-forcedirected/src/stories/**/*.stories.@(js|jsx|ts|tsx)',
+        '3': '../superset-plugin-chart-health-radar/src/stories/**/*.stories.@(js|jsx|ts|tsx)',
       };
       if (plugin && map[plugin]) {
         return [map[plugin]];
@@ -39,7 +41,8 @@ module.exports = {
         '../packages/superset-ui-demo/storybook/stories/**/*.*.@(tsx|jsx)',
         // include plugin stories for local plugin development
         '../superset-plugin-chart-collaboration-graph/src/stories/**/*.stories.@(js|jsx|ts|tsx)',
-        '../superset-plugin-chart-collab-forcedirected/src/stories/**/*.stories.@(js|jsx|ts|tsx)'
+        '../superset-plugin-chart-collab-forcedirected/src/stories/**/*.stories.@(js|jsx|ts|tsx)',
+        '../superset-plugin-chart-health-radar/src/stories/**/*.stories.@(js|jsx|ts|tsx)'
       ];
     })(),
 

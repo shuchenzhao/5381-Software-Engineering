@@ -17,6 +17,7 @@
  * under the License.
  */
 import { SupersetPluginChartCollaborationGraph } from 'superset-plugin-chart-collaboration-graph';
+import { default as SupersetPluginChartHealthRadar } from 'superset-plugin-chart-health-radar';
 
 import {
   isFeatureEnabled,
@@ -100,6 +101,7 @@ export default class MainPreset extends Preset {
       presets: [new DeckGLChartPreset()],
       plugins: [
         new SupersetPluginChartCollaborationGraph().configure({ key: 'ext-collaboration-graph' }),
+        new SupersetPluginChartHealthRadar().configure({ key: 'ext-health-radar' }),
         new BigNumberChartPlugin().configure({ key: VizType.BigNumber }),
         new BigNumberTotalChartPlugin().configure({
           key: VizType.BigNumberTotal,
