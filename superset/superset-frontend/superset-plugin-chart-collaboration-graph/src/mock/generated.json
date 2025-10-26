@@ -1,0 +1,166 @@
+{
+  "data": [
+    {
+      "source": "user_5",
+      "target": "user_9",
+      "weight": 7,
+      "timestamp": "2025-09-29T14:21:19.822Z"
+    },
+    {
+      "source": "user_3",
+      "target": "user_8",
+      "weight": 3,
+      "timestamp": "2025-10-05T14:21:19.823Z"
+    },
+    {
+      "source": "user_4",
+      "target": "user_6",
+      "weight": 7,
+      "timestamp": "2025-10-10T14:21:19.823Z"
+    },
+    {
+      "source": "user_4",
+      "target": "user_1",
+      "weight": 5,
+      "timestamp": "2025-08-01T14:21:19.823Z"
+    },
+    {
+      "source": "user_7",
+      "target": "user_6",
+      "weight": 5,
+      "timestamp": "2025-09-20T14:21:19.823Z"
+    },
+    {
+      "source": "user_1",
+      "target": "user_2",
+      "weight": 3,
+      "timestamp": "2025-09-06T14:21:19.823Z"
+    },
+    {
+      "source": "user_5",
+      "target": "user_2",
+      "weight": 1,
+      "timestamp": "2025-10-07T14:21:19.823Z"
+    },
+    {
+      "source": "user_3",
+      "target": "user_10",
+      "weight": 4,
+      "timestamp": "2025-10-03T14:21:19.823Z"
+    },
+    {
+      "source": "user_1",
+      "target": "user_9",
+      "weight": 3,
+      "timestamp": "2025-09-29T14:21:19.823Z"
+    },
+    {
+      "source": "user_6",
+      "target": "user_5",
+      "weight": 1,
+      "timestamp": "2025-08-27T14:21:19.823Z"
+    },
+    {
+      "source": "user_2",
+      "target": "user_3",
+      "weight": 4,
+      "timestamp": "2025-10-10T14:21:19.823Z"
+    },
+    {
+      "source": "user_9",
+      "target": "user_3",
+      "weight": 3,
+      "timestamp": "2025-08-09T14:21:19.823Z"
+    },
+    {
+      "source": "user_8",
+      "target": "user_6",
+      "weight": 1,
+      "timestamp": "2025-08-16T14:21:19.823Z"
+    },
+    {
+      "source": "user_8",
+      "target": "user_10",
+      "weight": 5,
+      "timestamp": "2025-09-26T14:21:19.823Z"
+    },
+    {
+      "source": "user_4",
+      "target": "user_5",
+      "weight": 4,
+      "timestamp": "2025-08-01T14:21:19.823Z"
+    },
+    {
+      "source": "user_9",
+      "target": "user_5",
+      "weight": 1,
+      "timestamp": "2025-08-23T14:21:19.823Z"
+    },
+    {
+      "source": "user_2",
+      "target": "user_4",
+      "weight": 5,
+      "timestamp": "2025-09-09T14:21:19.823Z"
+    },
+    {
+      "source": "user_10",
+      "target": "user_4",
+      "weight": 5,
+      "timestamp": "2025-09-28T14:21:19.823Z"
+    },
+    {
+      "source": "user_4",
+      "target": "user_7",
+      "weight": 2,
+      "timestamp": "2025-08-15T14:21:19.823Z"
+    },
+    {
+      "source": "user_2",
+      "target": "user_7",
+      "weight": 2,
+      "timestamp": "2025-08-10T14:21:19.823Z"
+    },
+    {
+      "source": "user_3",
+      "target": "user_7",
+      "weight": 5,
+      "timestamp": "2025-09-08T14:21:19.823Z"
+    },
+    {
+      "source": "user_2",
+      "target": "user_5",
+      "weight": 3,
+      "timestamp": "2025-07-29T14:21:19.823Z"
+    },
+    {
+      "source": "user_4",
+      "target": "user_9",
+      "weight": 3,
+      "timestamp": "2025-09-27T14:21:19.823Z"
+    },
+    {
+      "source": "user_1",
+      "target": "user_4",
+      "weight": 3,
+      "timestamp": "2025-09-08T14:21:19.823Z"
+    },
+    {
+      "source": "user_7",
+      "target": "user_2",
+      "weight": 4,
+      "timestamp": "2025-07-30T14:21:19.823Z"
+    },
+    {
+      "source": "user_9",
+      "target": "user_7",
+      "weight": 1,
+      "timestamp": "2025-09-28T14:21:19.823Z"
+    },
+    {
+      "source": "user_6",
+      "target": "user_7",
+      "weight": 5,
+      "timestamp": "2025-08-28T14:21:19.823Z"
+    }
+  ]
+}
