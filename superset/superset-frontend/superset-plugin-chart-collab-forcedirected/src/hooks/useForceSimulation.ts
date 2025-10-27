@@ -214,12 +214,27 @@ export function useForceSimulation(
       }
     });
 
-    // Build nodes from counts
+    // Build nodes from counts and links
     const newNodesMap: Map<string, NodeDatum> = new Map();
-    if (nodeCounts.size) {
+    
+    if (windowRange) {
+      // When time window is active, use counts from filtered events
+      // First, add all nodes from nodeCounts with their event-based size
       nodeCounts.forEach((count, id) => newNodesMap.set(id, { id, size: count || 1 }));
-    } else if (!windowRange) {
-      // No active window: show original nodes
+      
+      // Then ensure all nodes from filtered links are included (even if count is 0)
+      newLinks.forEach((ln) => {
+        const sourceId = typeof ln.source === 'string' ? ln.source : (ln.source as any)?.id;
+        const targetId = typeof ln.target === 'string' ? ln.target : (ln.target as any)?.id;
+        if (sourceId && !newNodesMap.has(sourceId)) {
+          newNodesMap.set(sourceId, { id: sourceId, size: 1 }); // minimal size
+        }
+        if (targetId && !newNodesMap.has(targetId)) {
+          newNodesMap.set(targetId, { id: targetId, size: 1 }); // minimal size
+        }
+      });
+    } else {
+      // No active window: show original nodes with original sizes
       (srcNodes || []).forEach((n) => newNodesMap.set(n.id, { id: n.id, size: n.size || 1 }));
     }
 

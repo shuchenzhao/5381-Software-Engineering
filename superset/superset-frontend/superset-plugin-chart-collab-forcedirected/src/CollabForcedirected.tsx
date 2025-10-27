@@ -260,39 +260,48 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
             const t = simNodes.find((n) => n.id === targetId);
             if (!s || !t) return null;
 
+            // When a node is selected, adjacent links should show detailed types instead of gray line
+            // So we hide the gray line for adjacent links when node is selected
+            const shouldShowGrayLine = !isAdjacent || !selectedNodeId;
+
             const weight = ln.weight || 1;
+            // When a node is selected, highlight adjacent links and dim others
             const strokeWidth = isExpanded || isAdjacent ? Math.max(2, weight / 2) : Math.max(1, weight / 4);
-            const opacity = isExpanded || isHovered || isAdjacent ? 0.9 : 0.3;
+            const opacity = isExpanded || isHovered || isAdjacent ? 0.9 : selectedNodeId ? 0.05 : 0.3;
 
             return (
               <g key={linkId}>
-                <line
-                  x1={s.x}
-                  y1={s.y}
-                  x2={t.x}
-                  y2={t.y}
-                  stroke="#999"
-                  strokeWidth={strokeWidth}
-                  opacity={opacity}
-                  style={{ pointerEvents: 'none' }}
-                />
-                <line
-                  x1={s.x}
-                  y1={s.y}
-                  x2={t.x}
-                  y2={t.y}
-                  stroke="transparent"
-                  strokeWidth={Math.max(10, strokeWidth * 4)}
-                  onClick={(e) => handleLinkClick(e, ln)}
-                  onMouseEnter={() => setHoveredLink(ln)}
-                  onMouseLeave={() => setHoveredLink(null)}
-                  style={{ cursor: 'pointer', pointerEvents: 'stroke' }}
-                />
+                {shouldShowGrayLine && (
+                  <>
+                    <line
+                      x1={s.x}
+                      y1={s.y}
+                      x2={t.x}
+                      y2={t.y}
+                      stroke="#999"
+                      strokeWidth={strokeWidth}
+                      opacity={opacity}
+                      style={{ pointerEvents: 'none' }}
+                    />
+                    <line
+                      x1={s.x}
+                      y1={s.y}
+                      x2={t.x}
+                      y2={t.y}
+                      stroke="transparent"
+                      strokeWidth={Math.max(10, strokeWidth * 4)}
+                      onClick={(e) => handleLinkClick(e, ln)}
+                      onMouseEnter={() => setHoveredLink(ln)}
+                      onMouseLeave={() => setHoveredLink(null)}
+                      style={{ cursor: 'pointer', pointerEvents: 'stroke' }}
+                    />
+                  </>
+                )}
               </g>
             );
           })}
 
-          {/* Expanded link detail (show event types as separate lines) */}
+          {/* Expanded link detail for expandedLinkId (show event types as separate lines) */}
           {(() => {
             if (!expandedLinkId) return null;
             const activeLink = simLinks.find((ln) => getLinkId(ln) === expandedLinkId);
@@ -313,7 +322,7 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
                   const visualStroke = Math.max(1, (v as number) / 1.5);
                   const hitWidth = Math.max(10, visualStroke * 6);
                   return (
-                    <g key={`sub-${k}`}>
+                    <g key={`expanded-${k}`}>
                       <line
                         x1={s.x}
                         y1={s.y}
@@ -353,24 +362,104 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
             );
           })()}
 
+          {/* Adjacent link details when a node is selected (show event types as separate lines) */}
+          {selectedNodeId && simLinks.map((ln) => {
+            const sourceId = typeof ln.source === 'string' ? ln.source : (ln.source as any)?.id;
+            const targetId = typeof ln.target === 'string' ? ln.target : (ln.target as any)?.id;
+            const isAdjacent = (sourceId === selectedNodeId || targetId === selectedNodeId);
+            
+            if (!isAdjacent) return null;
+
+            const s = simNodes.find((n) => n.id === sourceId);
+            const t = simNodes.find((n) => n.id === targetId);
+            if (!s || !t) return null;
+
+            const types = (ln as any).types || {};
+            const typeEntries = Object.entries(types);
+            const linkId = getLinkId(ln);
+
+            return (
+              <g key={`adjacent-${linkId}`}>
+                {typeEntries.map(([k, v], idx) => {
+                  const visualStroke = Math.max(1, (v as number) / 1.5);
+                  const hitWidth = Math.max(10, visualStroke * 6);
+                  return (
+                    <g key={`adjacent-${linkId}-${k}`}>
+                      <line
+                        x1={s.x}
+                        y1={s.y}
+                        x2={t.x}
+                        y2={t.y}
+                        stroke={
+                          k === 'commits'
+                            ? 'green'
+                            : k === 'reviews'
+                            ? 'blue'
+                            : k === 'assigns'
+                            ? 'orange'
+                            : 'gray'
+                        }
+                        strokeWidth={visualStroke}
+                        opacity={0.9}
+                        strokeDasharray={k === 'assigns' ? '4 2' : undefined}
+                        transform={`translate(0, ${idx * 3 - (typeEntries.length * 3) / 2})`}
+                        style={{ pointerEvents: 'none' }}
+                      />
+                      <line
+                        x1={s.x}
+                        y1={s.y}
+                        x2={t.x}
+                        y2={t.y}
+                        stroke="transparent"
+                        strokeWidth={hitWidth}
+                        opacity={0.0001}
+                        transform={`translate(0, ${idx * 3 - (typeEntries.length * 3) / 2})`}
+                        onClick={(e) => handleLinkClick(e, ln)}
+                        style={{ cursor: 'pointer', pointerEvents: 'stroke' }}
+                      />
+                    </g>
+                  );
+                })}
+              </g>
+            );
+          })}
+
           {/* Nodes */}
-          {simNodes.map((n) => (
-            <g
-              key={`node-${n.id}`}
-              transform={`translate(${n.x}, ${n.y})`}
-              onMouseDown={(e) => handleNodeMouseDown(e, n.id)}
-              onClick={(e) => handleNodeClick(e, n.id)}
-              onMouseEnter={(e) => nodeInteraction.onNodeMouseEnter(e, n)}
-              onMouseMove={nodeInteraction.onNodeMouseMove}
-              onMouseLeave={nodeInteraction.onNodeMouseLeave}
-              style={{ cursor: dragActiveId === n.id ? 'grabbing' : 'grab' }}
-            >
-              <circle r={Math.max(4, n.size || 4)} fill="#3182bd" />
-              <text x={8} y={4} fontSize={10}>
-                {String(n.id).slice(0, 3)}
-              </text>
-            </g>
-          ))}
+          {simNodes.map((n) => {
+            // Check if this node is adjacent to the selected node
+            const isAdjacent = selectedNodeId && simLinks.some((ln) => {
+              const sourceId = typeof ln.source === 'string' ? ln.source : (ln.source as any)?.id;
+              const targetId = typeof ln.target === 'string' ? ln.target : (ln.target as any)?.id;
+              return (
+                (sourceId === selectedNodeId && targetId === n.id) ||
+                (targetId === selectedNodeId && sourceId === n.id)
+              );
+            });
+            const isSelected = n.id === selectedNodeId;
+            const nodeOpacity = isSelected || isAdjacent || !selectedNodeId ? 1 : 0.2;
+            
+            return (
+              <g
+                key={`node-${n.id}`}
+                transform={`translate(${n.x}, ${n.y})`}
+                onMouseDown={(e) => handleNodeMouseDown(e, n.id)}
+                onClick={(e) => handleNodeClick(e, n.id)}
+                onMouseEnter={(e) => nodeInteraction.onNodeMouseEnter(e, n)}
+                onMouseMove={nodeInteraction.onNodeMouseMove}
+                onMouseLeave={nodeInteraction.onNodeMouseLeave}
+                style={{ cursor: dragActiveId === n.id ? 'grabbing' : 'grab' }}
+                opacity={nodeOpacity}
+              >
+                <circle 
+                  r={Math.max(4, n.size || 4)} 
+                  fill="#3182bd"
+                />
+                <text x={8} y={4} fontSize={10}>
+                  {String(n.id).slice(0, 3)}
+                </text>
+              </g>
+            );
+          })}
         </g>
       </svg>
 
