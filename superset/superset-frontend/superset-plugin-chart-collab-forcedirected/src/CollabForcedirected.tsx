@@ -96,6 +96,10 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
   const MIN_WEIGHT = 0.1;
   const MIN_LINK_DISTANCE = 20;
   const MAX_LINK_DISTANCE = 400;
+  // minimal extra spacing between two nodes (in pixels). The collision radius
+  // we provide to d3.forceCollide is per-node; using NODE_MIN_PADDING/2 for
+  // each node yields a center-to-center minimum of r1 + r2 + NODE_MIN_PADDING.
+  const NODE_MIN_PADDING = 20;
 
   // compute a reasonable default distanceScale from data and viewport
   useEffect(() => {
@@ -195,7 +199,10 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
       .force(
         'collide',
         forceCollide()
-          .radius((d: any) => Math.max(6, (d.size || 4) + 2))
+          .radius((d: any) => {
+            const visualR = Math.max(4, (d.size || 4));
+            return visualR + NODE_MIN_PADDING / 2;
+          })
           .strength(0.8),
       )
       // gentle centering forces to pull separated clusters closer together
@@ -533,7 +540,10 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
           .force(
             'collide',
             forceCollide()
-              .radius((d: any) => Math.max(6, (d.size || 4) + 2))
+              .radius((d: any) => {
+                const visualR = Math.max(4, (d.size || 4));
+                return visualR + NODE_MIN_PADDING / 2;
+              })
               .strength(0.8),
           )
           .force('x', forceX(0).strength(MAX_CLUSTER_STRENGTH - clusterDistance))
