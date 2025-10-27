@@ -31,21 +31,10 @@ import {
 import {
   DEFAULT_DISTANCE_SCALE,
   DEFAULT_CLUSTER_DISTANCE,
-  MAX_CLUSTER_STRENGTH,
-  MIN_WEIGHT,
-  MIN_LINK_DISTANCE,
-  MAX_LINK_DISTANCE,
-  NODE_MIN_PADDING,
   INITIAL_SIMULATION_TICKS,
-  FILTERED_SIMULATION_TICKS,
-  TIME_SLIDER_DEBOUNCE_MS,
-  VIEW_ANIMATION_DURATION_MS,
-  DRAG_CLICK_SUPPRESSION_MS,
   FIT_MARGIN_PX,
   MIN_ZOOM_SCALE,
   MAX_ZOOM_SCALE,
-  WHEEL_ZOOM_SENSITIVITY,
-  DEFAULT_COLLABORATION_WEIGHTS,
   MIN_NODE_RADIUS,
 } from './utils/constants';
 import {
@@ -58,12 +47,7 @@ import {
   addInitialJitter,
   computeAutoDistanceScale,
 } from './utils/d3Utils';
-import {
-  getLinkId,
-  normalizeLinkEndpoints,
-  collectConnectedNodeIds,
-  findConnectedLinks,
-} from './utils/linkHelpers';
+import { getLinkId } from './utils/linkHelpers';
 import { screenToGraph } from './utils/domHelpers';
 import {
   extractTimestampsFromLinks,
@@ -947,267 +931,35 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
           ))}
         </g>
       </svg>
-      {/* tooltip: absolute positioned element inside Styles */}
-      {tooltip.visible && (
-        <div
-          style={{
-            position: 'absolute',
-            left: tooltip.x,
-            top: tooltip.y,
-            background: 'rgba(0,0,0,0.8)',
-            color: 'white',
-            padding: '6px 8px',
-            borderRadius: 4,
-            fontSize: 12,
-            pointerEvents: 'none',
-            whiteSpace: 'pre',
-            maxWidth: 300,
-            zIndex: 10,
-          }}
-        >
-          {tooltip.content}
-        </div>
-      )}
-      {/* controls: both sliders side-by-side, each control uses two lines */}
-  <div style={{ display: 'flex', gap: 24, marginTop: 18, alignItems: 'flex-start' }}>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <label htmlFor="distanceRange">Node distance: </label>
-          <div>
-            <input
-              id="distanceRange"
-              type="range"
-              min={1}
-              max={120}
-              step={1}
-              value={distanceScale}
-              onChange={(e) => setDistanceScale(Number(e.target.value))}
-              style={{ width: 140 }}
-            />
-            <span style={{ marginLeft: 8 }}>{distanceScale}</span>
-          </div>
-        </div>
+      
+      {/* Tooltip component */}
+      <Tooltip
+        visible={tooltip.visible}
+        x={tooltip.x}
+        y={tooltip.y}
+        content={tooltip.content}
+      />
 
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <label htmlFor="clusterRange">Cluster distance: </label>
-          <div>
-            <input
-              id="clusterRange"
-              type="range"
-              min={0}
-              max={MAX_CLUSTER_STRENGTH}
-              step={0.01}
-              value={clusterDistance}
-              onChange={(e) => setClusterDistance(Number(e.target.value))}
-              style={{ width: 140 }}
-            />
-            <span style={{ marginLeft: 8 }}>{clusterDistance.toFixed(2)}</span>
-          </div>
-        </div>
-      </div>
-          {/* time-range selector: unit select + single slider */}
-          <div style={{ display: 'flex', gap: 16, marginTop: 12, alignItems: 'center' }}>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <label htmlFor="timeUnit">Time unit:</label>
-              <select id="timeUnit" value={timeUnit} onChange={(e) => setTimeUnit(e.target.value as any)} style={{ width: 120 }}>
-                <option value="year">Year</option>
-                <option value="month">Month</option>
-                <option value="week">Week</option>
-              </select>
-            </div>
+      {/* Controls component */}
+      <Controls
+        distanceScale={distanceScale}
+        onDistanceScaleChange={setDistanceScale}
+        clusterDistance={clusterDistance}
+        onClusterDistanceChange={setClusterDistance}
+        timeUnit={timeUnit}
+        onTimeUnitChange={setTimeUnit}
+        timeBuckets={timeBuckets}
+        sliderIndex={sliderIndex}
+        onSliderIndexChange={setSliderIndex}
+        windowRange={windowRange}
+      />
 
-            <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-              <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
-                <label >Selected interval: </label>
-                <div style={{ fontSize: 12, textAlign: 'right', marginBottom: '3px' }}>
-                  {windowRange ? (
-                    <div>
-                      {timeBuckets[timeIndex] ? timeBuckets[timeIndex].label : '—'}
-                      {' '}
-                      <span style={{ color: 'rgba(0,0,0,0.6)', marginLeft: 8 }}>
-                        {new Date(windowRange.startMs).toLocaleDateString()} — {new Date(windowRange.endMs).toLocaleDateString()}
-                      </span>
-                    </div>
-                  ) : (
-                    <div style={{ color: 'rgba(0,0,0,0.5)' }}>No time buckets</div>
-                  )}
-                </div>
-              </div>
-              <div style={{ marginTop: 6 }}>
-                <input
-                  type="range"
-                  min={0}
-                  max={Math.max(0, timeBuckets.length - 1)}
-                  step={1}
-                  value={sliderIndex}
-                  onChange={(e) => setSliderIndex(Number(e.target.value))}
-                  style={{ width: 300 }}
-                />
-              </div>
-            </div>
-          </div>
-      {/* records table: show when node or link is selected */}
-      <div
-        style={{
-          marginTop: 12,
-          border: '1px solid rgba(0,0,0,0.08)',
-          borderRadius: 4,
-          padding: 8,
-          maxHeight: 300,
-          overflowY: 'auto',
-          background: 'white',
-        }}
-      >
-        {/* title */}
-        <div style={{ marginBottom: 8, fontWeight: 600 }}>
-          {selectedNodeId ? `Username: ${selectedNodeId}` : expandedLinkId ? `Link: ${expandedLinkId}` : 'Records'}
-        </div>
-        {
-          // compute rows for selected node or expanded link
-        }
-        {
-          (() => {
-            type Row = {
-              source: string | null;
-              target: string | null;
-              linkId: string | null;
-              kind: 'event' | 'aggregate';
-              type?: string;
-              count?: number;
-              actor?: string;
-              time?: string | number;
-              payload?: string;
-            };
-
-            const rows: Row[] = [];
-
-            // helper to normalize ids
-            const getIds = (ln: LinkDatum) => {
-              const a = typeof (ln as any).source === 'string' ? (ln as any).source : (ln as any).source?.id;
-              const b = typeof (ln as any).target === 'string' ? (ln as any).target : (ln as any).target?.id;
-              return { a: a || null, b: b || null };
-            };
-
-            if (selectedNodeId) {
-              // find all links touching the node
-              simLinks.forEach((ln) => {
-                const { a, b } = getIds(ln);
-                if (a === selectedNodeId || b === selectedNodeId) {
-                  const linkId = getLinkId(ln as LinkDatum);
-                  const sample = (ln as any).sample_events as any[] | undefined;
-                  if (Array.isArray(sample) && sample.length) {
-                    sample.forEach((ev) => {
-                      // prefer ISO timestamp fields if present
-                      const ts = ev.timestamp || ev.time || ev.t || ev.timestamp_ms || ev.ts;
-                      rows.push({
-                        source: a,
-                        target: b,
-                        linkId,
-                        kind: 'event',
-                        type: ev.type || ev.event_type || (ev.kind as any) || undefined,
-                        actor: ev.actor || ev.user || ev.actor_id || undefined,
-                        time: ts,
-                        payload: JSON.stringify(ev),
-                      });
-                    });
-                  } else if (ln.types) {
-                    const typeEntries = Object.entries(ln.types || {});
-                    typeEntries.forEach(([k, v]) => {
-                      rows.push({ source: a, target: b, linkId, kind: 'aggregate', type: k, count: v as number });
-                    });
-                  }
-                }
-              });
-            } else if (expandedLinkId) {
-              // find expanded link
-              const ln = simLinks.find((l) => getLinkId(l as LinkDatum) === expandedLinkId) as any | undefined;
-              if (ln) {
-                const { a, b } = getIds(ln as LinkDatum);
-                const linkId = getLinkId(ln as LinkDatum);
-                const sample = ln.sample_events as any[] | undefined;
-                if (Array.isArray(sample) && sample.length) {
-                  sample.forEach((ev) => {
-                    const ts = ev.timestamp || ev.time || ev.t || ev.timestamp_ms || ev.ts;
-                    rows.push({
-                      source: a,
-                      target: b,
-                      linkId,
-                      kind: 'event',
-                      type: ev.type || ev.event_type || undefined,
-                      actor: ev.actor || ev.user || undefined,
-                      time: ts,
-                      payload: JSON.stringify(ev),
-                    });
-                  });
-                } else if (ln.types) {
-                  Object.entries(ln.types || {}).forEach(([k, v]) => rows.push({ source: a, target: b, linkId, kind: 'aggregate', type: k, count: v as number }));
-                }
-              }
-            }
-
-            if (!rows.length) {
-              return <div style={{ color: 'rgba(0,0,0,0.6)' }}>No records to display</div>;
-            }
-
-            const formatTime = (t: any) => {
-              if (t === undefined || t === null) return '';
-              // try to parse numeric timestamp (seconds or ms)
-              if (typeof t === 'number') {
-                // assume ms if > 1e12, else seconds
-                const ms = t > 1e12 ? t : t > 1e9 ? t : t * 1000;
-                try {
-                  return new Date(ms).toLocaleString();
-                } catch (err) {
-                  return String(t);
-                }
-              }
-              // try ISO string
-              const s = String(t);
-              const parsed = Date.parse(s);
-              if (!Number.isNaN(parsed)) return new Date(parsed).toLocaleString();
-              return s;
-            };
-
-            // decide whether Actor column is redundant: if every row.actor equals source or target or is falsy, we can hide it
-            const showActor = rows.some((r) => {
-              if (!r.actor) return false;
-              const src = r.source || '';
-              const tgt = r.target || '';
-              return r.actor !== src && r.actor !== tgt;
-            });
-
-            return (
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
-                <thead>
-                  <tr>
-                    <th style={{ textAlign: 'left', padding: '4px 8px', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>Source</th>
-                    <th style={{ textAlign: 'left', padding: '4px 8px', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>Target</th>
-                    <th style={{ textAlign: 'left', padding: '4px 8px', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>Link</th>
-                    <th style={{ textAlign: 'left', padding: '4px 8px', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>Type</th>
-                    {showActor && (
-                      <th style={{ textAlign: 'left', padding: '4px 8px', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>Actor</th>
-                    )}
-                    <th style={{ textAlign: 'left', padding: '4px 8px', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>Time</th>
-                    <th style={{ textAlign: 'left', padding: '4px 8px', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>Payload</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {rows.map((r, i) => (
-                    <tr key={`rec-${i}`} style={{ borderBottom: '1px solid rgba(0,0,0,0.03)' }}>
-                      <td style={{ padding: '6px 8px' }}>{r.source}</td>
-                      <td style={{ padding: '6px 8px' }}>{r.target}</td>
-                      <td style={{ padding: '6px 8px' }}>{r.linkId}</td>
-                      <td style={{ padding: '6px 8px' }}>{r.type ?? (r.kind === 'aggregate' ? 'aggregate' : '')}</td>
-                      {showActor && <td style={{ padding: '6px 8px' }}>{r.actor ?? ''}</td>}
-                      <td style={{ padding: '6px 8px' }}>{formatTime(r.time ?? '')}</td>
-                      <td style={{ padding: '6px 8px', whiteSpace: 'normal', wordBreak: 'break-word' }}>{r.payload ?? (r.count !== undefined ? String(r.count) : '')}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            );
-          })()
-        }
-      </div>
+      {/* RecordsTable component */}
+      <RecordsTable
+        selectedNodeId={selectedNodeId}
+        expandedLinkId={expandedLinkId}
+        links={simLinks}
+      />
     </Styles>
   );
 }
