@@ -11,7 +11,7 @@ src/stories/CollaborationGraph.stories.jsx
 ```
 '../superset-plugin-chart-collaboration-graph/src/stories/**/*.stories.@(js|jsx|ts|tsx)'
 ```
-
+// If PLUGIN_STORYBOOK=1 is set in the environment, only load the plugin's stories.
 完整示例：
 
 ```js

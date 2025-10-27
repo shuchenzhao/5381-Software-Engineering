@@ -19,9 +19,58 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { styled } from '@superset-ui/core';
 import { CollabForcedirectedProps, CollabForcedirectedStylesProps } from './types';
-import { forceSimulation, forceLink, forceManyBody, forceCenter, forceX, forceY, forceCollide } from 'd3-force';
-import { NodeDatum, LinkDatum } from './utils/types';
-import { getLinkId, computeViewFit, clampLinkDistance } from './utils/d3Helpers';
+import {
+  NodeDatum,
+  LinkDatum,
+  TimeUnit,
+  TimeBucket,
+  WindowRange,
+  TooltipState,
+  ViewTransform,
+} from './utils/types';
+import {
+  DEFAULT_DISTANCE_SCALE,
+  DEFAULT_CLUSTER_DISTANCE,
+  MAX_CLUSTER_STRENGTH,
+  MIN_WEIGHT,
+  MIN_LINK_DISTANCE,
+  MAX_LINK_DISTANCE,
+  NODE_MIN_PADDING,
+  INITIAL_SIMULATION_TICKS,
+  FILTERED_SIMULATION_TICKS,
+  TIME_SLIDER_DEBOUNCE_MS,
+  VIEW_ANIMATION_DURATION_MS,
+  DRAG_CLICK_SUPPRESSION_MS,
+  FIT_MARGIN_PX,
+  MIN_ZOOM_SCALE,
+  MAX_ZOOM_SCALE,
+  WHEEL_ZOOM_SENSITIVITY,
+  DEFAULT_COLLABORATION_WEIGHTS,
+  MIN_NODE_RADIUS,
+} from './utils/constants';
+import {
+  buildSimulation,
+  initializeAndTickSimulation,
+  updateLinkDistance,
+  updateClusterStrength,
+  fixNodePosition,
+  releaseNodePosition,
+  addInitialJitter,
+  computeAutoDistanceScale,
+} from './utils/d3Utils';
+import {
+  getLinkId,
+  normalizeLinkEndpoints,
+  collectConnectedNodeIds,
+  findConnectedLinks,
+} from './utils/linkHelpers';
+import { screenToGraph } from './utils/domHelpers';
+import {
+  extractTimestampsFromLinks,
+  buildTimeBuckets,
+  computeWindowEnd,
+} from './utils/timeUtils';
+import { Tooltip, Controls, RecordsTable } from './components';
 
 // The following Styles component is a <div> element, which has been styled using Emotion
 // For docs, visit https://emotion.sh/docs/styled
@@ -83,34 +132,17 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
 
   // control for link distance (lower => nodes cluster closer)
   // default reduced so nodes start more clustered
-  const [distanceScale, setDistanceScale] = useState<number>(10);
+  const [distanceScale, setDistanceScale] = useState<number>(DEFAULT_DISTANCE_SCALE);
   // don't override user's manual changes; compute an automatic default once
   const autoDistanceComputedRef = useRef(false);
   // control for cluster distance: slider value (0..max) where larger = more separation
-  // internally we map this to a pull strength = maxStrength - clusterDistance so
-  // moving the slider right (increasing clusterDistance) will reduce pull (clusters disperse)
-  const MAX_CLUSTER_STRENGTH = 0.5;
-  const [clusterDistance, setClusterDistance] = useState<number>(MAX_CLUSTER_STRENGTH * 0.7);
-  // link distance clamping to avoid extremely large separations when weight is tiny
-  const MIN_WEIGHT = 0.1;
-  const MIN_LINK_DISTANCE = 20;
-  const MAX_LINK_DISTANCE = 400;
-  // minimal extra spacing between two nodes (in pixels). The collision radius
-  // we provide to d3.forceCollide is per-node; using NODE_MIN_PADDING/2 for
-  // each node yields a center-to-center minimum of r1 + r2 + NODE_MIN_PADDING.
-  const NODE_MIN_PADDING = 20;
+  const [clusterDistance, setClusterDistance] = useState<number>(DEFAULT_CLUSTER_DISTANCE);
 
   // compute a reasonable default distanceScale from data and viewport
   useEffect(() => {
     try {
       if (autoDistanceComputedRef.current) return;
-      const src = originalLinksRef.current || (links as any[]);
-      if (!src || !src.length) return;
-      const weights = src.map((ln: any) => Math.max(MIN_WEIGHT, Number((ln && ln.weight) || 0)));
-      const avgWeight = weights.reduce((a: number, b: number) => a + b, 0) / weights.length || MIN_WEIGHT;
-      // target average visual link length: a fraction of the smaller viewport dimension
-      const targetLen = Math.min(Math.max(Math.min(width, height) / 6, MIN_LINK_DISTANCE), MAX_LINK_DISTANCE / 2);
-      const computed = Math.max(1, Math.round(targetLen * avgWeight));
+      const computed = computeAutoDistanceScale(originalLinksRef.current || links, width, height);
       setDistanceScale(computed);
       autoDistanceComputedRef.current = true;
     } catch (err) {
@@ -119,26 +151,25 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
   }, [links, width, height]);
 
   // time-range filter state
-  type TimeUnit = 'year' | 'month' | 'week';
   const [timeUnit, setTimeUnit] = useState<TimeUnit>('month');
   // time buckets: array of { startMs, label }
-  const [timeBuckets, setTimeBuckets] = useState<{ startMs: number; label: string }[]>([]);
+  const [timeBuckets, setTimeBuckets] = useState<TimeBucket[]>([]);
   // selected bucket index (single slider selecting one bucket)
   const [timeIndex, setTimeIndex] = useState<number>(0);
   // local slider value (debounced into timeIndex to avoid frequent re-aggregation)
   const [sliderIndex, setSliderIndex] = useState<number>(0);
   const sliderDebounceRef = useRef<number | null>(null);
   // computed window start/end based on selected bucket
-  const [windowRange, setWindowRange] = useState<{ startMs: number; endMs: number } | null>(null);
+  const [windowRange, setWindowRange] = useState<WindowRange | null>(null);
 
   // pan / zoom state
-  const [viewTransform, setViewTransform] = useState({ x: 0, y: 0, k: 1 });
+  const [viewTransform, setViewTransform] = useState<ViewTransform>({ x: 0, y: 0, k: 1 });
   const viewTransformRef = useRef(viewTransform);
   useEffect(() => {
     viewTransformRef.current = viewTransform;
   }, [viewTransform]);
   // store initial view so we can return to it on deselect
-  const initialViewRef = useRef<{ x: number; y: number; k: number } | null>(null);
+  const initialViewRef = useRef<ViewTransform | null>(null);
   // animation raf id
   const animRef = useRef<number | null>(null);
   const panningRef = useRef(false);
@@ -148,16 +179,55 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
   const lastDragTimeRef = useRef<number | null>(null);
   const [dragActiveId, setDragActiveId] = useState<string | null>(null);
   // tooltip state for showing full user info on hover
-  const [tooltip, setTooltip] = useState<{ visible: boolean; x: number; y: number; content: string }>({
+  const [tooltip, setTooltip] = useState<TooltipState>({
     visible: false,
     x: 0,
     y: 0,
     content: '',
   });
 
+  // Helper: fit view to show all given nodes
+  const fitViewToNodes = (nodesToFit: NodeDatum[]) => {
+    try {
+      const xs = nodesToFit.map((d) => d.x || 0);
+      const ys = nodesToFit.map((d) => d.y || 0);
+      if (!xs.length || !ys.length) return;
+
+      const minX = Math.min(...xs);
+      const maxX = Math.max(...xs);
+      const minY = Math.min(...ys);
+      const maxY = Math.max(...ys);
+      const contentW = Math.max(1, maxX - minX);
+      const contentH = Math.max(1, maxY - minY);
+      const availableW = Math.max(10, width - FIT_MARGIN_PX * 2);
+      const availableH = Math.max(10, height - FIT_MARGIN_PX * 2);
+      let k = Math.min(availableW / contentW, availableH / contentH);
+      // clamp k to reasonable range
+      k = Math.max(MIN_ZOOM_SCALE, Math.min(MAX_ZOOM_SCALE, k));
+      const centerX = (minX + maxX) / 2;
+      const centerY = (minY + maxY) / 2;
+      const tx = width / 2 - k * centerX;
+      const ty = height / 2 - k * centerY;
+      setViewTransform({ x: tx, y: ty, k });
+      initialViewRef.current = { x: tx, y: ty, k };
+    } catch (err) {
+      // ignore
+    }
+  };
+
+  // Helper: format node tooltip
+  const formatNodeTooltip = (nd: NodeDatum) => {
+    const lines: string[] = [];
+    lines.push(`Username: ${nd.id}`);
+    const extra = { ...((nd as any).meta || {}) };
+    const extraKeys = Object.keys(extra).filter((k) => k !== 'id' && k !== 'size');
+    extraKeys.forEach((k) => lines.push(`${k}: ${JSON.stringify((extra as any)[k])}`));
+    return lines.join('\n');
+  };
+
   useEffect(() => {
     // initialize sim nodes/links from props
-    const n = (nodes as any[]).map((d) => ({ id: d.id, size: d.size || 4 }));
+    const n = (nodes as any[]).map((d) => ({ id: d.id, size: d.size || MIN_NODE_RADIUS }));
     // d3 expects link.source/link.target to be node objects or ids
     const l = (links as any[]).map((d) => ({
       source: d.source,
@@ -169,86 +239,33 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
     }));
     setSimNodes(n);
     setSimLinks(l);
-  // store originals for later time-based filtering
-  originalLinksRef.current = l.map((x) => ({ ...x }));
-  originalNodesRef.current = n.map((x) => ({ ...x }));
+    // store originals for later time-based filtering
+    originalLinksRef.current = l.map((x) => ({ ...x }));
+    originalNodesRef.current = n.map((x) => ({ ...x }));
 
-  // give newly created nodes a small random jitter so they don't all start at (0,0)
-  n.forEach((nd) => {
-    if ((nd as any).x === undefined) (nd as any).x = (Math.random() - 0.5) * 20;
-    if ((nd as any).y === undefined) (nd as any).y = (Math.random() - 0.5) * 20;
-  });
+    // give newly created nodes a small random jitter so they don't all start at (0,0)
+    addInitialJitter(n);
 
-  // use the state-driven clusterPullStrength
-    const simulation = forceSimulation(n as any)
-      .force(
-        'link',
-        forceLink(l as any)
-          .id((d: any) => d.id)
-          .distance((d: any) => clampLinkDistance(distanceScale, (d && (d.weight || 0)) || 0, MIN_WEIGHT, MIN_LINK_DISTANCE, MAX_LINK_DISTANCE)),
-      )
-      // disable the global charge (we'll rely on collide to avoid overlaps)
-      .force('charge', forceManyBody().strength(-100))
-      // collision force to prevent node overlap while keeping layout compact
-      .force(
-        'collide',
-        forceCollide()
-          .radius((d: any) => {
-            const visualR = Math.max(4, (d.size || 4));
-            return visualR + NODE_MIN_PADDING / 2;
-          })
-          .strength(0.8),
-      )
-      // gentle centering forces to pull separated clusters closer together
-      .force('x', forceX(0).strength(MAX_CLUSTER_STRENGTH - clusterDistance))
-      .force('y', forceY(0).strength(MAX_CLUSTER_STRENGTH - clusterDistance))
-      // use a neutral simulation center (0,0). We'll compute a viewTransform
-      // that maps the node cloud to the canvas center, so forceCenter should
-      // not use absolute canvas coordinates which conflicts with our transform.
-      .force('center', forceCenter(0, 0))
-      .on('tick', () => {
-        // update local state to re-render
-        setSimNodes([...n]);
-      });
+    // Build simulation using our util function
+    const simulation = buildSimulation(n, l, {
+      distanceScale,
+      clusterDistance,
+      onTick: (nodes) => setSimNodes([...nodes]),
+    });
 
-    // ensure d3 internal nodes/links are using our arrays (helps avoid mismatches)
-    try {
-      if (typeof (simulation as any).nodes === 'function') (simulation as any).nodes(n as any);
-      const linkForce: any = (simulation as any).force && (simulation as any).force('link');
-      if (linkForce && typeof linkForce.links === 'function') linkForce.links(l as any);
-    } catch (err) {
-      // ignore
-    }
-
-    // nudge simulation so it actively relaxes and doesn't require a click to start
-    try {
-      simulation.alpha(0.5).restart();
-    } catch (err) {
-      // ignore if simulation API isn't available
-    }
-    // set ref after wiring nodes/links so cleanup comparisons are stable
-    simulationRef.current = simulation;
-
-    // Run a few synchronous ticks so nodes get initial x/y coordinates immediately
-    // Reduced to avoid blocking the main thread when many rebuilds occur.
-    for (let i = 0; i < 60; i += 1) {
-      simulation.tick();
-    }
+    // Initialize and run initial ticks
+    initializeAndTickSimulation(simulation, n, l, INITIAL_SIMULATION_TICKS);
+    
     // ensure initial render has positions
     setSimNodes([...n]);
     // Also capture links after d3 may have replaced link.source/target with node objects
     setSimLinks([...l]);
+    
+    // set ref after wiring nodes/links so cleanup comparisons are stable
+    simulationRef.current = simulation;
 
     // compute bounding box of nodes and set a viewTransform that fits all nodes
-    try {
-      const vt = computeViewFit(n as NodeDatum[], width, height, 40);
-      if (vt) {
-        setViewTransform(vt);
-        initialViewRef.current = vt;
-      }
-    } catch (err) {
-      // ignore
-    }
+    fitViewToNodes(n);
 
     // (initial view already saved above when we computed tx/ty/k)
 
@@ -285,81 +302,17 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
   // compute time buckets from originalLinks' sample_events when originalLinks or unit change
   useEffect(() => {
     try {
-      const allTimestamps: number[] = [];
       const sourceLinks = originalLinksRef.current || [];
-      (sourceLinks || []).forEach((ln) => {
-        const sample = (ln as any).sample_events as any[] | undefined;
-        if (Array.isArray(sample)) {
-          sample.forEach((ev) => {
-            const s = ev && (ev.timestamp || ev.time || ev.t || ev.ts || ev.timestamp_ms);
-            const parsed = s ? Date.parse(String(s)) : NaN;
-            if (!Number.isNaN(parsed)) allTimestamps.push(parsed);
-          });
-        }
-      });
+      const allTimestamps = extractTimestampsFromLinks(sourceLinks);
+      
       if (!allTimestamps.length) {
         setTimeBuckets([]);
         setTimeIndex(0);
         setWindowRange(null);
         return;
       }
-      const min = Math.min(...allTimestamps);
-      const max = Math.max(...allTimestamps);
-  const buckets: { startMs: number; label: string }[] = [];
-      // helper to build buckets per unit
-      const buildBuckets = (unit: TimeUnit) => {
-        buckets.length = 0;
-        const startDate = new Date(min);
-        const endDate = new Date(max);
-        // We'll only create buckets that actually contain at least one event.
-        if (unit === 'year') {
-          for (let y = startDate.getUTCFullYear(); y <= endDate.getUTCFullYear(); y += 1) {
-            const s = Date.UTC(y, 0, 1);
-            const e = Date.UTC(y + 1, 0, 1) - 1;
-            // include this year only if any timestamp falls within [s,e]
-            const has = allTimestamps.some((ts) => ts >= s && ts <= e);
-            if (has) buckets.push({ startMs: s, label: String(y) });
-          }
-        } else if (unit === 'month') {
-          let y = startDate.getUTCFullYear();
-          let m = startDate.getUTCMonth();
-          while (y < endDate.getUTCFullYear() || (y === endDate.getUTCFullYear() && m <= endDate.getUTCMonth())) {
-            const s = Date.UTC(y, m, 1);
-            const next = Date.UTC(y, m + 1, 1) - 1;
-            const label = `${y}-${String(m + 1).padStart(2, '0')}`;
-            // only push month if it has any timestamps
-            const has = allTimestamps.some((ts) => ts >= s && ts <= next);
-            if (has) buckets.push({ startMs: s, label });
-            m += 1;
-            if (m > 11) {
-              m = 0; y += 1;
-            }
-          }
-        } else if (unit === 'week') {
-          // Week buckets that restart at W1 each year. We compute Monday-start weeks.
-          const date = new Date(min);
-          // normalize to UTC midnight
-          date.setUTCHours(0, 0, 0, 0);
-          // shift back to Monday of that week
-          const day = date.getUTCDay();
-          const diff = ((day + 6) % 7); // 0 => Monday
-          date.setUTCDate(date.getUTCDate() - diff);
-          while (date.getTime() <= max) {
-            const wkStart = date.getTime();
-            const wkEnd = wkStart + 7 * 24 * 3600 * 1000 - 1;
-            const y = new Date(wkStart).getUTCFullYear();
-            // compute week number relative to the start of the year
-            const yearStart = Date.UTC(y, 0, 1);
-            const daysSinceYearStart = Math.floor((wkStart - yearStart) / 86400000);
-            const weekNum = Math.floor(daysSinceYearStart / 7) + 1;
-            const label = `${y}-W${weekNum}`;
-            const has = allTimestamps.some((ts) => ts >= wkStart && ts <= wkEnd);
-            if (has) buckets.push({ startMs: wkStart, label });
-            date.setUTCDate(date.getUTCDate() + 7);
-          }
-        }
-      };
-      buildBuckets(timeUnit);
+
+      const buckets = buildTimeBuckets(allTimestamps, timeUnit);
       setTimeBuckets(buckets);
       // clamp timeIndex
       setTimeIndex((idx) => Math.min(Math.max(0, idx || 0), Math.max(0, buckets.length - 1)));
@@ -426,7 +379,7 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
           // include
           sampleFiltered.push(ev);
           // determine type key
-          let key: string | null = null;
+          let key: 'commits' | 'reviews' | 'assigns' | 'discussion' | 'pullRequests' | undefined;
           if (ev.type === 'commit') key = 'commits';
           else if (ev.type === 'review') key = 'reviews';
           else if (ev.type === 'assign') key = 'assigns';
@@ -491,52 +444,16 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
     // create new simulation for filtered data
     try {
       // give filtered nodes a small jitter so they don't all overlap at creation
-      newNodes.forEach((nd) => {
-        if ((nd as any).x === undefined) (nd as any).x = (Math.random() - 0.5) * 20;
-        if ((nd as any).y === undefined) (nd as any).y = (Math.random() - 0.5) * 20;
+      addInitialJitter(newNodes);
+
+      const sim = buildSimulation(newNodes, newLinks, {
+        distanceScale,
+        clusterDistance,
+        onTick: (nodes) => setSimNodes([...nodes]),
       });
 
-      const sim = forceSimulation(newNodes as any)
-        .force(
-          'link',
-          forceLink(newLinks as any)
-            .id((d: any) => d.id)
-            .distance((d: any) => clampLinkDistance(distanceScale, (d && (d.weight || 0)) || 0, MIN_WEIGHT, MIN_LINK_DISTANCE, MAX_LINK_DISTANCE)),
-        )
-          .force('charge', forceManyBody().strength(0))
-          // collision force to prevent node overlap in filtered simulation as well
-          .force(
-            'collide',
-            forceCollide()
-              .radius((d: any) => {
-                const visualR = Math.max(4, (d.size || 4));
-                return visualR + NODE_MIN_PADDING / 2;
-              })
-              .strength(0.8),
-          )
-          .force('x', forceX(0).strength(MAX_CLUSTER_STRENGTH - clusterDistance))
-          .force('y', forceY(0).strength(MAX_CLUSTER_STRENGTH - clusterDistance))
-        .force('center', forceCenter(0, 0))
-        .on('tick', () => {
-          setSimNodes([...newNodes]);
-        });
+      initializeAndTickSimulation(sim, newNodes, newLinks, 80);
 
-      // nudge and run initial ticks so layout relaxes immediately
-        // ensure d3 internal nodes/links are our arrays
-        try {
-          if (typeof (sim as any).nodes === 'function') (sim as any).nodes(newNodes as any);
-          const linkForce: any = (sim as any).force && (sim as any).force('link');
-          if (linkForce && typeof linkForce.links === 'function') linkForce.links(newLinks as any);
-        } catch (err) {
-          // ignore
-        }
-        try {
-          sim.alpha(0.5).restart();
-        } catch (err) {
-          // ignore
-        }
-      // run initial ticks
-      for (let i = 0; i < 80; i += 1) sim.tick();
       setSimNodes([...newNodes]);
       setSimLinks([...newLinks]);
       simulationRef.current = sim;
@@ -587,22 +504,7 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
     }
     const idx = Math.min(Math.max(0, timeIndex), timeBuckets.length - 1);
     const start = timeBuckets[idx].startMs;
-    // compute end based on unit by looking at next bucket start or adding unit duration
-    let end = start;
-    if (idx + 1 < timeBuckets.length) {
-      end = timeBuckets[idx + 1].startMs - 1;
-    } else {
-      // last bucket: extend based on unit
-      if (timeUnit === 'year') end = Date.UTC(new Date(start).getUTCFullYear() + 1, 0, 1) - 1;
-      else if (timeUnit === 'month') {
-        const d = new Date(start);
-        const y = d.getUTCFullYear();
-        const m = d.getUTCMonth();
-        end = Date.UTC(y, m + 1, 1) - 1;
-      } else if (timeUnit === 'week') {
-        end = start + 7 * 24 * 3600 * 1000 - 1;
-      }
-    }
+    const end = computeWindowEnd(timeBuckets, idx, timeUnit);
     setWindowRange({ startMs: start, endMs: end });
   }, [timeIndex, timeBuckets, timeUnit]);
 
@@ -610,42 +512,15 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
   useEffect(() => {
     const sim = simulationRef.current;
     if (!sim) return;
-    try {
-      const linkForce: any = sim.force && sim.force('link');
-      if (linkForce && typeof linkForce.distance === 'function') {
-        linkForce.distance((d: any) => clampLinkDistance(distanceScale, (d && (d.weight || 0)) || 0, MIN_WEIGHT, MIN_LINK_DISTANCE, MAX_LINK_DISTANCE));
-        sim.alpha(0.3).restart();
-      }
-    } catch (err) {
-      // ignore
-    }
+    updateLinkDistance(sim, distanceScale);
   }, [distanceScale]);
 
   // update cluster pull strength when user changes slider
   useEffect(() => {
     const sim = simulationRef.current;
     if (!sim) return;
-    try {
-      const fx: any = sim.force && sim.force('x');
-      const fy: any = sim.force && sim.force('y');
-      const eff = MAX_CLUSTER_STRENGTH - clusterDistance;
-      if (fx && typeof fx.strength === 'function') fx.strength(eff);
-      if (fy && typeof fy.strength === 'function') fy.strength(eff);
-      sim.alpha(0.3).restart();
-    } catch (err) {
-      // ignore
-    }
+    updateClusterStrength(sim, clusterDistance);
   }, [clusterDistance]);
-
-  // Convert screen coordinates to graph coordinates (accounting for pan/zoom)
-  const screenToGraph = (clientX: number, clientY: number) => {
-    const svg = svgRef.current;
-    if (!svg) return { x: clientX, y: clientY };
-    const rect = svg.getBoundingClientRect();
-    const x = (clientX - rect.left - viewTransform.x) / viewTransform.k;
-    const y = (clientY - rect.top - viewTransform.y) / viewTransform.k;
-    return { x, y };
-  };
 
   // Background pan handlers
   const onSvgMouseDown = (e: React.MouseEvent<SVGSVGElement>) => {
@@ -669,7 +544,10 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
       dragMovedRef.current = true;
       lastDragTimeRef.current = Date.now();
       const id = dragNodeRef.current;
-      const graphPos = screenToGraph(e.clientX, e.clientY);
+      const svg = svgRef.current;
+      if (!svg) return;
+      const rect = svg.getBoundingClientRect();
+      const graphPos = screenToGraph(e.clientX, e.clientY, rect, viewTransform);
       setSimNodes((cur) => {
         const next = cur.map((nd) => {
           if (nd.id === id) {
@@ -679,24 +557,8 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
         });
         return next;
       });
-      // Also update the simulation's internal node object so the force layout uses the dragged position
-      try {
-        const sim = simulationRef.current;
-        if (sim && typeof sim.nodes === 'function') {
-          const simNodesArr = sim.nodes();
-          const sn = simNodesArr.find((n: any) => n.id === id);
-          if (sn) {
-            sn.x = graphPos.x;
-            sn.y = graphPos.y;
-            sn.fx = graphPos.x;
-            sn.fy = graphPos.y;
-            // nudge simulation so it responds immediately
-            if (typeof sim.alpha === 'function') sim.alpha(0.3).restart();
-          }
-        }
-      } catch (err) {
-        // ignore
-      }
+      // Also update the simulation's internal node object
+      fixNodePosition(simulationRef.current, id, graphPos.x, graphPos.y);
     }
   };
   const onWindowMouseUp = () => {
@@ -707,28 +569,12 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
     if (dragNodeRef.current) {
       const id = dragNodeRef.current;
       dragNodeRef.current = null;
-  // don't immediately clear dragMovedRef here; use timestamp-based suppression in click handler
-  // dragMovedRef.current = false; // Commented out to prevent immediate clearing
+      // don't immediately clear dragMovedRef here; use timestamp-based suppression in click handler
       setDragActiveId(null);
       // release fixed position in React state
       setSimNodes((cur) => cur.map((nd) => (nd.id === id ? { ...nd, fx: undefined, fy: undefined } : nd)));
-      // release fixed position in the simulation's internal node
-      try {
-        const sim = simulationRef.current;
-        if (sim && typeof sim.nodes === 'function') {
-          const simNodesArr = sim.nodes();
-          const sn = simNodesArr.find((n: any) => n.id === id);
-          if (sn) {
-            sn.fx = undefined;
-            sn.fy = undefined;
-          }
-          // nudge simulation so it relaxes
-          if (typeof sim.alphaTarget === 'function') sim.alphaTarget(0.1).restart();
-          else if (typeof sim.alpha === 'function') sim.alpha(0.1).restart();
-        }
-      } catch (err) {
-        // ignore
-      }
+      // release fixed position in the simulation
+      releaseNodePosition(simulationRef.current, id);
     }
   };
 
@@ -761,37 +607,17 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
     dragNodeRef.current = nodeId;
     dragMovedRef.current = false;
     setDragActiveId(nodeId);
-    // fix node position
-    setSimNodes((cur) => cur.map((nd) => (nd.id === nodeId ? { ...nd, fx: nd.x, fy: nd.y } : nd)));
-    // also set fx/fy on the simulation node so the layout respects the fixed state immediately
-    try {
-      const sim = simulationRef.current;
-      if (sim && typeof sim.nodes === 'function') {
-        const simNodesArr = sim.nodes();
-        const sn = simNodesArr.find((n: any) => n.id === nodeId);
-        if (sn) {
-          sn.fx = sn.x;
-          sn.fy = sn.y;
-        }
-        if (typeof sim.alpha === 'function') sim.alpha(0.3).restart();
+    // fix node position in React state and simulation
+    setSimNodes((cur) => {
+      const node = cur.find((nd) => nd.id === nodeId);
+      if (node && node.x !== undefined && node.y !== undefined) {
+        fixNodePosition(simulationRef.current, nodeId, node.x, node.y);
       }
-    } catch (err) {
-      // ignore
-    }
+      return cur.map((nd) => (nd.id === nodeId ? { ...nd, fx: nd.x, fy: nd.y } : nd));
+    });
   };
 
   // Tooltip handlers: show full info when hovering nodes
-  const formatNodeTooltip = (nd: NodeDatum) => {
-    const lines: string[] = [];
-    lines.push(`Username: ${nd.id}`);
-    // if (nd.size !== undefined) lines.push(`Size: ${nd.size}`);
-    // include any other properties if present
-    const extra = { ...((nd as any).meta || {}) };
-    const extraKeys = Object.keys(extra).filter((k) => k !== 'id' && k !== 'size');
-    extraKeys.forEach((k) => lines.push(`${k}: ${JSON.stringify((extra as any)[k])}`));
-    return lines.join('\n');
-  };
-
   const onNodeMouseEnter = (e: React.MouseEvent, nd: NodeDatum) => {
     const rect = containerRef.current?.getBoundingClientRect();
     const x = e.clientX - (rect?.left ?? 0) + 8;
@@ -898,8 +724,6 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
     };
     animRef.current = requestAnimationFrame(step);
   };
-
-  // getLinkId is provided by utils/d3Helpers and imported above
 
   // Toggle expanded link on click using stable id
   const onLinkClick = (e: React.MouseEvent, ln: LinkDatum) => {

@@ -1,0 +1,351 @@
+[
+  {
+    "id": "cmt-3431401988",
+    "type": "comment",
+    "actor": "PetrovS30",
+    "target": "PetrovS30",
+    "repo": "octocat/Hello-World",
+    "issue_id": "ISSUE-4418",
+    "comment_id": 3431401988,
+    "timestamp": "2025-10-22T09:42:46Z",
+    "body": "<img width=\"1683\" height=\"859\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/d190269c-3ce6-4d57-9848-bd6356c45532\" />"
+  },
+  {
+    "id": "i-4418",
+    "type": "issue",
+    "actor": "PetrovS30",
+    "repo": "octocat/Hello-World",
+    "issue_id": "ISSUE-4418",
+    "timestamp": "2025-10-22T09:42:29Z",
+    "title": "private repository",
+    "body": "i have a problem with a private repository"
+  },
+  {
+    "id": "pr-4417",
+    "type": "pull_request",
+    "actor": "mairucell667-hash",
+    "repo": "octocat/Hello-World",
+    "pr_id": "PR-4417",
+    "timestamp": "2025-10-22T07:20:17Z",
+    "title": "Erick Ibarra Heredia Add devcontainer configuration filehttps://github.com/octocat/Hello-W…",
+    "files": [
+      ".devcontainer/devcontainer.json"
+    ]
+  },
+  {
+    "id": "pr-4416",
+    "type": "pull_request",
+    "actor": "lichykonrad1-art",
+    "repo": "octocat/Hello-World",
+    "pr_id": "PR-4416",
+    "timestamp": "2025-10-22T06:47:07Z",
+    "title": "Rename README to Huawei",
+    "files": [
+      "Huawei"
+    ]
+  },
+  {
+    "id": "pr-4415",
+    "type": "pull_request",
+    "actor": "Shiro1591",
+    "repo": "octocat/Hello-World",
+    "pr_id": "PR-4415",
+    "timestamp": "2025-10-21T17:51:40Z",
+    "title": "Mellora docs",
+    "files": [
+      "README.MD",
+      "README.md"
+    ]
+  },
+  {
+    "id": "pr-4414",
+    "type": "pull_request",
+    "actor": "spenfr98",
+    "repo": "octocat/Hello-World",
+    "pr_id": "PR-4414",
+    "timestamp": "2025-10-21T04:00:41Z",
+    "title": "Spenny yeah cool guy",
+    "files": [
+      "jaja.ipynb"
+    ]
+  },
+  {
+    "id": "pr-4413",
+    "type": "pull_request",
+    "actor": "spenfr98",
+    "repo": "octocat/Hello-World",
+    "pr_id": "PR-4413",
+    "timestamp": "2025-10-21T03:53:09Z",
+    "title": "create jaja",
+    "files": [
+      "jaja.ipynb"
+    ]
+  },
+  {
+    "id": "pr-4412",
+    "type": "pull_request",
+    "actor": "OlegMatus",
+    "repo": "octocat/Hello-World",
+    "pr_id": "PR-4412",
+    "timestamp": "2025-10-20T21:40:49Z",
+    "title": "my-pr",
+    "files": [
+      ".idea/.gitignore",
+      ".idea/Hello-World.iml",
+      ".idea/material_theme_project_new.xml",
+      ".idea/misc.xml",
+      ".idea/modules.xml",
+      ".idea/vcs.xml",
+      "Test Fork.txt",
+      "test.txt"
+    ]
+  },
+  {
+    "id": "pr-4411",
+    "type": "pull_request",
+    "actor": "KasunBandara921",
+    "repo": "octocat/Hello-World",
+    "pr_id": "PR-4411",
+    "timestamp": "2025-10-20T09:18:35Z",
+    "title": "add new login",
+    "files": [
+      "login.html"
+    ]
+  },
+  {
+    "id": "pr-4410",
+    "type": "pull_request",
+    "actor": "dudocarela",
+    "repo": "octocat/Hello-World",
+    "pr_id": "PR-4410",
+    "timestamp": "2025-10-19T23:03:02Z",
+    "title": "docs: PR de teste para Bootcamp I",
+    "files": [
+      "README"
+    ]
+  },
+  {
+    "id": "pr-4409",
+    "type": "pull_request",
+    "actor": "styrofoam23",
+    "repo": "octocat/Hello-World",
+    "pr_id": "PR-4409",
+    "timestamp": "2025-10-18T21:35:27Z",
+    "title": "Styrofoam23 patch 1",
+    "files": [
+      ".github/workflows/rahul.txt",
+      ".github/workflows/spellcheck.yml",
+      "README",
+      "blackgnezdo.md",
+      "blackgnezdo.txt",
+      "hello from Aiden",
+      "hypertaiyo.txt",
+      "rahul.md",
+      "snehalmthakkar",
+      "spellcheck.yaml"
+    ]
+  },
+  {
+    "id": "cmt-3418793308",
+    "type": "comment",
+    "actor": "przemyslawolszewski77-tech",
+    "target": "onikuwo835",
+    "repo": "octocat/Hello-World",
+    "issue_id": "ISSUE-4405",
+    "comment_id": 3418793308,
+    "timestamp": "2025-10-18T20:23:55Z",
+    "body": "```c++\n\n``` "
+  },
+  {
+    "id": "cmt-3418792035",
+    "type": "comment",
+    "actor": "przemyslawolszewski77-tech",
+    "target": "onikuwo835",
+    "repo": "octocat/Hello-World",
+    "issue_id": "ISSUE-4405",
+    "comment_id": 3418792035,
+    "timestamp": "2025-10-18T20:21:16Z",
+    "body": "> <img alt=\"Obraz\" width=\"500\" height=\"281\" src=\"https://private-user-images.githubusercontent.com/181985009/502667550-f1d42db8-4a5e-444f-a208-448d37f795c2.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjA4MTkxNDQsIm5iZiI6MTc2MDgxODg0NCwicGF0aCI6Ii8xODE5ODUwMDkvNTAyNjY3NTUwLWYxZDQyZGI4LTRhNWUtNDQ0Zi1hMjA4LTQ0OGQzN2Y3OTVjMi5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUxMDE4JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MTAxOFQyMDIwNDRaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0zNGFiMjA4YTYyN2Y2Mzg0Mjg4ZTFiZDhlMWZlYmI1ZmMwZTE3YTQ3MjFjNDQ4ZTkzZjFmMTM2MmMwYTBkYWYwJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.hGo9289bMZI9r7DihtuyuKUBeAts99bawEYT3FqZfKY\"> <img alt=\"Obraz\" width=\"800\" height=\"528\" src=\"https://private-user-images.githubusercontent.com/181985009/502667738-dd4f3b9a-3688-4921-94c9-d805fd5938d1.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjA4MTkxNDQsIm5iZiI6MTc2MDgxODg0NCwicGF0aCI6Ii8xODE5ODUwMDkvNTAyNjY3NzM4LWRkNGYzYjlhLTM2ODgtNDkyMS05NGM5LWQ4MDVmZDU5MzhkMS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUxMDE4JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MTAxOFQyMDIwNDRaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT05Y2E1NmExNDBhODk0Nzk3NzM2Y2Y3ZmNhZjUwNWUyMWNkODczODJiYmFmMWY3NzI1MTUwYTJiZDQ4NDIwZjkyJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.uYtZzd_M1hTLaXB905IuxrQm5tKJhVCgJltfd1KVJYA\"> <img alt=\"Obraz\" width=\"1024\" height=\"1024\" src=\"https://private-user-images.githubusercontent.com/181985009/502667789-cc93ec01-1435-4971-b3bc-a3c4fec1c836.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjA4MTkxNDQsIm5iZiI6MTc2MDgxODg0NCwicGF0aCI6Ii8xODE5ODUwMDkvNTAyNjY3Nzg5LWNjOTNlYzAxLTE0MzUtNDk3MS1iM2JjLWEzYzRmZWMxYzgzNi5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUxMDE4JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MTAxOFQyMDIwNDRaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0xODc5NmNiNDcxMWFjZjgxZmY0OWMwMzE2OTcxNTVlOTQ4Y2Q1MTQzYTFlODJjNTYzM2M3YzQxYjg0YjEyYzIyJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.SgbFlQ3yqbf_2-6FdlxHDhXK3jXJKY8MTykQ72iSsSk\">\n\n"
+  },
+  {
+    "id": "pr-4408",
+    "type": "pull_request",
+    "actor": "ugurartuk",
+    "repo": "octocat/Hello-World",
+    "pr_id": "PR-4408",
+    "timestamp": "2025-10-18T16:39:03Z",
+    "title": "Update README",
+    "files": [
+      "README"
+    ]
+  },
+  {
+    "id": "i-4405",
+    "type": "issue",
+    "actor": "onikuwo835",
+    "repo": "octocat/Hello-World",
+    "issue_id": "ISSUE-4405",
+    "timestamp": "2025-10-17T16:42:33Z",
+    "title": "Cat 🙀",
+    "body": "<img width=\"500\" height=\"281\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/f1d42db8-4a5e-444f-a208-448d37f795c2\" />\n\n<img width=\"800\" height=\"528\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/dd4f3b9a-3688-4921-94c9-d805fd5938d1\" />\n\n<img width=\"1024\" height=\"1024\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/cc93ec01-1435-4971-b3bc-a3c4fec1c836\" />"
+  },
+  {
+    "id": "i-4404",
+    "type": "issue",
+    "actor": "azhderskam",
+    "repo": "octocat/Hello-World",
+    "issue_id": "ISSUE-4404",
+    "timestamp": "2025-10-17T13:24:02Z",
+    "title": "Test 55",
+    "body": null
+  },
+  {
+    "id": "i-4403",
+    "type": "issue",
+    "actor": "ankan792",
+    "repo": "octocat/Hello-World",
+    "issue_id": "ISSUE-4403",
+    "timestamp": "2025-10-17T11:20:33Z",
+    "title": "block me",
+    "body": null
+  },
+  {
+    "id": "i-4402",
+    "type": "issue",
+    "actor": "ankan792",
+    "repo": "octocat/Hello-World",
+    "issue_id": "ISSUE-4402",
+    "timestamp": "2025-10-17T11:19:43Z",
+    "title": "should be blocked",
+    "body": null
+  },
+  {
+    "id": "i-4401",
+    "type": "issue",
+    "actor": "ankan792",
+    "repo": "octocat/Hello-World",
+    "issue_id": "ISSUE-4401",
+    "timestamp": "2025-10-17T11:14:23Z",
+    "title": "should be blocked",
+    "body": null
+  },
+  {
+    "id": "i-4400",
+    "type": "issue",
+    "actor": "ankan792",
+    "repo": "octocat/Hello-World",
+    "issue_id": "ISSUE-4400",
+    "timestamp": "2025-10-17T11:09:52Z",
+    "title": "Sample Issue",
+    "body": "This is a sample issue created by the GitHub assistant."
+  },
+  {
+    "id": "i-4399",
+    "type": "issue",
+    "actor": "PagelsR",
+    "repo": "octocat/Hello-World",
+    "issue_id": "ISSUE-4399",
+    "timestamp": "2025-10-16T22:25:20Z",
+    "title": "NullReferenceException When Viewing Profile Page",
+    "body": "**Observed Behavior**\nNavigating to the profile page after login causes a blank page to load with a NullReferenceException displayed in the console logs. The exception occurs even for new accounts with default settings.\n\n**Expected Behavior**\nProfile page should render user information, including name, email, and activity history, without throwing an exception.\n\n**Environment Details Checklist**\n[] Operating system (e.g., Windows, macOS, Linux)\n[] Browser and version\n[] App version (if applicable)\n[] Network (WiFi, Ethernet, VPN, etc)\n\n Any relevant logs or error codes (stack trace, exception message)\n\nPlease attach the console output and steps leading up to the error to help reproduce."
+  },
+  {
+    "id": "i-4398",
+    "type": "issue",
+    "actor": "PagelsR",
+    "repo": "octocat/Hello-World",
+    "issue_id": "ISSUE-4398",
+    "timestamp": "2025-10-16T22:24:29Z",
+    "title": "Database Timeout Error During Checkout",
+    "body": "**Observed Behavior**\nWhen attempting to complete a purchase, the checkout process hangs for about 30 seconds, then displays a timeout error. Payment does not process, and the user is returned to the cart page.\n\n**Expected Behavior**\nCheckout should complete successfully within a few seconds, charging the payment method and redirecting the user to the order confirmation page.\n\n**Environment Details Checklist**\n\n[] Operating system (e.g., Windows, macOS, Linux)\n[] Browser and version\n[] App version (if applicable)\n[] Network (WiFi, Ethernet, VPN, etc)\n[] Any relevant logs or error codes (e.g., SQL timeout exceptions, request IDs)\n\nPlease include logs if available, especially database query traces."
+  },
+  {
+    "id": "i-4397",
+    "type": "issue",
+    "actor": "kolja-test-account",
+    "repo": "octocat/Hello-World",
+    "issue_id": "ISSUE-4397",
+    "timestamp": "2025-10-16T17:54:37Z",
+    "title": "12345",
+    "body": null
+  },
+  {
+    "id": "i-4396",
+    "type": "issue",
+    "actor": "kolja-test-account",
+    "repo": "octocat/Hello-World",
+    "issue_id": "ISSUE-4396",
+    "timestamp": "2025-10-16T17:54:35Z",
+    "title": "Test Issue with Assignees - 2025-10-16T11:54:35.432579",
+    "body": null
+  },
+  {
+    "id": "i-4395",
+    "type": "issue",
+    "actor": "kolja-test-account",
+    "repo": "octocat/Hello-World",
+    "issue_id": "ISSUE-4395",
+    "timestamp": "2025-10-16T17:54:34Z",
+    "title": "Test Issue with Body - 2025-10-16T11:54:34.483603",
+    "body": "This is a test issue created by the integration test suite."
+  },
+  {
+    "id": "i-4394",
+    "type": "issue",
+    "actor": "kolja-test-account",
+    "repo": "octocat/Hello-World",
+    "issue_id": "ISSUE-4394",
+    "timestamp": "2025-10-16T17:54:34Z",
+    "title": "Test Issue - 2025-10-16T11:54:33.941845",
+    "body": null
+  },
+  {
+    "id": "i-4392",
+    "type": "issue",
+    "actor": "Mikki200893",
+    "repo": "octocat/Hello-World",
+    "issue_id": "ISSUE-4392",
+    "timestamp": "2025-10-15T08:06:25Z",
+    "title": "Обойти всю защиту на редми 11е",
+    "body": "Ребята выручайте не могу обойти акаунты редми "
+  },
+  {
+    "id": "c-7fd1a60",
+    "type": "commit",
+    "actor": "octocat",
+    "repo": "octocat/Hello-World",
+    "timestamp": "2012-03-06T23:06:50Z",
+    "files": [
+      "README"
+    ],
+    "lines_added": 1,
+    "lines_deleted": 1,
+    "message": "Merge pull request #6 from Spaceghost/patch-1\n\nNew line at end of file."
+  },
+  {
+    "id": "c-7629413",
+    "type": "commit",
+    "actor": "Spaceghost",
+    "repo": "octocat/Hello-World",
+    "timestamp": "2011-09-14T04:42:41Z",
+    "files": [
+      "README"
+    ],
+    "lines_added": 1,
+    "lines_deleted": 1,
+    "message": "New line at end of file. --Signed off by Spaceghost"
+  },
+  {
+    "id": "c-553c207",
+    "type": "commit",
+    "actor": "Cameron423698",
+    "repo": "octocat/Hello-World",
+    "timestamp": "2011-01-26T19:06:08Z",
+    "files": [
+      "README"
+    ],
+    "lines_added": 1,
+    "lines_deleted": 0,
+    "message": "first commit"
+  }
+]

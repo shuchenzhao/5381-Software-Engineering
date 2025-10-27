@@ -93,7 +93,7 @@ const Styles = styled.div<SupersetPluginChartCollaborationGraphStylesProps>`
  */
 
 export default function SupersetPluginChartCollaborationGraph(props: SupersetPluginChartCollaborationGraphProps) {
-  const { data = [], height, width } = props;
+  const { data = [], height, width, nodes: propNodes } = props;
 
   // Adjust the SVG size slightly smaller than the container to avoid overflow
   // and visual misalignment between the background box and the svg.
@@ -220,15 +220,20 @@ export default function SupersetPluginChartCollaborationGraph(props: SupersetPlu
 
   useEffect(() => {
     // parse edges (rows) into nodes and links using filteredData
-    const links = filteredData.map((d: any) => ({ source: d.source, target: d.target, weight: +d.weight || 1, timestamp: d.timestamp }));
+    const links = filteredData.map((d: any) => ({ source: d.source, target: d.target, weight: +d.weight || 1, timestamp: d.timestamp, types: d.types || {} }));
 
-    // build node list with unique ids
-    const nodeById = new Map();
-    links.forEach((l: any) => {
-      if (!nodeById.has(l.source)) nodeById.set(l.source, { id: l.source });
-      if (!nodeById.has(l.target)) nodeById.set(l.target, { id: l.target });
-    });
-  const nodes = Array.from(nodeById.values());
+    // prefer nodes provided by transformProps (aggregated mock). fallback: build from links
+    let nodes: any[] = [];
+    if (Array.isArray(propNodes) && propNodes.length > 0) {
+      nodes = propNodes.map((n: any) => ({ id: n.id, ...n }));
+    } else {
+      const nodeById = new Map();
+      links.forEach((l: any) => {
+        if (!nodeById.has(l.source)) nodeById.set(l.source, { id: l.source });
+        if (!nodeById.has(l.target)) nodeById.set(l.target, { id: l.target });
+      });
+      nodes = Array.from(nodeById.values());
+    }
 
     // compute metrics
   const metrics = computeNodeMetrics(nodes, links);
@@ -284,7 +289,8 @@ export default function SupersetPluginChartCollaborationGraph(props: SupersetPlu
   const g = svg.append('g');
 
     // draw links and nodes groups
-    const link = g.append('g').attr('class', 'links').selectAll('line').data(links).enter()
+    const linksG = g.append('g').attr('class', 'links');
+    const link = linksG.selectAll('line').data(links).enter()
       .append('line')
       .attr('stroke', '#999')
       .attr('stroke-opacity', 0.6)
@@ -338,6 +344,8 @@ export default function SupersetPluginChartCollaborationGraph(props: SupersetPlu
         const target = event.currentTarget as any;
         select(target).attr('stroke', null);
         tooltip.style('display', 'none');
+        // remove overlay child edges when mouse out of node
+        select(containerRef.current as any).selectAll('.overlay-edges').remove();
       });
 
     // node labels
@@ -405,6 +413,78 @@ export default function SupersetPluginChartCollaborationGraph(props: SupersetPlu
         .attr('x', (d: any) => d.x)
         .attr('y', (d: any) => d.y);
     }
+
+      // overlay group for expanded child edges (drawn on hover) - stays outside simulation
+      const overlay = select(containerRef.current as any).selectAll('.overlay-root').data([0]);
+      const overlayRoot = overlay.enter().append('div').attr('class', 'overlay-root').merge(overlay as any)
+        .style('position', 'absolute')
+        .style('left', '0px')
+        .style('top', '0px')
+        .style('pointer-events', 'none');
+
+      // helper to draw child edges for a given aggregated link
+      function drawChildEdgesForLink(linkData: any) {
+        // remove existing overlay
+        select(containerRef.current as any).selectAll('.overlay-edges').remove();
+        const ov = overlayRoot.append('svg').attr('class', 'overlay-edges').attr('width', svgWidth).attr('height', svgHeight)
+          .style('position', 'absolute')
+          .style('left', '0px')
+          .style('top', '0px')
+          .style('pointer-events', 'none');
+
+        const srcNode = nodes.find((n: any) => n.id === linkData.source);
+        const tgtNode = nodes.find((n: any) => n.id === linkData.target);
+        if (!srcNode || !tgtNode) return;
+
+        // types to draw with color/style
+        const typeDefs: any = {
+          commits: { color: 'green', dash: '' },
+          reviews: { color: 'blue', dash: '' },
+          pullRequests: { color: 'orange', dash: '' },
+          assigns: { color: 'darkorange', dash: '4,2' },
+          discussion: { color: '#999', dash: '2,2' },
+        };
+
+        const totalTypes = Object.keys(linkData.types || {}).filter((k) => (linkData.types as any)[k] > 0);
+        // draw each type as a slightly offset line for visibility
+        totalTypes.forEach((type: string, idx: number) => {
+          const def = typeDefs[type] || { color: '#666', dash: '' };
+          // offset perpendicular to line by small amount
+          const dx = (tgtNode.x - srcNode.x);
+          const dy = (tgtNode.y - srcNode.y);
+          const len = Math.sqrt(dx * dx + dy * dy) || 1;
+          const nx = -dy / len;
+          const ny = dx / len;
+          const offset = (idx - (totalTypes.length - 1) / 2) * 6; // spread lines
+          const x1 = (srcNode.x as number) + nx * offset;
+          const y1 = (srcNode.y as number) + ny * offset;
+          const x2 = (tgtNode.x as number) + nx * offset;
+          const y2 = (tgtNode.y as number) + ny * offset;
+
+          ov.append('line')
+            .attr('x1', x1)
+            .attr('y1', y1)
+            .attr('x2', x2)
+            .attr('y2', y2)
+            .attr('stroke', def.color)
+            .attr('stroke-width', 2)
+            .attr('stroke-dasharray', def.dash)
+            .attr('opacity', 0.95);
+        });
+        // dim unrelated elements
+        g.selectAll('circle').attr('opacity', (d: any) => (d.id === srcNode.id || d.id === tgtNode.id ? 1 : 0.15));
+        g.selectAll('.links line').attr('opacity', (d: any) => (d.source.id === srcNode.id && d.target.id === tgtNode.id) ? 1 : 0.08);
+      }
+
+      // attach hover handlers on link elements to show overlay child edges
+      link.on('mouseover', (event: any, d: any) => {
+        // attempt to draw child edges for this aggregated link
+        drawChildEdgesForLink(d);
+      }).on('mouseout', () => {
+        select(containerRef.current as any).selectAll('.overlay-edges').remove();
+        g.selectAll('circle').attr('opacity', 1);
+        g.selectAll('.links line').attr('opacity', 0.6);
+      });
 
     // zoom behavior
     svg.call(zoom().on('zoom', (event: any) => {

@@ -40,5 +40,7 @@ export type SupersetPluginChartCollaborationGraphQueryFormData = QueryFormData &
 export type SupersetPluginChartCollaborationGraphProps = SupersetPluginChartCollaborationGraphStylesProps &
   SupersetPluginChartCollaborationGraphCustomizeProps & {
     data: TimeseriesDataRecord[];
+    // optional aggregated nodes provided by transformProps (nodes + links model)
+    nodes?: Array<{ id: string; [key: string]: any }>;
     // add typing here for the props you pass in from transformProps.ts!
   };
