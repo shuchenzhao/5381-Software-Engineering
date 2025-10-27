@@ -19,7 +19,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { styled } from '@superset-ui/core';
 import { CollabForcedirectedProps, CollabForcedirectedStylesProps } from './types';
-import { forceSimulation, forceLink, forceManyBody, forceCenter, forceX, forceY } from 'd3-force';
+import { forceSimulation, forceLink, forceManyBody, forceCenter, forceX, forceY, forceCollide } from 'd3-force';
 
 type NodeDatum = { id: string; x?: number; y?: number; vx?: number; vy?: number; size?: number };
 type LinkDatum = { source: string; target: string; weight: number; types?: any; sample_events?: any[]; first?: number; last?: number };
@@ -85,11 +85,35 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
   // control for link distance (lower => nodes cluster closer)
   // default reduced so nodes start more clustered
   const [distanceScale, setDistanceScale] = useState<number>(10);
+  // don't override user's manual changes; compute an automatic default once
+  const autoDistanceComputedRef = useRef(false);
   // control for cluster distance: slider value (0..max) where larger = more separation
   // internally we map this to a pull strength = maxStrength - clusterDistance so
   // moving the slider right (increasing clusterDistance) will reduce pull (clusters disperse)
   const MAX_CLUSTER_STRENGTH = 0.5;
   const [clusterDistance, setClusterDistance] = useState<number>(MAX_CLUSTER_STRENGTH * 0.7);
+  // link distance clamping to avoid extremely large separations when weight is tiny
+  const MIN_WEIGHT = 0.1;
+  const MIN_LINK_DISTANCE = 20;
+  const MAX_LINK_DISTANCE = 400;
+
+  // compute a reasonable default distanceScale from data and viewport
+  useEffect(() => {
+    try {
+      if (autoDistanceComputedRef.current) return;
+      const src = originalLinksRef.current || (links as any[]);
+      if (!src || !src.length) return;
+      const weights = src.map((ln: any) => Math.max(MIN_WEIGHT, Number((ln && ln.weight) || 0)));
+      const avgWeight = weights.reduce((a: number, b: number) => a + b, 0) / weights.length || MIN_WEIGHT;
+      // target average visual link length: a fraction of the smaller viewport dimension
+      const targetLen = Math.min(Math.max(Math.min(width, height) / 6, MIN_LINK_DISTANCE), MAX_LINK_DISTANCE / 2);
+      const computed = Math.max(1, Math.round(targetLen * avgWeight));
+      setDistanceScale(computed);
+      autoDistanceComputedRef.current = true;
+    } catch (err) {
+      // noop
+    }
+  }, [links, width, height]);
 
   // time-range filter state
   type TimeUnit = 'year' | 'month' | 'week';
@@ -146,18 +170,37 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
   originalLinksRef.current = l.map((x) => ({ ...x }));
   originalNodesRef.current = n.map((x) => ({ ...x }));
 
+  // give newly created nodes a small random jitter so they don't all start at (0,0)
+  n.forEach((nd) => {
+    if ((nd as any).x === undefined) (nd as any).x = (Math.random() - 0.5) * 20;
+    if ((nd as any).y === undefined) (nd as any).y = (Math.random() - 0.5) * 20;
+  });
+
   // use the state-driven clusterPullStrength
     const simulation = forceSimulation(n as any)
       .force(
         'link',
         forceLink(l as any)
           .id((d: any) => d.id)
-          .distance((d: any) => distanceScale / ((d && d.weight) || 1)),
+          .distance((d: any) => {
+            const w = (d && (d.weight || 0)) || 0;
+            const eff = Math.max(MIN_WEIGHT, w);
+            const raw = distanceScale / eff;
+            return Math.min(MAX_LINK_DISTANCE, Math.max(MIN_LINK_DISTANCE, raw));
+          }),
       )
-      .force('charge', forceManyBody().strength(-200))
+      // disable the global charge (we'll rely on collide to avoid overlaps)
+      .force('charge', forceManyBody().strength(-100))
+      // collision force to prevent node overlap while keeping layout compact
+      .force(
+        'collide',
+        forceCollide()
+          .radius((d: any) => Math.max(6, (d.size || 4) + 2))
+          .strength(0.8),
+      )
       // gentle centering forces to pull separated clusters closer together
-  .force('x', forceX(0).strength(MAX_CLUSTER_STRENGTH - clusterDistance))
-  .force('y', forceY(0).strength(MAX_CLUSTER_STRENGTH - clusterDistance))
+      .force('x', forceX(0).strength(MAX_CLUSTER_STRENGTH - clusterDistance))
+      .force('y', forceY(0).strength(MAX_CLUSTER_STRENGTH - clusterDistance))
       // use a neutral simulation center (0,0). We'll compute a viewTransform
       // that maps the node cloud to the canvas center, so forceCenter should
       // not use absolute canvas coordinates which conflicts with our transform.
@@ -167,6 +210,22 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
         setSimNodes([...n]);
       });
 
+    // ensure d3 internal nodes/links are using our arrays (helps avoid mismatches)
+    try {
+      if (typeof (simulation as any).nodes === 'function') (simulation as any).nodes(n as any);
+      const linkForce: any = (simulation as any).force && (simulation as any).force('link');
+      if (linkForce && typeof linkForce.links === 'function') linkForce.links(l as any);
+    } catch (err) {
+      // ignore
+    }
+
+    // nudge simulation so it actively relaxes and doesn't require a click to start
+    try {
+      simulation.alpha(0.5).restart();
+    } catch (err) {
+      // ignore if simulation API isn't available
+    }
+    // set ref after wiring nodes/links so cleanup comparisons are stable
     simulationRef.current = simulation;
 
     // Run a few synchronous ticks so nodes get initial x/y coordinates immediately
@@ -234,7 +293,12 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
     }, 0);
 
     return () => {
-      simulation.stop();
+      try {
+        // only stop this simulation if it is still the active one
+        if (simulationRef.current === simulation) simulation.stop();
+      } catch (err) {
+        // ignore
+      }
     };
   }, [nodes, links, width, height]);
 
@@ -441,35 +505,70 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
     setSimNodes(newNodes);
     setSimLinks(newLinks);
 
-    // stop old simulation
-    try {
-      if (simulationRef.current) simulationRef.current.stop();
-    } catch (err) {
-      // ignore
-    }
+    // capture previous simulation; we'll stop it after the new one is installed
+    const prevSimulation = simulationRef.current;
 
     // create new simulation for filtered data
     try {
+      // give filtered nodes a small jitter so they don't all overlap at creation
+      newNodes.forEach((nd) => {
+        if ((nd as any).x === undefined) (nd as any).x = (Math.random() - 0.5) * 20;
+        if ((nd as any).y === undefined) (nd as any).y = (Math.random() - 0.5) * 20;
+      });
+
       const sim = forceSimulation(newNodes as any)
         .force(
           'link',
           forceLink(newLinks as any)
             .id((d: any) => d.id)
-            .distance((d: any) => distanceScale / ((d && d.weight) || 1)),
+            .distance((d: any) => {
+              const w = (d && (d.weight || 0)) || 0;
+              const eff = Math.max(MIN_WEIGHT, w);
+              const raw = distanceScale / eff;
+              return Math.min(MAX_LINK_DISTANCE, Math.max(MIN_LINK_DISTANCE, raw));
+            }),
         )
-        .force('charge', forceManyBody().strength(-200))
-        .force('x', forceX(0).strength(MAX_CLUSTER_STRENGTH - clusterDistance))
-        .force('y', forceY(0).strength(MAX_CLUSTER_STRENGTH - clusterDistance))
+          .force('charge', forceManyBody().strength(0))
+          // collision force to prevent node overlap in filtered simulation as well
+          .force(
+            'collide',
+            forceCollide()
+              .radius((d: any) => Math.max(6, (d.size || 4) + 2))
+              .strength(0.8),
+          )
+          .force('x', forceX(0).strength(MAX_CLUSTER_STRENGTH - clusterDistance))
+          .force('y', forceY(0).strength(MAX_CLUSTER_STRENGTH - clusterDistance))
         .force('center', forceCenter(0, 0))
         .on('tick', () => {
           setSimNodes([...newNodes]);
         });
 
+      // nudge and run initial ticks so layout relaxes immediately
+        // ensure d3 internal nodes/links are our arrays
+        try {
+          if (typeof (sim as any).nodes === 'function') (sim as any).nodes(newNodes as any);
+          const linkForce: any = (sim as any).force && (sim as any).force('link');
+          if (linkForce && typeof linkForce.links === 'function') linkForce.links(newLinks as any);
+        } catch (err) {
+          // ignore
+        }
+        try {
+          sim.alpha(0.5).restart();
+        } catch (err) {
+          // ignore
+        }
       // run initial ticks
       for (let i = 0; i < 80; i += 1) sim.tick();
       setSimNodes([...newNodes]);
       setSimLinks([...newLinks]);
       simulationRef.current = sim;
+
+      // stop the previous simulation only if it's not the one we just created
+      try {
+        if (prevSimulation && prevSimulation !== sim) prevSimulation.stop();
+      } catch (err) {
+        // ignore
+      }
 
       // fit view
       try {
@@ -536,7 +635,12 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
     try {
       const linkForce: any = sim.force && sim.force('link');
       if (linkForce && typeof linkForce.distance === 'function') {
-        linkForce.distance((d: any) => distanceScale / ((d && d.weight) || 1));
+        linkForce.distance((d: any) => {
+          const w = (d && (d.weight || 0)) || 0;
+          const eff = Math.max(MIN_WEIGHT, w);
+          const raw = distanceScale / eff;
+          return Math.min(MAX_LINK_DISTANCE, Math.max(MIN_LINK_DISTANCE, raw));
+        });
         sim.alpha(0.3).restart();
       }
     } catch (err) {
@@ -1081,7 +1185,7 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
               id="distanceRange"
               type="range"
               min={1}
-              max={20}
+              max={120}
               step={1}
               value={distanceScale}
               onChange={(e) => setDistanceScale(Number(e.target.value))}
