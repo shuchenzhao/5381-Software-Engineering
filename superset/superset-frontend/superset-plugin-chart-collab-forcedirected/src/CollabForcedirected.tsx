@@ -20,9 +20,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { styled } from '@superset-ui/core';
 import { CollabForcedirectedProps, CollabForcedirectedStylesProps } from './types';
 import { forceSimulation, forceLink, forceManyBody, forceCenter, forceX, forceY, forceCollide } from 'd3-force';
-
-type NodeDatum = { id: string; x?: number; y?: number; vx?: number; vy?: number; size?: number };
-type LinkDatum = { source: string; target: string; weight: number; types?: any; sample_events?: any[]; first?: number; last?: number };
+import { NodeDatum, LinkDatum } from './utils/types';
+import { getLinkId, computeViewFit, clampLinkDistance } from './utils/d3Helpers';
 
 // The following Styles component is a <div> element, which has been styled using Emotion
 // For docs, visit https://emotion.sh/docs/styled
@@ -186,12 +185,7 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
         'link',
         forceLink(l as any)
           .id((d: any) => d.id)
-          .distance((d: any) => {
-            const w = (d && (d.weight || 0)) || 0;
-            const eff = Math.max(MIN_WEIGHT, w);
-            const raw = distanceScale / eff;
-            return Math.min(MAX_LINK_DISTANCE, Math.max(MIN_LINK_DISTANCE, raw));
-          }),
+          .distance((d: any) => clampLinkDistance(distanceScale, (d && (d.weight || 0)) || 0, MIN_WEIGHT, MIN_LINK_DISTANCE, MAX_LINK_DISTANCE)),
       )
       // disable the global charge (we'll rely on collide to avoid overlaps)
       .force('charge', forceManyBody().strength(-100))
@@ -247,31 +241,10 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
 
     // compute bounding box of nodes and set a viewTransform that fits all nodes
     try {
-      const nn = n as NodeDatum[];
-      const xs = nn.map((d) => d.x || 0);
-      const ys = nn.map((d) => d.y || 0);
-      if (xs.length && ys.length) {
-        const minX = Math.min(...xs);
-        const maxX = Math.max(...xs);
-        const minY = Math.min(...ys);
-        const maxY = Math.max(...ys);
-        const contentW = Math.max(1, maxX - minX);
-        const contentH = Math.max(1, maxY - minY);
-        const margin = 40; // pixels
-        const availableW = Math.max(10, width - margin * 2);
-        const availableH = Math.max(10, height - margin * 2);
-        let k = Math.min(availableW / contentW, availableH / contentH);
-        // clamp k to reasonable range
-        k = Math.max(0.2, Math.min(4, k));
-        const centerX = (minX + maxX) / 2;
-        const centerY = (minY + maxY) / 2;
-          // We'll use transform: scale(k) translate(tx,ty) so final = k*p + t
-          // Want final center = (width/2, height/2) => t = (width/2, height/2) - k*center
-          const tx = width / 2 - k * centerX;
-          const ty = height / 2 - k * centerY;
-          setViewTransform({ x: tx, y: ty, k });
-          // record the initial view immediately so deselect can restore reliably
-          initialViewRef.current = { x: tx, y: ty, k };
+      const vt = computeViewFit(n as NodeDatum[], width, height, 40);
+      if (vt) {
+        setViewTransform(vt);
+        initialViewRef.current = vt;
       }
     } catch (err) {
       // ignore
@@ -453,7 +426,7 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
           // include
           sampleFiltered.push(ev);
           // determine type key
-          let key: keyof LinkDatum['types'] | null = null as any;
+          let key: string | null = null;
           if (ev.type === 'commit') key = 'commits';
           else if (ev.type === 'review') key = 'reviews';
           else if (ev.type === 'assign') key = 'assigns';
@@ -528,12 +501,7 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
           'link',
           forceLink(newLinks as any)
             .id((d: any) => d.id)
-            .distance((d: any) => {
-              const w = (d && (d.weight || 0)) || 0;
-              const eff = Math.max(MIN_WEIGHT, w);
-              const raw = distanceScale / eff;
-              return Math.min(MAX_LINK_DISTANCE, Math.max(MIN_LINK_DISTANCE, raw));
-            }),
+            .distance((d: any) => clampLinkDistance(distanceScale, (d && (d.weight || 0)) || 0, MIN_WEIGHT, MIN_LINK_DISTANCE, MAX_LINK_DISTANCE)),
         )
           .force('charge', forceManyBody().strength(0))
           // collision force to prevent node overlap in filtered simulation as well
@@ -645,12 +613,7 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
     try {
       const linkForce: any = sim.force && sim.force('link');
       if (linkForce && typeof linkForce.distance === 'function') {
-        linkForce.distance((d: any) => {
-          const w = (d && (d.weight || 0)) || 0;
-          const eff = Math.max(MIN_WEIGHT, w);
-          const raw = distanceScale / eff;
-          return Math.min(MAX_LINK_DISTANCE, Math.max(MIN_LINK_DISTANCE, raw));
-        });
+        linkForce.distance((d: any) => clampLinkDistance(distanceScale, (d && (d.weight || 0)) || 0, MIN_WEIGHT, MIN_LINK_DISTANCE, MAX_LINK_DISTANCE));
         sim.alpha(0.3).restart();
       }
     } catch (err) {
@@ -936,12 +899,7 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
     animRef.current = requestAnimationFrame(step);
   };
 
-  const getLinkId = (ln: LinkDatum) => {
-    const a = typeof (ln as any).source === 'string' ? (ln as any).source : (ln as any).source?.id;
-    const b = typeof (ln as any).target === 'string' ? (ln as any).target : (ln as any).target?.id;
-    if (!a || !b) return null;
-    return a < b ? `${a}||${b}` : `${b}||${a}`;
-  };
+  // getLinkId is provided by utils/d3Helpers and imported above
 
   // Toggle expanded link on click using stable id
   const onLinkClick = (e: React.MouseEvent, ln: LinkDatum) => {
