@@ -18,7 +18,7 @@
  */
 import React, { RefObject, useEffect, useRef, useState } from 'react';
 import { NodeDatum, ViewTransform } from '../utils/types';
-import { FIT_MARGIN_PX, MIN_ZOOM_SCALE, MAX_ZOOM_SCALE } from '../utils/constants';
+import { MIN_ZOOM_SCALE, MAX_ZOOM_SCALE } from '../utils/constants';
 
 /**
  * Custom hook for managing pan and zoom interactions on an SVG viewport.
@@ -78,26 +78,42 @@ export function usePanZoom(
 
   /**
    * Fit view to show all given nodes with margin
+   * Ensures all nodes fit within the center 70% of the viewport
+   * (15% margin on each side)
    */
   const fitViewToNodes = (nodesToFit: NodeDatum[]) => {
     try {
-      const xs = nodesToFit.map((d) => d.x || 0);
-      const ys = nodesToFit.map((d) => d.y || 0);
-      if (!xs.length || !ys.length) return;
+      // Calculate bounding box including node sizes
+      let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+      
+      nodesToFit.forEach((d) => {
+        const x = d.x || 0;
+        const y = d.y || 0;
+        const radius = d.size || 4; // Include node radius in bounds
+        minX = Math.min(minX, x - radius);
+        maxX = Math.max(maxX, x + radius);
+        minY = Math.min(minY, y - radius);
+        maxY = Math.max(maxY, y + radius);
+      });
+      
+      if (!isFinite(minX)) return;
 
-      const minX = Math.min(...xs);
-      const maxX = Math.max(...xs);
-      const minY = Math.min(...ys);
-      const maxY = Math.max(...ys);
       const contentW = Math.max(1, maxX - minX);
       const contentH = Math.max(1, maxY - minY);
-      const availableW = Math.max(10, width - FIT_MARGIN_PX * 2);
-      const availableH = Math.max(10, height - FIT_MARGIN_PX * 2);
+      
+      // Use 70% of viewport for content (15% margin on each side)
+      const availableW = Math.max(10, width * 0.7);
+      const availableH = Math.max(10, height * 0.7);
+      
       let k = Math.min(availableW / contentW, availableH / contentH);
       // Clamp k to reasonable range
       k = Math.max(MIN_ZOOM_SCALE, Math.min(MAX_ZOOM_SCALE, k));
+      
+      // Calculate geometric center of bounding box
       const centerX = (minX + maxX) / 2;
       const centerY = (minY + maxY) / 2;
+      
+      // Transform to place bbox center at viewport center
       const tx = width / 2 - k * centerX;
       const ty = height / 2 - k * centerY;
       setViewTransform({ x: tx, y: ty, k });
@@ -110,29 +126,47 @@ export function usePanZoom(
   /**
    * Update initial view reference without changing current view
    * (used when nodes change but we don't want to re-center)
+   * Ensures all nodes fit within the center 70% of the viewport
    */
   const updateInitialView = (nodesToFit: NodeDatum[]) => {
     try {
-      const xs = nodesToFit.map((d) => d.x || 0);
-      const ys = nodesToFit.map((d) => d.y || 0);
-      if (!xs.length || !ys.length) return;
+      // Calculate bounding box including node sizes
+      let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+      
+      nodesToFit.forEach((d) => {
+        const x = d.x || 0;
+        const y = d.y || 0;
+        const radius = d.size || 4; // Include node radius in bounds
+        minX = Math.min(minX, x - radius);
+        maxX = Math.max(maxX, x + radius);
+        minY = Math.min(minY, y - radius);
+        maxY = Math.max(maxY, y + radius);
+      });
+      
+      if (!isFinite(minX)) return;
 
-      const minX = Math.min(...xs);
-      const maxX = Math.max(...xs);
-      const minY = Math.min(...ys);
-      const maxY = Math.max(...ys);
       const contentW = Math.max(1, maxX - minX);
       const contentH = Math.max(1, maxY - minY);
-      const availableW = Math.max(10, width - FIT_MARGIN_PX * 2);
-      const availableH = Math.max(10, height - FIT_MARGIN_PX * 2);
+      
+      // Use 70% of viewport for content (15% margin on each side)
+      const availableW = Math.max(10, width * 0.7);
+      const availableH = Math.max(10, height * 0.7);
+      
       let k = Math.min(availableW / contentW, availableH / contentH);
+      const unclamped_k = k;
       k = Math.max(MIN_ZOOM_SCALE, Math.min(MAX_ZOOM_SCALE, k));
+      
+      console.log('[PanZoom] updateInitialView - Content size:', { contentW, contentH });
+      console.log('[PanZoom] updateInitialView - Available space (70%):', { availableW, availableH });
+      console.log('[PanZoom] updateInitialView - Calculated k:', unclamped_k, '→ Clamped k:', k);
+      
       const centerX = (minX + maxX) / 2;
       const centerY = (minY + maxY) / 2;
       const tx = width / 2 - k * centerX;
       const ty = height / 2 - k * centerY;
       // Only update ref, don't change current view
       initialViewRef.current = { x: tx, y: ty, k };
+      console.log('[PanZoom] updateInitialView - Updated initial view:', { x: tx, y: ty, k });
     } catch (err) {
       // ignore
     }
@@ -194,10 +228,14 @@ export function usePanZoom(
 
   /**
    * Restore initial view
+   * Uses the saved initial view reference (which is updated when time filter changes)
    */
-  const restoreInitialView = () => {
+  const restoreInitialView = (currentNodes?: NodeDatum[]) => {
     if (initialViewRef.current) {
+      console.log('[PanZoom] Restoring saved initial view:', initialViewRef.current);
       animateTo(initialViewRef.current);
+    } else {
+      console.log('[PanZoom] No initial view saved, cannot restore');
     }
   };
 

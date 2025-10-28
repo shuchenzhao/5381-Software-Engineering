@@ -28,7 +28,7 @@ import {
   addInitialJitter,
   computeAutoDistanceScale,
 } from '../utils/d3Utils';
-import { INITIAL_SIMULATION_TICKS, MIN_NODE_RADIUS } from '../utils/constants';
+import { INITIAL_SIMULATION_TICKS, MIN_NODE_RADIUS, MAX_NODE_RADIUS } from '../utils/constants';
 
 interface UseForceSimulationOptions {
   width: number;
@@ -77,6 +77,33 @@ export function useForceSimulation(
       types: d.types,
       sample_events: d.sample_events || d.sampleEvents || d.events || undefined,
     }));
+
+    // Normalize node sizes to fit within MIN_NODE_RADIUS to MAX_NODE_RADIUS range
+    // Algorithm: Linear scaling based on min/max node weights
+    // - Node with minimum weight → MIN_NODE_RADIUS (smallest visual size)
+    // - Node with maximum weight → MAX_NODE_RADIUS (largest visual size)
+    // - Other nodes → proportionally scaled between MIN and MAX
+    if (nodes.length > 0) {
+      const sizes = nodes.map((n) => n.size || 1);
+      const minSize = Math.min(...sizes);
+      const maxSize = Math.max(...sizes);
+      
+      if (maxSize > minSize) {
+        // Scale sizes proportionally: normalized = (value - min) / (max - min)
+        // Result: 0 (min weight) → MIN_RADIUS, 1 (max weight) → MAX_RADIUS
+        nodes.forEach((n) => {
+          const rawSize = n.size || 1;
+          const normalized = (rawSize - minSize) / (maxSize - minSize); // 0 to 1
+          n.size = MIN_NODE_RADIUS + normalized * (MAX_NODE_RADIUS - MIN_NODE_RADIUS);
+        });
+      } else {
+        // All nodes have the same size, use average of MIN and MAX
+        const avgRadius = (MIN_NODE_RADIUS + MAX_NODE_RADIUS) / 2;
+        nodes.forEach((n) => {
+          n.size = avgRadius;
+        });
+      }
+    }
 
     setSimNodes(nodes);
     setSimLinks(links);
@@ -239,6 +266,28 @@ export function useForceSimulation(
     }
 
     const newNodes = Array.from(newNodesMap.values());
+
+    // Normalize node sizes to fit within MIN_NODE_RADIUS to MAX_NODE_RADIUS range
+    if (newNodes.length > 0) {
+      const sizes = newNodes.map((n) => n.size || 1);
+      const minSize = Math.min(...sizes);
+      const maxSize = Math.max(...sizes);
+      
+      if (maxSize > minSize) {
+        // Scale sizes proportionally between MIN and MAX radius
+        newNodes.forEach((n) => {
+          const rawSize = n.size || 1;
+          const normalized = (rawSize - minSize) / (maxSize - minSize);
+          n.size = MIN_NODE_RADIUS + normalized * (MAX_NODE_RADIUS - MIN_NODE_RADIUS);
+        });
+      } else {
+        // All nodes have the same size, use average of MIN and MAX
+        const avgRadius = (MIN_NODE_RADIUS + MAX_NODE_RADIUS) / 2;
+        newNodes.forEach((n) => {
+          n.size = avgRadius;
+        });
+      }
+    }
 
     // Update state and rebuild simulation
     setSimNodes(newNodes);

@@ -20,7 +20,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { styled } from '@superset-ui/core';
 import { CollabForcedirectedProps, CollabForcedirectedStylesProps } from './types';
 import { LinkDatum } from './utils/types';
-import { DEFAULT_DISTANCE_SCALE, DEFAULT_CLUSTER_DISTANCE } from './utils/constants';
+import { DEFAULT_DISTANCE_SCALE, DEFAULT_CLUSTER_DISTANCE, MIN_NODE_RADIUS } from './utils/constants';
 import { getLinkId } from './utils/linkHelpers';
 import { screenToGraph } from './utils/domHelpers';
 import { Tooltip, Controls, RecordsTable } from './components';
@@ -91,12 +91,14 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
     }
   }, [simulation.simNodes.length]);
 
-  // Update initial view when time filter changes (but don't re-center the view)
+  // When time filter changes, immediately recenter the view with new calculated zoom
+  // Apply new view as soon as nodes are updated (no delay)
   useEffect(() => {
     if (simulation.simNodes.length > 0 && initialCenterDoneRef.current) {
-      panZoom.updateInitialView(simulation.simNodes);
+      // Immediately fit view to new nodes without delay
+      panZoom.fitViewToNodes(simulation.simNodes);
     }
-  }, [timeFilter.windowRange]);
+  }, [timeFilter.windowRange, simulation.simNodes.length]);
 
   // ===== Event handlers using hook APIs =====
   
@@ -451,7 +453,7 @@ export default function CollabForcedirected(props: CollabForcedirectedProps) {
                 opacity={nodeOpacity}
               >
                 <circle 
-                  r={Math.max(4, n.size || 4)} 
+                  r={n.size || MIN_NODE_RADIUS} 
                   fill="#3182bd"
                 />
                 <text x={8} y={4} fontSize={10}>

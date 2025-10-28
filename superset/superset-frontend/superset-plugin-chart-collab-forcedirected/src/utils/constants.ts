@@ -93,7 +93,7 @@ export const FIT_MARGIN_PX = 40;
  * Minimum and maximum zoom scale factors.
  */
 export const MIN_ZOOM_SCALE = 0.2;
-export const MAX_ZOOM_SCALE = 4;
+export const MAX_ZOOM_SCALE = 10;
 
 /**
  * Wheel zoom sensitivity.
@@ -116,6 +116,11 @@ export const DEFAULT_COLLABORATION_WEIGHTS: CollaborationWeights = {
  * Minimum visual radius for nodes (pixels).
  */
 export const MIN_NODE_RADIUS = 4;
+
+/**
+ * Maximum visual radius for nodes (pixels).
+ */
+export const MAX_NODE_RADIUS = 20;
 
 /**
  * Minimum stroke width for links (pixels).
