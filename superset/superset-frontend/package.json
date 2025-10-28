@@ -35,6 +35,7 @@
     "packages/*",
     "superset-plugin-chart-collab-forcedirected",
     "superset-plugin-chart-health-radar",
+    "superset-plugin-chart-burndown",
     "src/setup/*"
   ],
   "scripts": {

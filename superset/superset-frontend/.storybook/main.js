@@ -25,19 +25,22 @@ module.exports = {
     // Supported values:
     //  - '1' -> superset-plugin-chart-collab-forcedirected
     //  - '2' -> superset-plugin-chart-health-radar
+    //  - '3' -> superset-plugin-chart-burndown
     stories: (() => {
       const plugin = process.env.PLUGIN_STORYBOOK;
       const map = {
         '1': '../superset-plugin-chart-collab-forcedirected/src/stories/**/*.stories.@(js|jsx|ts|tsx)',
         '2': '../superset-plugin-chart-health-radar/src/stories/**/*.stories.@(js|jsx|ts|tsx)',
+        '3': '../superset-plugin-chart-burndown/src/stories/**/*.stories.@(js|jsx|ts|tsx)',
       };
       if (plugin && map[plugin]) {
         return [map[plugin]];
       }
-      // Default: load both custom plugins
+      // Default: load all custom plugins
       return [
         '../superset-plugin-chart-collab-forcedirected/src/stories/**/*.stories.@(js|jsx|ts|tsx)',
-        '../superset-plugin-chart-health-radar/src/stories/**/*.stories.@(js|jsx|ts|tsx)'
+        '../superset-plugin-chart-health-radar/src/stories/**/*.stories.@(js|jsx|ts|tsx)',
+        '../superset-plugin-chart-burndown/src/stories/**/*.stories.@(js|jsx|ts|tsx)'
       ];
     })(),
 
