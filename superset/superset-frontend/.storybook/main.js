@@ -23,18 +23,21 @@ const customConfig = require('../webpack.config.js');
 module.exports = {
     // If PLUGIN_STORYBOOK is set in the environment, only load that plugin's stories.
     // Supported values:
-    //  - '2' -> superset-plugin-chart-collab-forcedirected
+    //  - '1' -> superset-plugin-chart-collab-forcedirected
+    //  - '2' -> superset-plugin-chart-health-radar
     stories: (() => {
       const plugin = process.env.PLUGIN_STORYBOOK;
       const map = {
-        '2': '../superset-plugin-chart-collab-forcedirected/src/stories/**/*.stories.@(js|jsx|ts|tsx)',
+        '1': '../superset-plugin-chart-collab-forcedirected/src/stories/**/*.stories.@(js|jsx|ts|tsx)',
+        '2': '../superset-plugin-chart-health-radar/src/stories/**/*.stories.@(js|jsx|ts|tsx)',
       };
       if (plugin && map[plugin]) {
         return [map[plugin]];
       }
-      // Default: only load your custom plugin, not all Superset core components
+      // Default: load both custom plugins
       return [
-        '../superset-plugin-chart-collab-forcedirected/src/stories/**/*.stories.@(js|jsx|ts|tsx)'
+        '../superset-plugin-chart-collab-forcedirected/src/stories/**/*.stories.@(js|jsx|ts|tsx)',
+        '../superset-plugin-chart-health-radar/src/stories/**/*.stories.@(js|jsx|ts|tsx)'
       ];
     })(),
 

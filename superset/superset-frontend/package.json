@@ -34,6 +34,7 @@
   "workspaces": [
     "packages/*",
     "superset-plugin-chart-collab-forcedirected",
+    "superset-plugin-chart-health-radar",
     "src/setup/*"
   ],
   "scripts": {
