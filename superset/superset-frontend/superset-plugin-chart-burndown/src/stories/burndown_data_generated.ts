@@ -1,11 +1,5 @@
-import React from 'react';
-import SupersetPluginChartBurndown from '../SupersetPluginChartBurndown';
-
-export default {
-  title: 'Charts/Burndown',
-};
-
-const data = [
+// 生成于 2025-11-03 01:15:10
+export const burndownData = [
   { ds: '2025-08-04', remaining: 186 },
   { ds: '2025-08-05', remaining: 187 },
   { ds: '2025-08-06', remaining: 187 },
@@ -78,32 +72,24 @@ const data = [
   { ds: '2025-10-12', remaining: 134 },
   { ds: '2025-10-13', remaining: 131 },
   { ds: '2025-10-14', remaining: 125 },
-  // { ds: '2025-10-15', remaining: 123 },
-  // { ds: '2025-10-16', remaining: 127 },
-  // { ds: '2025-10-17', remaining: 128 },
-  // { ds: '2025-10-18', remaining: 130 },
-  // { ds: '2025-10-19', remaining: 131 },
-  // { ds: '2025-10-20', remaining: 129 },
-  // { ds: '2025-10-21', remaining: 129 },
-  // { ds: '2025-10-22', remaining: 129 },
-  // { ds: '2025-10-23', remaining: 123 },
-  // { ds: '2025-10-24', remaining: 123 },
-  // { ds: '2025-10-25', remaining: 119 },
-  // { ds: '2025-10-26', remaining: 120 },
-  // { ds: '2025-10-27', remaining: 122 },
-  // { ds: '2025-10-28', remaining: 124 },
-  // { ds: '2025-10-29', remaining: 125 },
-  // { ds: '2025-10-30', remaining: 124 },
-  // { ds: '2025-10-31', remaining: 123 },
-  // { ds: '2025-11-01', remaining: 124 },
-  // { ds: '2025-11-02', remaining: 125 },
-  // { ds: '2025-11-03', remaining: 125 },
+  { ds: '2025-10-15', remaining: 123 },
+  { ds: '2025-10-16', remaining: 127 },
+  { ds: '2025-10-17', remaining: 128 },
+  { ds: '2025-10-18', remaining: 130 },
+  { ds: '2025-10-19', remaining: 131 },
+  { ds: '2025-10-20', remaining: 129 },
+  { ds: '2025-10-21', remaining: 129 },
+  { ds: '2025-10-22', remaining: 129 },
+  { ds: '2025-10-23', remaining: 123 },
+  { ds: '2025-10-24', remaining: 123 },
+  { ds: '2025-10-25', remaining: 119 },
+  { ds: '2025-10-26', remaining: 120 },
+  { ds: '2025-10-27', remaining: 122 },
+  { ds: '2025-10-28', remaining: 124 },
+  { ds: '2025-10-29', remaining: 125 },
+  { ds: '2025-10-30', remaining: 124 },
+  { ds: '2025-10-31', remaining: 123 },
+  { ds: '2025-11-01', remaining: 124 },
+  { ds: '2025-11-02', remaining: 125 },
+  { ds: '2025-11-03', remaining: 125 },
 ];
-
-
-
-export const Basic = () => (
-  <div style={{ width: 600 }}>
-    <SupersetPluginChartBurndown data={data} width={600} height={300} />
-  </div>
-);
