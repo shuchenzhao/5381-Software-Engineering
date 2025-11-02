@@ -469,8 +469,8 @@ def get_events_data():
         base_dir = os.path.dirname(__file__)
         # Compute plugin data directory relative to this connector package.
         # base_dir is expected to be .../superset/superset-github-connector
-        # plugin data dir is .../superset/superset-frontend/superset-plugin-chart-collab-forcedirected/src/data
-        plugin_data_dir = os.path.abspath(os.path.join(base_dir, '..', 'superset-frontend', 'superset-plugin-chart-collab-forcedirected', 'src', 'data'))
+        # plugin data dir is .../superset/superset-frontend/superset-plugin-chart-health-radar/src/data
+        plugin_data_dir = os.path.abspath(os.path.join(base_dir, '..', 'superset-frontend', 'superset-plugin-chart-health-radar', 'src', 'data'))
         try:
             os.makedirs(plugin_data_dir, exist_ok=True)
         except Exception as e:

@@ -1,0 +1,20 @@
+# Dockerfile for GitHub Connector Service
+FROM python:3.10-slim
+
+WORKDIR /app
+
+# Copy requirements and install dependencies
+COPY superset-github-connector/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the connector script
+COPY superset-github-connector/ .
+
+# Create data directory for output
+RUN mkdir -p data
+
+# Expose port 5000
+EXPOSE 5000
+
+# Run the Flask app
+CMD ["python", "github_connector.py"]

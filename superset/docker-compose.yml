@@ -102,6 +102,21 @@ services:
       CYPRESS_CONFIG: "${CYPRESS_CONFIG:-}"
       SUPERSET_LOG_LEVEL: "${SUPERSET_LOG_LEVEL:-info}"
 
+  github-connector:
+    container_name: github_connector
+    build:
+      context: .
+      dockerfile: Dockerfile.github-connector
+    ports:
+      - "5000:5000"
+    environment:
+      GITHUB_TOKEN: "${GITHUB_TOKEN}"
+    volumes:
+      - ./superset-github-connector:/app
+      - ./superset-frontend/superset-plugin-chart-collaboration-graph/src/data:/app/data
+    working_dir: /app
+    command: python github_connector.py
+
   superset-websocket:
     container_name: superset_websocket
     build: ./superset-websocket
