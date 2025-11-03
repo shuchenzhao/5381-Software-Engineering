@@ -1,5 +1,8 @@
-// 生成于 2025-11-03 22:59:30
+// 生成于 2025-11-04 00:12:17
 export const burndownData = [
+  { ds: '2025-09-01', remaining: 264 },
+  { ds: '2025-09-02', remaining: 264 },
+  { ds: '2025-09-03', remaining: 262 },
   { ds: '2025-09-04', remaining: 262 },
   { ds: '2025-09-05', remaining: 249 },
   { ds: '2025-09-06', remaining: 243 },
@@ -61,4 +64,5 @@ export const burndownData = [
   { ds: '2025-11-01', remaining: 171 },
   { ds: '2025-11-02', remaining: 172 },
   { ds: '2025-11-03', remaining: 177 },
+  { ds: '2025-11-04', remaining: 177 },
 ];

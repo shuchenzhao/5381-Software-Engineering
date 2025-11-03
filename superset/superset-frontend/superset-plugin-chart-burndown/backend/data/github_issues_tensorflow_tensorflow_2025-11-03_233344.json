@@ -1,5 +1,45 @@
 [
   {
+    "issue_number": 103454,
+    "issue_state": "open",
+    "created_at": "2025-11-03T14:34:20Z",
+    "closed_at": null,
+    "creator_login": "pesekon2",
+    "title": "tf.nn.max_pool_with_argmax output_dtype not working"
+  },
+  {
+    "issue_number": 103438,
+    "issue_state": "open",
+    "created_at": "2025-11-03T11:51:25Z",
+    "closed_at": null,
+    "creator_login": "pesekon2",
+    "title": "tf.nn.max_pool_with_argmax not working on GPU"
+  },
+  {
+    "issue_number": 103434,
+    "issue_state": "open",
+    "created_at": "2025-11-03T09:41:02Z",
+    "closed_at": null,
+    "creator_login": "showerage",
+    "title": "How does TensorFlow manage the lifecycle of an input tensor that is used within a GPU Kernel?"
+  },
+  {
+    "issue_number": 103430,
+    "issue_state": "open",
+    "created_at": "2025-11-03T04:56:57Z",
+    "closed_at": null,
+    "creator_login": "khteh",
+    "title": "Bogus exception during model `.fit()`"
+  },
+  {
+    "issue_number": 103429,
+    "issue_state": "open",
+    "created_at": "2025-11-03T03:35:15Z",
+    "closed_at": null,
+    "creator_login": "WangHHY19931001",
+    "title": "build tflite error for android arm64"
+  },
+  {
     "issue_number": 103407,
     "issue_state": "open",
     "created_at": "2025-11-02T09:07:49Z",

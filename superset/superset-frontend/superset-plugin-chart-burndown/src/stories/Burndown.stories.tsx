@@ -6,6 +6,9 @@ export default {
 };
 
 const data = [
+  { ds: '2025-09-01', remaining: 264 },
+  { ds: '2025-09-02', remaining: 264 },
+  { ds: '2025-09-03', remaining: 262 },
   { ds: '2025-09-04', remaining: 262 },
   { ds: '2025-09-05', remaining: 249 },
   { ds: '2025-09-06', remaining: 243 },
@@ -56,17 +59,18 @@ const data = [
   { ds: '2025-10-21', remaining: 176 },
   { ds: '2025-10-22', remaining: 176 },
   { ds: '2025-10-23', remaining: 170 },
-  // { ds: '2025-10-24', remaining: 170 },
-  // { ds: '2025-10-25', remaining: 166 },
-  // { ds: '2025-10-26', remaining: 167 },
-  // { ds: '2025-10-27', remaining: 169 },
-  // { ds: '2025-10-28', remaining: 171 },
-  // { ds: '2025-10-29', remaining: 172 },
-  // { ds: '2025-10-30', remaining: 171 },
-  // { ds: '2025-10-31', remaining: 170 },
-  // { ds: '2025-11-01', remaining: 171 },
-  // { ds: '2025-11-02', remaining: 172 },
-  // { ds: '2025-11-03', remaining: 177 },
+  { ds: '2025-10-24', remaining: 170 },
+  { ds: '2025-10-25', remaining: 166 },
+  { ds: '2025-10-26', remaining: 167 },
+  { ds: '2025-10-27', remaining: 169 },
+  { ds: '2025-10-28', remaining: 171 },
+  { ds: '2025-10-29', remaining: 172 },
+  { ds: '2025-10-30', remaining: 171 },
+  { ds: '2025-10-31', remaining: 170 },
+  { ds: '2025-11-01', remaining: 171 },
+  { ds: '2025-11-02', remaining: 172 },
+  { ds: '2025-11-03', remaining: 177 },
+  { ds: '2025-11-04', remaining: 177 },
 ];
 
 
