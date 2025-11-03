@@ -1,0 +1,3986 @@
+[
+  {
+    "issue_number": 103454,
+    "issue_state": "open",
+    "created_at": "2025-11-03T14:34:20Z",
+    "closed_at": null,
+    "creator_login": "pesekon2",
+    "title": "tf.nn.max_pool_with_argmax output_dtype not working"
+  },
+  {
+    "issue_number": 103438,
+    "issue_state": "open",
+    "created_at": "2025-11-03T11:51:25Z",
+    "closed_at": null,
+    "creator_login": "pesekon2",
+    "title": "tf.nn.max_pool_with_argmax not working on GPU"
+  },
+  {
+    "issue_number": 103434,
+    "issue_state": "open",
+    "created_at": "2025-11-03T09:41:02Z",
+    "closed_at": null,
+    "creator_login": "showerage",
+    "title": "How does TensorFlow manage the lifecycle of an input tensor that is used within a GPU Kernel?"
+  },
+  {
+    "issue_number": 103430,
+    "issue_state": "open",
+    "created_at": "2025-11-03T04:56:57Z",
+    "closed_at": null,
+    "creator_login": "khteh",
+    "title": "Bogus exception during model `.fit()`"
+  },
+  {
+    "issue_number": 103429,
+    "issue_state": "open",
+    "created_at": "2025-11-03T03:35:15Z",
+    "closed_at": null,
+    "creator_login": "WangHHY19931001",
+    "title": "build tflite error for android arm64"
+  },
+  {
+    "issue_number": 103407,
+    "issue_state": "open",
+    "created_at": "2025-11-02T09:07:49Z",
+    "closed_at": null,
+    "creator_login": "midoradev",
+    "title": "Can't download tensorflow"
+  },
+  {
+    "issue_number": 103397,
+    "issue_state": "open",
+    "created_at": "2025-11-01T09:04:53Z",
+    "closed_at": null,
+    "creator_login": "khteh",
+    "title": "`ValueError: Shape must be at most rank 0 but is rank 2 for '{{node BroadcastTo_1}} = BroadcastTo[T=DT_FLOAT, Tidx=DT_INT32](Cast_6, BroadcastTo_1/shape_1)' with input shapes: [?,104], [0].`"
+  },
+  {
+    "issue_number": 103352,
+    "issue_state": "open",
+    "created_at": "2025-10-31T12:54:32Z",
+    "closed_at": null,
+    "creator_login": "ILCSFNO",
+    "title": "Fix the type match in func `tf.raw_ops.IsotonicRegression`"
+  },
+  {
+    "issue_number": 103263,
+    "issue_state": "open",
+    "created_at": "2025-10-30T09:47:52Z",
+    "closed_at": null,
+    "creator_login": "brooqngar127-stack",
+    "title": "TensorFlow Lite in Play Services issue"
+  },
+  {
+    "issue_number": 103066,
+    "issue_state": "open",
+    "created_at": "2025-10-29T20:50:25Z",
+    "closed_at": null,
+    "creator_login": "Shahed-mn",
+    "title": "keras vulnerability on the latest version of tensorflow"
+  },
+  {
+    "issue_number": 103033,
+    "issue_state": "open",
+    "created_at": "2025-10-29T09:55:12Z",
+    "closed_at": null,
+    "creator_login": "saisrivatsa",
+    "title": "Undefined symbol while importing tensorflow"
+  },
+  {
+    "issue_number": 102996,
+    "issue_state": "open",
+    "created_at": "2025-10-28T22:22:43Z",
+    "closed_at": null,
+    "creator_login": "pEtienn",
+    "title": "Images returned by tf.image.decode_jpeg have significant differences with images returned by other common loaders."
+  },
+  {
+    "issue_number": 102943,
+    "issue_state": "open",
+    "created_at": "2025-10-28T05:17:48Z",
+    "closed_at": null,
+    "creator_login": "kuriakosejom",
+    "title": "Understanding the math behind TFLite quantization"
+  },
+  {
+    "issue_number": 102890,
+    "issue_state": "open",
+    "created_at": "2025-10-27T13:04:03Z",
+    "closed_at": null,
+    "creator_login": "chenrui333",
+    "title": "Support python 3.14"
+  },
+  {
+    "issue_number": 102880,
+    "issue_state": "open",
+    "created_at": "2025-10-27T09:52:11Z",
+    "closed_at": null,
+    "creator_login": "khteh",
+    "title": "`plot_model` `rankdir=\"LR\"` show empty image"
+  },
+  {
+    "issue_number": 102870,
+    "issue_state": "closed",
+    "created_at": "2025-10-27T02:31:37Z",
+    "closed_at": "2025-10-30T05:32:59Z",
+    "creator_login": "khteh",
+    "title": "`BatchNormalization` does not transform the input at all."
+  },
+  {
+    "issue_number": 102864,
+    "issue_state": "open",
+    "created_at": "2025-10-26T15:39:38Z",
+    "closed_at": null,
+    "creator_login": "bylowerik",
+    "title": "Cannot build lite for iOS"
+  },
+  {
+    "issue_number": 102812,
+    "issue_state": "closed",
+    "created_at": "2025-10-24T09:44:08Z",
+    "closed_at": "2025-10-31T09:31:04Z",
+    "creator_login": "ILCSFNO",
+    "title": "Memory usage stop increasing when `max_range` increase in func `tf.raw_ops.QuantizeV2()`"
+  },
+  {
+    "issue_number": 102799,
+    "issue_state": "closed",
+    "created_at": "2025-10-24T01:07:13Z",
+    "closed_at": "2025-10-24T16:25:25Z",
+    "creator_login": "kp5244569-del",
+    "title": "I'm a spammer"
+  },
+  {
+    "issue_number": 102778,
+    "issue_state": "closed",
+    "created_at": "2025-10-23T17:21:11Z",
+    "closed_at": "2025-10-24T16:26:19Z",
+    "creator_login": "kp5244569-del",
+    "title": "I'm a spammer"
+  },
+  {
+    "issue_number": 102771,
+    "issue_state": "open",
+    "created_at": "2025-10-23T12:20:13Z",
+    "closed_at": null,
+    "creator_login": "grow1n",
+    "title": "Division Precision Problem in Graph Mode on Intel CPU"
+  },
+  {
+    "issue_number": 102743,
+    "issue_state": "closed",
+    "created_at": "2025-10-22T19:50:52Z",
+    "closed_at": "2025-10-27T15:57:33Z",
+    "creator_login": "Abelarm",
+    "title": "Incopatible version of `tensorflow==2.14` with `numpy>2`"
+  },
+  {
+    "issue_number": 102598,
+    "issue_state": "open",
+    "created_at": "2025-10-20T09:51:57Z",
+    "closed_at": null,
+    "creator_login": "khteh",
+    "title": "GRU character generation functional API model throws various exceptions."
+  },
+  {
+    "issue_number": 102572,
+    "issue_state": "open",
+    "created_at": "2025-10-20T01:46:22Z",
+    "closed_at": null,
+    "creator_login": "WangHHY19931001",
+    "title": "build tersonflow-lite error"
+  },
+  {
+    "issue_number": 102566,
+    "issue_state": "closed",
+    "created_at": "2025-10-19T18:34:32Z",
+    "closed_at": "2025-10-20T18:18:29Z",
+    "creator_login": "Mhassaansi",
+    "title": "The native library arm64-v8a/libtask_text_jni.so (from org.tensorflow:tensorflow-lite-task-text:0.4.4) is not 16 KB aligned"
+  },
+  {
+    "issue_number": 102546,
+    "issue_state": "open",
+    "created_at": "2025-10-18T22:10:35Z",
+    "closed_at": null,
+    "creator_login": "7erryX",
+    "title": "Potential NULL Pointer Dereference"
+  },
+  {
+    "issue_number": 102536,
+    "issue_state": "closed",
+    "created_at": "2025-10-18T10:24:51Z",
+    "closed_at": "2025-10-20T18:23:15Z",
+    "creator_login": "HossamSadekk",
+    "title": "Play Console warning: Library that does not support 16 KB for libtensorflowlite_jni.so"
+  },
+  {
+    "issue_number": 102492,
+    "issue_state": "open",
+    "created_at": "2025-10-17T13:43:48Z",
+    "closed_at": null,
+    "creator_login": "qiqicliff",
+    "title": "TensorFlow NearestNeighborsOp Crash Due to Negative k Value"
+  },
+  {
+    "issue_number": 102490,
+    "issue_state": "open",
+    "created_at": "2025-10-17T13:13:30Z",
+    "closed_at": null,
+    "creator_login": "idalevison",
+    "title": "Tensorflow lite reference kernel ReduceSum overflows when network type not uint8"
+  },
+  {
+    "issue_number": 102475,
+    "issue_state": "closed",
+    "created_at": "2025-10-17T05:25:55Z",
+    "closed_at": "2025-10-23T17:45:55Z",
+    "creator_login": "khteh",
+    "title": "`TypeError: Could not locate function 'log_softmax_v2' and 'l2_normalize'.` when deserializing a saved `.keras` model."
+  },
+  {
+    "issue_number": 102418,
+    "issue_state": "open",
+    "created_at": "2025-10-16T13:02:05Z",
+    "closed_at": null,
+    "creator_login": "ILCSFNO",
+    "title": "Bug or Just Doc Bug: For arg `n` in func `tf.signal.idct()`"
+  },
+  {
+    "issue_number": 102416,
+    "issue_state": "closed",
+    "created_at": "2025-10-16T12:39:46Z",
+    "closed_at": "2025-10-25T01:36:57Z",
+    "creator_login": "Vertinpy",
+    "title": "\"Segmentation fault\" error occurred when building the model with Keras"
+  },
+  {
+    "issue_number": 102411,
+    "issue_state": "open",
+    "created_at": "2025-10-16T10:53:04Z",
+    "closed_at": null,
+    "creator_login": "vi1",
+    "title": "Support new cpu+os combination."
+  },
+  {
+    "issue_number": 102402,
+    "issue_state": "closed",
+    "created_at": "2025-10-16T09:08:44Z",
+    "closed_at": "2025-10-16T15:29:39Z",
+    "creator_login": "tgnathan",
+    "title": "tensorflow pywrap import"
+  },
+  {
+    "issue_number": 102383,
+    "issue_state": "open",
+    "created_at": "2025-10-16T02:34:42Z",
+    "closed_at": null,
+    "creator_login": "tinywisdom",
+    "title": "[GPU][UnsortedSegmentProd] GPU kernel assertion on large num_segments (overflow in launch config)"
+  },
+  {
+    "issue_number": 102354,
+    "issue_state": "closed",
+    "created_at": "2025-10-15T13:31:23Z",
+    "closed_at": "2025-10-15T20:49:33Z",
+    "creator_login": "aabeni771-ai",
+    "title": "abeni AI"
+  },
+  {
+    "issue_number": 102352,
+    "issue_state": "open",
+    "created_at": "2025-10-15T12:28:11Z",
+    "closed_at": null,
+    "creator_login": "ILCSFNO",
+    "title": "Return Bug find in func `tf.raw_ops.SelfAdjointEigV2()`: Tensors or just one Tensor"
+  },
+  {
+    "issue_number": 102349,
+    "issue_state": "open",
+    "created_at": "2025-10-15T11:38:46Z",
+    "closed_at": null,
+    "creator_login": "ILCSFNO",
+    "title": "Add the limitation on types in func `tf.raw_ops.Imag()`"
+  },
+  {
+    "issue_number": 102343,
+    "issue_state": "open",
+    "created_at": "2025-10-15T11:23:03Z",
+    "closed_at": null,
+    "creator_login": "ILCSFNO",
+    "title": "Add the limitation on types transferred in func `tf.raw_ops.ComplexAbs()`"
+  },
+  {
+    "issue_number": 102210,
+    "issue_state": "closed",
+    "created_at": "2025-10-13T12:34:17Z",
+    "closed_at": "2025-10-14T18:42:29Z",
+    "creator_login": "suvarnaray-coriolis",
+    "title": "Tensorflow issue with Spotfire LTS 12.0.3 : A DLL initialization routine failed"
+  },
+  {
+    "issue_number": 102206,
+    "issue_state": "open",
+    "created_at": "2025-10-13T10:18:57Z",
+    "closed_at": null,
+    "creator_login": "medaminezghal",
+    "title": "TF_SYSTEM_LIBS doesn't work"
+  },
+  {
+    "issue_number": 102159,
+    "issue_state": "open",
+    "created_at": "2025-10-12T16:34:28Z",
+    "closed_at": null,
+    "creator_login": "Sherlockzhangjinge",
+    "title": "Can't compile tensorflow 2.19.1 on riscv"
+  },
+  {
+    "issue_number": 102158,
+    "issue_state": "closed",
+    "created_at": "2025-10-12T10:41:10Z",
+    "closed_at": "2025-10-14T18:44:44Z",
+    "creator_login": "mochajavatest-cyber",
+    "title": "Error: Request failed with status code 403"
+  },
+  {
+    "issue_number": 102084,
+    "issue_state": "open",
+    "created_at": "2025-10-11T03:34:01Z",
+    "closed_at": null,
+    "creator_login": "syan427",
+    "title": "tf.linalg.trace returns opposite infinity signs with and without XLA (jit_compile=True) on float16 inputs"
+  },
+  {
+    "issue_number": 102071,
+    "issue_state": "closed",
+    "created_at": "2025-10-10T20:39:37Z",
+    "closed_at": "2025-10-31T15:08:10Z",
+    "creator_login": "Apoorv-1009",
+    "title": "LiteRT Support in Latest Tensorflow version 2.20.0"
+  },
+  {
+    "issue_number": 102065,
+    "issue_state": "open",
+    "created_at": "2025-10-10T19:09:31Z",
+    "closed_at": null,
+    "creator_login": "achen1959",
+    "title": "GPU crash with RTX A1000 on TensorFlow 2.13 — even simple Conv2D model fails"
+  },
+  {
+    "issue_number": 102055,
+    "issue_state": "closed",
+    "created_at": "2025-10-10T15:29:09Z",
+    "closed_at": "2025-10-12T04:14:42Z",
+    "creator_login": "matheushenrick304-code",
+    "title": "Ucgcgcgvy."
+  },
+  {
+    "issue_number": 102054,
+    "issue_state": "closed",
+    "created_at": "2025-10-10T15:28:08Z",
+    "closed_at": "2025-10-12T04:14:59Z",
+    "creator_login": "matheushenrick304-code",
+    "title": "Spammer"
+  },
+  {
+    "issue_number": 102053,
+    "issue_state": "closed",
+    "created_at": "2025-10-10T15:26:56Z",
+    "closed_at": "2025-10-12T04:15:31Z",
+    "creator_login": "matheushenrick304-code",
+    "title": "I'm a spammer"
+  },
+  {
+    "issue_number": 102052,
+    "issue_state": "closed",
+    "created_at": "2025-10-10T15:26:38Z",
+    "closed_at": "2025-10-12T04:15:21Z",
+    "creator_login": "matheushenrick304-code",
+    "title": "Spammer"
+  },
+  {
+    "issue_number": 102051,
+    "issue_state": "closed",
+    "created_at": "2025-10-10T15:25:08Z",
+    "closed_at": "2025-10-12T04:15:08Z",
+    "creator_login": "matheushenrick304-code",
+    "title": "Spammer"
+  },
+  {
+    "issue_number": 102048,
+    "issue_state": "open",
+    "created_at": "2025-10-10T13:21:10Z",
+    "closed_at": null,
+    "creator_login": "syan427",
+    "title": "tf.image.rgb_to_hsv and tf.image.hsv_to_rgb are not numerically reversible for large float32 inputs"
+  },
+  {
+    "issue_number": 102047,
+    "issue_state": "open",
+    "created_at": "2025-10-10T13:19:48Z",
+    "closed_at": null,
+    "creator_login": "syan427",
+    "title": "tf.signal.ifft and tf.raw_ops.IFFT produce inconsistent results on large complex128 inputs"
+  },
+  {
+    "issue_number": 102046,
+    "issue_state": "open",
+    "created_at": "2025-10-10T13:18:28Z",
+    "closed_at": null,
+    "creator_login": "syan427",
+    "title": "tf.distribute.Strategy.reduce(\"SUM\") produces inf while tf.math.reduce_sum gives correct finite result on float16"
+  },
+  {
+    "issue_number": 102044,
+    "issue_state": "closed",
+    "created_at": "2025-10-10T13:01:52Z",
+    "closed_at": "2025-10-15T15:50:57Z",
+    "creator_login": "syan427",
+    "title": "tf.math.not_equal gives inconsistent results between dense and RaggedTensor inputs"
+  },
+  {
+    "issue_number": 102043,
+    "issue_state": "open",
+    "created_at": "2025-10-10T12:53:44Z",
+    "closed_at": null,
+    "creator_login": "syan427",
+    "title": "Incorrect result when using XLA (jit_compile=True) with tf.math.reduce_mean on int32 tensors"
+  },
+  {
+    "issue_number": 102027,
+    "issue_state": "open",
+    "created_at": "2025-10-10T10:42:20Z",
+    "closed_at": null,
+    "creator_login": "ILCSFNO",
+    "title": "Fix the descriptions of limitation in several RFFT funcs"
+  },
+  {
+    "issue_number": 101991,
+    "issue_state": "closed",
+    "created_at": "2025-10-09T22:05:48Z",
+    "closed_at": "2025-10-14T17:16:08Z",
+    "creator_login": "lordo223",
+    "title": "LiteRT Support 1.4.0 ships libimage_processing_util_jni.so with 4 KB alignment — fails Play’s 16 KB page-size requirement"
+  },
+  {
+    "issue_number": 101960,
+    "issue_state": "closed",
+    "created_at": "2025-10-09T14:29:10Z",
+    "closed_at": "2025-10-15T16:12:18Z",
+    "creator_login": "josecabrita",
+    "title": "Error on load tensorflow"
+  },
+  {
+    "issue_number": 101941,
+    "issue_state": "closed",
+    "created_at": "2025-10-09T06:17:51Z",
+    "closed_at": "2025-10-20T18:26:52Z",
+    "creator_login": "matsidor1975",
+    "title": "I'm a spammer"
+  },
+  {
+    "issue_number": 101889,
+    "issue_state": "open",
+    "created_at": "2025-10-08T16:20:38Z",
+    "closed_at": null,
+    "creator_login": "sebouh00",
+    "title": "SIGSEGV on armv7a devices"
+  },
+  {
+    "issue_number": 101746,
+    "issue_state": "closed",
+    "created_at": "2025-10-06T16:30:53Z",
+    "closed_at": "2025-10-22T02:10:44Z",
+    "creator_login": "tgshen",
+    "title": "[Bug] CUDA_ERROR_INVALID_PTX on new RTX 5080 GPU with Driver 581.29"
+  },
+  {
+    "issue_number": 101590,
+    "issue_state": "open",
+    "created_at": "2025-10-03T12:30:11Z",
+    "closed_at": null,
+    "creator_login": "HusainKapadia",
+    "title": "Tensorboard Profiler not working"
+  },
+  {
+    "issue_number": 101580,
+    "issue_state": "open",
+    "created_at": "2025-10-03T09:24:59Z",
+    "closed_at": null,
+    "creator_login": "ILCSFNO",
+    "title": "Error should not Raised when transferring `keepdim` into `False` in `tf.nn.weighted_moments()`"
+  },
+  {
+    "issue_number": 101578,
+    "issue_state": "closed",
+    "created_at": "2025-10-03T08:50:02Z",
+    "closed_at": "2025-10-15T17:18:57Z",
+    "creator_login": "ILCSFNO",
+    "title": "Note the `UnimplementedError` in func `tf.raw_ops.DenseBincount()`"
+  },
+  {
+    "issue_number": 101521,
+    "issue_state": "closed",
+    "created_at": "2025-10-02T15:59:18Z",
+    "closed_at": "2025-10-17T06:51:59Z",
+    "creator_login": "ILCSFNO",
+    "title": "Fix the docstring in `tf.raw_ops.ThreadPoolHandle()` and `tf.raw_ops.StatsAggregatorHandleV2()`"
+  },
+  {
+    "issue_number": 101516,
+    "issue_state": "closed",
+    "created_at": "2025-10-02T14:57:05Z",
+    "closed_at": "2025-10-17T06:59:30Z",
+    "creator_login": "ILCSFNO",
+    "title": "Fix the Doc of `input_min` and `input_max` in `tf.raw_ops.QuantizeAndDequantizeV4Grad()`"
+  },
+  {
+    "issue_number": 101499,
+    "issue_state": "open",
+    "created_at": "2025-10-02T11:11:35Z",
+    "closed_at": null,
+    "creator_login": "khteh",
+    "title": "tf.keras.applications.EfficientNetV2L `include_top=False` but still see the `top_activation` in the transfer-learning model"
+  },
+  {
+    "issue_number": 101472,
+    "issue_state": "closed",
+    "created_at": "2025-10-02T04:13:26Z",
+    "closed_at": "2025-10-13T16:58:39Z",
+    "creator_login": "Sujal1201",
+    "title": "Footer Responsiveness on Mobile"
+  },
+  {
+    "issue_number": 101445,
+    "issue_state": "open",
+    "created_at": "2025-10-01T15:52:49Z",
+    "closed_at": null,
+    "creator_login": "chengdusunny",
+    "title": "Bug in tf.keras.layer.Attention Doc"
+  },
+  {
+    "issue_number": 101409,
+    "issue_state": "open",
+    "created_at": "2025-10-01T02:57:33Z",
+    "closed_at": null,
+    "creator_login": "tinywisdom",
+    "title": "[TF/Keras][Conv3D+MaxPool3D] Zero-sized spatial dims cause fatal cuDNN abort (should raise Python InvalidArgumentError instead)"
+  },
+  {
+    "issue_number": 101397,
+    "issue_state": "open",
+    "created_at": "2025-09-30T19:28:28Z",
+    "closed_at": null,
+    "creator_login": "buttered-stoast",
+    "title": "Tensorflow lite CVE-2022-23559 fixes potentially incomplete"
+  },
+  {
+    "issue_number": 101391,
+    "issue_state": "closed",
+    "created_at": "2025-09-30T18:00:00Z",
+    "closed_at": "2025-10-30T02:12:11Z",
+    "creator_login": "adityas129",
+    "title": "How to Install old TF versions? My package relies on old package of TF that is currently not accessible via Pypi and I need that- how to solve?"
+  },
+  {
+    "issue_number": 101361,
+    "issue_state": "open",
+    "created_at": "2025-09-30T08:16:48Z",
+    "closed_at": null,
+    "creator_login": "karmenOvO-cc",
+    "title": "An exception caused by a lack of null check in the SimpleMemoryArena::Commit function"
+  },
+  {
+    "issue_number": 101358,
+    "issue_state": "closed",
+    "created_at": "2025-09-30T06:16:47Z",
+    "closed_at": "2025-10-13T16:50:46Z",
+    "creator_login": "uhhuhohyeababy",
+    "title": "I'm a proud spammer and a hater"
+  },
+  {
+    "issue_number": 101307,
+    "issue_state": "closed",
+    "created_at": "2025-09-29T15:11:30Z",
+    "closed_at": "2025-10-14T18:44:11Z",
+    "creator_login": "Abhinavvel2006",
+    "title": "tensorFlow runtime issue"
+  },
+  {
+    "issue_number": 101296,
+    "issue_state": "open",
+    "created_at": "2025-09-29T12:24:11Z",
+    "closed_at": null,
+    "creator_login": "khteh",
+    "title": "Transfer Learning - `MobileNetV3Large`/`EfficientNetV2L` `CategoricalCrossentropy` keep getting negative predictions"
+  },
+  {
+    "issue_number": 101265,
+    "issue_state": "open",
+    "created_at": "2025-09-28T20:30:41Z",
+    "closed_at": null,
+    "creator_login": "vincentnderitu",
+    "title": "Inconsistent Behavior of tf.image.resize When Using antialias=True with Integer Scaling Factors"
+  },
+  {
+    "issue_number": 101201,
+    "issue_state": "closed",
+    "created_at": "2025-09-27T11:58:32Z",
+    "closed_at": "2025-10-13T16:46:21Z",
+    "creator_login": "khteh",
+    "title": "`ValueError: Only instances of `keras.Layer` can be added to a Sequential model. Received: <tensorflow_hub.keras_layer.KerasLayer object at 0x7f28cb785bd0> (of type <class 'tensorflow_hub.keras_layer.KerasLayer'>)`"
+  },
+  {
+    "issue_number": 101188,
+    "issue_state": "open",
+    "created_at": "2025-09-27T10:19:23Z",
+    "closed_at": null,
+    "creator_login": "LiSsHhUuAaIi",
+    "title": "XLA JIT Compilation Fails with String Input Tensors"
+  },
+  {
+    "issue_number": 101183,
+    "issue_state": "open",
+    "created_at": "2025-09-27T09:27:24Z",
+    "closed_at": null,
+    "creator_login": "LiSsHhUuAaIi",
+    "title": "XLA JIT Compilation Fails with String Tensor Return Values"
+  },
+  {
+    "issue_number": 101181,
+    "issue_state": "open",
+    "created_at": "2025-09-27T09:11:14Z",
+    "closed_at": null,
+    "creator_login": "LiSsHhUuAaIi",
+    "title": "XLA JIT Compilation Fails with String Operations in tf.where"
+  },
+  {
+    "issue_number": 101142,
+    "issue_state": "open",
+    "created_at": "2025-09-26T20:01:45Z",
+    "closed_at": null,
+    "creator_login": "0xra0",
+    "title": "failed: undeclared inclusion(s) in rule '//tensorflow/core/grappler:devices': this rule is missing dependency declarations for the following files included by 'tensorflow/core/grappler/devices.cc'"
+  },
+  {
+    "issue_number": 101115,
+    "issue_state": "closed",
+    "created_at": "2025-09-26T13:43:14Z",
+    "closed_at": "2025-10-13T16:47:34Z",
+    "creator_login": "estudante668",
+    "title": "NotFoundError in cats_and_dogs_filtered tutorial with tf.keras.utils.get_file(extract=True) (TF 2.19, Colab)"
+  },
+  {
+    "issue_number": 101050,
+    "issue_state": "open",
+    "created_at": "2025-09-25T18:19:52Z",
+    "closed_at": null,
+    "creator_login": "CalinPetrea5115",
+    "title": "[RNN] LSTM model crashing during conversion to int8x8 tflite"
+  },
+  {
+    "issue_number": 101017,
+    "issue_state": "closed",
+    "created_at": "2025-09-25T09:20:47Z",
+    "closed_at": "2025-09-29T10:30:40Z",
+    "creator_login": "Ankita-020696",
+    "title": "Native Compilation of Tflite (tensorflow 2.19.1) for riscv64 using Cmake"
+  },
+  {
+    "issue_number": 100940,
+    "issue_state": "open",
+    "created_at": "2025-09-24T06:39:53Z",
+    "closed_at": null,
+    "creator_login": "Sherlockzhangjinge",
+    "title": "Compile Tensorflow on riscv64 platform"
+  },
+  {
+    "issue_number": 100902,
+    "issue_state": "closed",
+    "created_at": "2025-09-23T16:16:07Z",
+    "closed_at": "2025-09-23T16:21:04Z",
+    "creator_login": "pass-lin",
+    "title": "Bug for tf.image.extract_patches"
+  },
+  {
+    "issue_number": 100889,
+    "issue_state": "closed",
+    "created_at": "2025-09-23T13:13:37Z",
+    "closed_at": "2025-09-24T15:35:56Z",
+    "creator_login": "jangabrielgodoy2006-lgtm",
+    "title": "I'm a spammer"
+  },
+  {
+    "issue_number": 100874,
+    "issue_state": "open",
+    "created_at": "2025-09-23T07:31:09Z",
+    "closed_at": null,
+    "creator_login": "tinywisdom",
+    "title": "XLA GPU JIT: tf.random.poisson lowers to RandomPoissonV2 which has no XLA_GPU_JIT kernel (fails under tf.function(jit_compile=True))"
+  },
+  {
+    "issue_number": 100872,
+    "issue_state": "closed",
+    "created_at": "2025-09-23T06:46:45Z",
+    "closed_at": "2025-10-14T02:05:38Z",
+    "creator_login": "tinywisdom",
+    "title": "XLA GPU JIT: Keras LSTM hits \"No registered 'CudnnRNNV3' OpKernel for XLA_GPU_JIT\" (TF 2.20.0, Keras 3.11.3)"
+  },
+  {
+    "issue_number": 100865,
+    "issue_state": "open",
+    "created_at": "2025-09-23T02:48:07Z",
+    "closed_at": null,
+    "creator_login": "tinywisdom",
+    "title": "XLA GPU JIT: keras.layers.RandomRotation fails with \"No registered 'ImageProjectiveTransformV3' OpKernel for XLA_GPU_JIT\" (TF 2.20.0, Keras 3.11.3)"
+  },
+  {
+    "issue_number": 100817,
+    "issue_state": "closed",
+    "created_at": "2025-09-22T04:35:33Z",
+    "closed_at": "2025-09-22T15:54:54Z",
+    "creator_login": "Bigfamily666",
+    "title": "I am a spammer with no shame, I will spam your project"
+  },
+  {
+    "issue_number": 100689,
+    "issue_state": "closed",
+    "created_at": "2025-09-20T20:50:23Z",
+    "closed_at": "2025-09-22T19:46:22Z",
+    "creator_login": "elieobeid7",
+    "title": "Python 3.13: Unable to install tensorflow[cuda] on windows 11"
+  },
+  {
+    "issue_number": 100686,
+    "issue_state": "open",
+    "created_at": "2025-09-20T18:21:43Z",
+    "closed_at": null,
+    "creator_login": "raphael10-collab",
+    "title": "install(EXPORT \"tensorflow-liteTargets\" ...) includes target \"tensorflow-lite\" which requires target \"pthreadpool\"/\"xnnpack-delegate\"/\"XNNPACK\" that is not in any export set"
+  },
+  {
+    "issue_number": 100590,
+    "issue_state": "open",
+    "created_at": "2025-09-19T09:44:30Z",
+    "closed_at": null,
+    "creator_login": "AyoubMDL",
+    "title": "tf.clip_by_value / tf.minimum and tf.maximum produce incorrect results with int64 on Windows"
+  },
+  {
+    "issue_number": 100573,
+    "issue_state": "closed",
+    "created_at": "2025-09-19T05:43:20Z",
+    "closed_at": "2025-09-19T16:14:06Z",
+    "creator_login": "gabrielsosa03",
+    "title": "I'm a spammer"
+  },
+  {
+    "issue_number": 100533,
+    "issue_state": "closed",
+    "created_at": "2025-09-18T16:38:34Z",
+    "closed_at": "2025-10-15T20:51:06Z",
+    "creator_login": "JoyalTA",
+    "title": "TensorFlow lite task-vision and gpu-delegate-plugin  libs does not support 16kb page alignment in Android"
+  },
+  {
+    "issue_number": 100522,
+    "issue_state": "closed",
+    "created_at": "2025-09-18T13:28:41Z",
+    "closed_at": "2025-09-19T16:47:48Z",
+    "creator_login": "ILCSFNO",
+    "title": "Specify the rule of the name of `container` in func `tf.raw_ops.ExperimentalThreadPoolHandle`"
+  },
+  {
+    "issue_number": 100521,
+    "issue_state": "open",
+    "created_at": "2025-09-18T13:24:23Z",
+    "closed_at": null,
+    "creator_login": "LiSsHhUuAaIi",
+    "title": "XLA JIT Compilation Fails with CropAndResize Operation"
+  },
+  {
+    "issue_number": 100519,
+    "issue_state": "open",
+    "created_at": "2025-09-18T13:16:59Z",
+    "closed_at": null,
+    "creator_login": "LiSsHhUuAaIi",
+    "title": "XLA JIT Compilation Fails with MaxPoolWithArgmax Operation"
+  },
+  {
+    "issue_number": 100517,
+    "issue_state": "open",
+    "created_at": "2025-09-18T12:55:41Z",
+    "closed_at": null,
+    "creator_login": "LiSsHhUuAaIi",
+    "title": "tf.print Operation Fails on XLA JIT Compilation with \"No registered 'StringFormat' OpKernel for XLA_TPU_JIT devices\""
+  },
+  {
+    "issue_number": 100500,
+    "issue_state": "closed",
+    "created_at": "2025-09-18T09:40:35Z",
+    "closed_at": "2025-09-19T16:29:01Z",
+    "creator_login": "ILCSFNO",
+    "title": "Clarify the error raised between `pad_values` and `padding_width` in func `tf.strings.ngrams()`"
+  },
+  {
+    "issue_number": 100497,
+    "issue_state": "closed",
+    "created_at": "2025-09-18T09:31:04Z",
+    "closed_at": "2025-09-19T16:55:22Z",
+    "creator_login": "ILCSFNO",
+    "title": "Clarify the limitation between `scientific` and `shortest` in func `tf.strings.as_string()`"
+  },
+  {
+    "issue_number": 100442,
+    "issue_state": "closed",
+    "created_at": "2025-09-17T17:54:54Z",
+    "closed_at": "2025-10-10T02:05:28Z",
+    "creator_login": "Orient-Dorey",
+    "title": "TF_CPP_MIN_LOG_LEVEL=3 doesn't silence import warnings in tensorflow 2.19"
+  },
+  {
+    "issue_number": 100434,
+    "issue_state": "open",
+    "created_at": "2025-09-17T10:21:21Z",
+    "closed_at": null,
+    "creator_login": "yangliu-1995",
+    "title": "[iOS][Xcode 26 Support"
+  },
+  {
+    "issue_number": 100375,
+    "issue_state": "open",
+    "created_at": "2025-09-16T06:36:51Z",
+    "closed_at": null,
+    "creator_login": "KnightGOKU",
+    "title": "`Segmentation fault` in TensorFlow API `tf.raw_ops.CropAndResize`"
+  },
+  {
+    "issue_number": 100374,
+    "issue_state": "open",
+    "created_at": "2025-09-16T06:34:46Z",
+    "closed_at": null,
+    "creator_login": "KnightGOKU",
+    "title": "`aborted issue` in TensorFlow for  API `tf.nn.separable_conv2d`"
+  },
+  {
+    "issue_number": 100335,
+    "issue_state": "open",
+    "created_at": "2025-09-15T09:35:03Z",
+    "closed_at": null,
+    "creator_login": "mallappa24",
+    "title": "Crash in tensoflow protobuf."
+  },
+  {
+    "issue_number": 100332,
+    "issue_state": "open",
+    "created_at": "2025-09-15T05:00:58Z",
+    "closed_at": null,
+    "creator_login": "mbochk",
+    "title": "Attention layer is not able to predict on Macos"
+  },
+  {
+    "issue_number": 100330,
+    "issue_state": "open",
+    "created_at": "2025-09-15T03:16:07Z",
+    "closed_at": null,
+    "creator_login": "khteh",
+    "title": "`.compile` throws `ValueError: Could not interpret optimizer identifier: <keras.src.optimizers.adam.Adam object at 0x7f419cfc5010>`"
+  },
+  {
+    "issue_number": 100327,
+    "issue_state": "closed",
+    "created_at": "2025-09-14T04:27:29Z",
+    "closed_at": "2025-09-24T08:03:10Z",
+    "creator_login": "khteh",
+    "title": "`@saving.register_keras_serializable()` but still fails deserialization!"
+  },
+  {
+    "issue_number": 100320,
+    "issue_state": "closed",
+    "created_at": "2025-09-13T15:16:03Z",
+    "closed_at": "2025-09-22T15:55:45Z",
+    "creator_login": "Bigfamily666",
+    "title": "I am spammer with no shame"
+  },
+  {
+    "issue_number": 100319,
+    "issue_state": "closed",
+    "created_at": "2025-09-13T15:01:16Z",
+    "closed_at": "2025-09-15T02:36:37Z",
+    "creator_login": "khteh",
+    "title": "`.compile` metrics list"
+  },
+  {
+    "issue_number": 100317,
+    "issue_state": "closed",
+    "created_at": "2025-09-13T14:09:50Z",
+    "closed_at": "2025-10-01T02:12:40Z",
+    "creator_login": "cruisetravis369",
+    "title": "TensorFlow Lite in Play Services issue"
+  },
+  {
+    "issue_number": 100300,
+    "issue_state": "closed",
+    "created_at": "2025-09-13T05:20:43Z",
+    "closed_at": "2025-09-13T14:24:00Z",
+    "creator_login": "khteh",
+    "title": "`tensorflow.keras.layers.LSTM` layer throws `TypeError: missing a required argument: 'sequences'`"
+  },
+  {
+    "issue_number": 100252,
+    "issue_state": "open",
+    "created_at": "2025-09-12T11:33:58Z",
+    "closed_at": null,
+    "creator_login": "ILCSFNO",
+    "title": "Exception when `alg='threefry'` in func `tf.random.stateless_uniform()`"
+  },
+  {
+    "issue_number": 100244,
+    "issue_state": "closed",
+    "created_at": "2025-09-12T10:32:01Z",
+    "closed_at": "2025-09-13T14:51:36Z",
+    "creator_login": "Harsha0609-2k5",
+    "title": "import error"
+  },
+  {
+    "issue_number": 100237,
+    "issue_state": "open",
+    "created_at": "2025-09-12T09:06:10Z",
+    "closed_at": null,
+    "creator_login": "ILCSFNO",
+    "title": "Codes should not work well when `dilations greater than 1` and `strides have value not of 1` on `tf.nn.depthwise_conv2d`"
+  },
+  {
+    "issue_number": 100234,
+    "issue_state": "closed",
+    "created_at": "2025-09-12T08:19:27Z",
+    "closed_at": "2025-09-16T20:55:19Z",
+    "creator_login": "ILCSFNO",
+    "title": "Clarify the range of action of `select_cols` in `tf.io.decode_csv()` and `tf.raw_ops.DecodeCSV()`"
+  },
+  {
+    "issue_number": 100223,
+    "issue_state": "open",
+    "created_at": "2025-09-12T04:42:43Z",
+    "closed_at": null,
+    "creator_login": "SilentTester73",
+    "title": "Unclear Error Message in tf.raw_ops.QuantizedMaxPool with oneDNN Enabled"
+  },
+  {
+    "issue_number": 100175,
+    "issue_state": "open",
+    "created_at": "2025-09-11T14:51:27Z",
+    "closed_at": null,
+    "creator_login": "ILCSFNO",
+    "title": "Fix the `axis` issue in func `tf.raw_ops.Dequantize()`"
+  },
+  {
+    "issue_number": 100138,
+    "issue_state": "closed",
+    "created_at": "2025-09-11T09:19:54Z",
+    "closed_at": "2025-09-15T16:31:56Z",
+    "creator_login": "ILCSFNO",
+    "title": "Clarify the Error Raised in `tf.train.CheckpointManager()`"
+  },
+  {
+    "issue_number": 100134,
+    "issue_state": "closed",
+    "created_at": "2025-09-11T08:19:21Z",
+    "closed_at": "2025-09-15T16:46:00Z",
+    "creator_login": "ILCSFNO",
+    "title": "Note and Clarify the Error Raised in `tf.raw_ops.ExtractGlimpse()` and `tf.raw_ops.ExtractGlimpseV2()`"
+  },
+  {
+    "issue_number": 100085,
+    "issue_state": "open",
+    "created_at": "2025-09-10T14:48:25Z",
+    "closed_at": null,
+    "creator_login": "CopyOfA",
+    "title": "TensorFlow/Keras model accumulates system and GPU RAM during training"
+  },
+  {
+    "issue_number": 99991,
+    "issue_state": "closed",
+    "created_at": "2025-09-09T17:03:45Z",
+    "closed_at": "2025-09-22T17:29:42Z",
+    "creator_login": "danilaml",
+    "title": "Tensorflow needs to build shared libraries with -Bsymbolic(-functions) and only export necessary symbols"
+  },
+  {
+    "issue_number": 99925,
+    "issue_state": "open",
+    "created_at": "2025-09-08T22:18:48Z",
+    "closed_at": null,
+    "creator_login": "Oblynx",
+    "title": "TensorFlow 2.20.0 Segmentation Fault After PyVista Screenshot"
+  },
+  {
+    "issue_number": 99909,
+    "issue_state": "open",
+    "created_at": "2025-09-08T16:03:42Z",
+    "closed_at": null,
+    "creator_login": "apach301",
+    "title": "[mlir] Possible null dereference"
+  },
+  {
+    "issue_number": 99907,
+    "issue_state": "open",
+    "created_at": "2025-09-08T15:52:36Z",
+    "closed_at": null,
+    "creator_login": "apach301",
+    "title": "[XLA] Possible null dereference"
+  },
+  {
+    "issue_number": 99894,
+    "issue_state": "open",
+    "created_at": "2025-09-08T12:21:41Z",
+    "closed_at": null,
+    "creator_login": "tinywisdom",
+    "title": "[GPU][BiasAdd] Kernel launch count overflow with large Dense/bias_add (negative `work_element_count` → abort)"
+  },
+  {
+    "issue_number": 99885,
+    "issue_state": "closed",
+    "created_at": "2025-09-08T07:31:01Z",
+    "closed_at": "2025-09-10T09:40:48Z",
+    "creator_login": "AliceRemake",
+    "title": "SyntaxWarning: invalid escape sequence '\\s'   match = re.match(\"\\s*#\\s*define %s\\s+(\\d+)\" % name, line)"
+  },
+  {
+    "issue_number": 99870,
+    "issue_state": "open",
+    "created_at": "2025-09-06T15:58:06Z",
+    "closed_at": null,
+    "creator_login": "water-mizuu",
+    "title": "Training LSTM with NVIDIA's NGC container incompatible with RTX 5070Ti"
+  },
+  {
+    "issue_number": 99859,
+    "issue_state": "closed",
+    "created_at": "2025-09-05T23:25:14Z",
+    "closed_at": "2025-09-13T14:55:56Z",
+    "creator_login": "Ndunj",
+    "title": "ImportError"
+  },
+  {
+    "issue_number": 99835,
+    "issue_state": "closed",
+    "created_at": "2025-09-05T07:36:18Z",
+    "closed_at": "2025-09-24T02:04:53Z",
+    "creator_login": "zhangyale",
+    "title": "tensorflow 2.20.0 build failed  in CPU with numpy 2.3.0"
+  },
+  {
+    "issue_number": 99792,
+    "issue_state": "open",
+    "created_at": "2025-09-04T13:41:36Z",
+    "closed_at": null,
+    "creator_login": "cx104906",
+    "title": "Does TensorFlow support AddressSanitizer (ASan) build?"
+  },
+  {
+    "issue_number": 99759,
+    "issue_state": "open",
+    "created_at": "2025-09-04T06:16:40Z",
+    "closed_at": null,
+    "creator_login": "rookieLiu2018",
+    "title": "`tf.clip_by_value` produces inconsistent results for `-0.0` between CPU and GPU"
+  },
+  {
+    "issue_number": 99644,
+    "issue_state": "closed",
+    "created_at": "2025-09-02T16:50:03Z",
+    "closed_at": "2025-09-02T18:17:18Z",
+    "creator_login": "daniele-NA",
+    "title": "Android Alignment 16kb"
+  },
+  {
+    "issue_number": 99639,
+    "issue_state": "closed",
+    "created_at": "2025-09-02T14:38:22Z",
+    "closed_at": "2025-09-24T02:04:54Z",
+    "creator_login": "mweinelt",
+    "title": "Wheels for 2.20.0 on tensorflow.org"
+  },
+  {
+    "issue_number": 99631,
+    "issue_state": "open",
+    "created_at": "2025-09-02T12:14:37Z",
+    "closed_at": null,
+    "creator_login": "tinywisdom",
+    "title": "[GPU] CUDA_ERROR_ILLEGAL_ADDRESS / “No algorithm worked” in Conv2D after full spatial self-attention at 224×224 (N≈50k → N²≈2.5B). Looks like index/size limit; should fail earlier with a clearer error"
+  },
+  {
+    "issue_number": 99605,
+    "issue_state": "open",
+    "created_at": "2025-09-02T05:17:17Z",
+    "closed_at": null,
+    "creator_login": "nagoconso",
+    "title": "The registration function for TFLite's builtin operators (BuiltinOps) results in an 'undefined symbol' error."
+  },
+  {
+    "issue_number": 99592,
+    "issue_state": "closed",
+    "created_at": "2025-09-01T14:12:13Z",
+    "closed_at": "2025-09-08T04:30:06Z",
+    "creator_login": "water980",
+    "title": "RTX 5000 series support (CUDA_ERROR_INVALID_HANDLE)"
+  },
+  {
+    "issue_number": 99583,
+    "issue_state": "open",
+    "created_at": "2025-09-01T10:34:53Z",
+    "closed_at": null,
+    "creator_login": "tinywisdom",
+    "title": "tf.image.combined_non_max_suppression aborts process on wrong-rank inputs (should raise Python exception instead)"
+  },
+  {
+    "issue_number": 99580,
+    "issue_state": "open",
+    "created_at": "2025-09-01T05:10:08Z",
+    "closed_at": null,
+    "creator_login": "acampove",
+    "title": "Missing type annotations"
+  },
+  {
+    "issue_number": 99575,
+    "issue_state": "open",
+    "created_at": "2025-08-30T20:22:16Z",
+    "closed_at": null,
+    "creator_login": "wolfgang42",
+    "title": "docs: spurious favicon in template"
+  },
+  {
+    "issue_number": 99562,
+    "issue_state": "open",
+    "created_at": "2025-08-29T21:38:56Z",
+    "closed_at": null,
+    "creator_login": "cameronjacobson",
+    "title": "Curriculum concept for pre-sorting data for training"
+  },
+  {
+    "issue_number": 99543,
+    "issue_state": "closed",
+    "created_at": "2025-08-29T05:01:16Z",
+    "closed_at": "2025-08-29T05:06:47Z",
+    "creator_login": "khteh",
+    "title": "Error specifying a 2-dimensional Input layer"
+  },
+  {
+    "issue_number": 99533,
+    "issue_state": "open",
+    "created_at": "2025-08-28T21:55:04Z",
+    "closed_at": null,
+    "creator_login": "za-nordic",
+    "title": "Output Quantization difference between models that has an ADD layer adding outputs from two FC layers"
+  },
+  {
+    "issue_number": 99517,
+    "issue_state": "closed",
+    "created_at": "2025-08-28T15:57:52Z",
+    "closed_at": "2025-09-01T07:29:45Z",
+    "creator_login": "ILCSFNO",
+    "title": "Fix the docstring of `dilations` when `padding` is set to `\"SAME\"`"
+  },
+  {
+    "issue_number": 99513,
+    "issue_state": "open",
+    "created_at": "2025-08-28T14:47:24Z",
+    "closed_at": null,
+    "creator_login": "ILCSFNO",
+    "title": "`minlength` should be dealt together with `maxlength` in `tf.math.bincount`"
+  },
+  {
+    "issue_number": 99471,
+    "issue_state": "open",
+    "created_at": "2025-08-27T16:31:44Z",
+    "closed_at": null,
+    "creator_login": "aravindhbalaji1985",
+    "title": "TensorFlow master branch missing CUPTI dependencies"
+  },
+  {
+    "issue_number": 99464,
+    "issue_state": "closed",
+    "created_at": "2025-08-27T15:27:37Z",
+    "closed_at": "2025-09-01T15:27:33Z",
+    "creator_login": "PierreGallet",
+    "title": "v2.20 : erreur [mutex.cc : 452] RAW: Lock blocking"
+  },
+  {
+    "issue_number": 99458,
+    "issue_state": "open",
+    "created_at": "2025-08-27T13:04:33Z",
+    "closed_at": null,
+    "creator_login": "panda123dd",
+    "title": "QuantizeAndDequantizeV3 with non-scalar input_min/input_max and axis=-1 crashes (tensor.cc:865) instead of raising InvalidArgumentError"
+  },
+  {
+    "issue_number": 99456,
+    "issue_state": "closed",
+    "created_at": "2025-08-27T12:56:59Z",
+    "closed_at": "2025-08-27T12:59:36Z",
+    "creator_login": "panda123dd",
+    "title": "QuantizeAndDequantizeV3 causes hard crash instead of InvalidArgumentError when axis=-1 with non-scalar input_min/input_max"
+  },
+  {
+    "issue_number": 99450,
+    "issue_state": "closed",
+    "created_at": "2025-08-27T09:31:26Z",
+    "closed_at": "2025-09-03T01:43:55Z",
+    "creator_login": "sleeping-oo",
+    "title": "Why can't I get a TFLite Concatenation node with fused_activation_function?"
+  },
+  {
+    "issue_number": 99434,
+    "issue_state": "closed",
+    "created_at": "2025-08-27T03:04:18Z",
+    "closed_at": "2025-10-01T02:12:43Z",
+    "creator_login": "wdfyjnnmkc",
+    "title": "Why does the transposed convolution in TensorFlow take significantly longer after being quantized with TFLite?"
+  },
+  {
+    "issue_number": 99385,
+    "issue_state": "closed",
+    "created_at": "2025-08-26T07:15:40Z",
+    "closed_at": "2025-09-13T01:59:44Z",
+    "creator_login": "tinywisdom",
+    "title": "`tf.function(jit_compile=True)` fails with GRU/LSTM (CuDNNRNNV3) on XLA GPU JIT: \"No registered 'CudnnRNNV3' OpKernel for XLA_GPU_JIT\""
+  },
+  {
+    "issue_number": 99333,
+    "issue_state": "closed",
+    "created_at": "2025-08-25T12:00:55Z",
+    "closed_at": "2025-09-22T17:08:07Z",
+    "creator_login": "khteh",
+    "title": "`tf.image.decode_image(img, channels=3)` throws `ValueError: 'images' contains no shape.`"
+  },
+  {
+    "issue_number": 99318,
+    "issue_state": "open",
+    "created_at": "2025-08-24T09:20:22Z",
+    "closed_at": null,
+    "creator_login": "ngvananh2508",
+    "title": "ValueError: Exception encountered when calling Sequential.call(). Cannot take the length of shape with unknown rank."
+  },
+  {
+    "issue_number": 99316,
+    "issue_state": "closed",
+    "created_at": "2025-08-24T04:00:50Z",
+    "closed_at": "2025-08-27T07:20:55Z",
+    "creator_login": "ingesim",
+    "title": "DLL load failed while importing _pywrap_tensorflow_internal:"
+  },
+  {
+    "issue_number": 99315,
+    "issue_state": "closed",
+    "created_at": "2025-08-24T00:22:32Z",
+    "closed_at": "2025-09-24T15:36:46Z",
+    "creator_login": "GeorgiBalb",
+    "title": "TensorFlow Lite in Play Services issue"
+  },
+  {
+    "issue_number": 99291,
+    "issue_state": "closed",
+    "created_at": "2025-08-22T17:10:23Z",
+    "closed_at": "2025-08-23T06:26:39Z",
+    "creator_login": "said-ml",
+    "title": "A dynamic link library (DLL) initialization routine failed"
+  },
+  {
+    "issue_number": 99286,
+    "issue_state": "closed",
+    "created_at": "2025-08-22T11:36:03Z",
+    "closed_at": "2025-09-22T17:37:51Z",
+    "creator_login": "ILCSFNO",
+    "title": "Fix the Doc and Error Format of `round_mode` in func `tf.quantization.quantize()`"
+  },
+  {
+    "issue_number": 99283,
+    "issue_state": "closed",
+    "created_at": "2025-08-22T10:01:02Z",
+    "closed_at": "2025-08-23T06:28:18Z",
+    "creator_login": "Maksik14041993",
+    "title": "I'm a spammer"
+  },
+  {
+    "issue_number": 99273,
+    "issue_state": "closed",
+    "created_at": "2025-08-22T01:42:27Z",
+    "closed_at": "2025-10-25T02:06:12Z",
+    "creator_login": "aravindhbalaji1985",
+    "title": "Tensorflow v2.20 build fails with cuda v12.9.1"
+  },
+  {
+    "issue_number": 99255,
+    "issue_state": "open",
+    "created_at": "2025-08-21T19:42:37Z",
+    "closed_at": null,
+    "creator_login": "SwuduSusuwu",
+    "title": "`Forbidden Error 403` is shown if you browse to `./README.md#official-builds`'s \"status\"."
+  },
+  {
+    "issue_number": 99246,
+    "issue_state": "open",
+    "created_at": "2025-08-21T17:38:50Z",
+    "closed_at": null,
+    "creator_login": "ramnathnayak-ibm",
+    "title": "[ppc64le][Python 3.12] TensorFlow fails to load: undefined symbol GenericProtoCast from pybind11_protobuf"
+  },
+  {
+    "issue_number": 99230,
+    "issue_state": "closed",
+    "created_at": "2025-08-21T13:57:18Z",
+    "closed_at": "2025-10-25T02:06:13Z",
+    "creator_login": "khatchad",
+    "title": "Cannot call first version of `tf.range()` providing a dtype using positional arguments"
+  },
+  {
+    "issue_number": 99165,
+    "issue_state": "open",
+    "created_at": "2025-08-20T07:34:26Z",
+    "closed_at": null,
+    "creator_login": "springcrane",
+    "title": "CPU produces incorrect gradients / zero outputs for [OPERATION_NAME]"
+  },
+  {
+    "issue_number": 99164,
+    "issue_state": "closed",
+    "created_at": "2025-08-20T07:07:10Z",
+    "closed_at": "2025-10-23T18:43:22Z",
+    "creator_login": "springcrane",
+    "title": "argsort does not support complex128 tensors on CPU backend"
+  },
+  {
+    "issue_number": 99163,
+    "issue_state": "open",
+    "created_at": "2025-08-20T06:50:01Z",
+    "closed_at": null,
+    "creator_login": "springcrane",
+    "title": "tf.experimental.numpy.take_along_axis fails with int32 indices on int64 shapes"
+  },
+  {
+    "issue_number": 99162,
+    "issue_state": "open",
+    "created_at": "2025-08-20T06:33:17Z",
+    "closed_at": null,
+    "creator_login": "springcrane",
+    "title": "Autograph: unclear AssertionError when using tf.size(x) inside a @tf.function branch"
+  },
+  {
+    "issue_number": 99160,
+    "issue_state": "open",
+    "created_at": "2025-08-20T06:25:20Z",
+    "closed_at": null,
+    "creator_login": "springcrane",
+    "title": "ForwardAccumulator: Improve error message when primals and tangents shapes mismatch"
+  },
+  {
+    "issue_number": 99122,
+    "issue_state": "open",
+    "created_at": "2025-08-19T08:48:54Z",
+    "closed_at": null,
+    "creator_login": "ngvananh2508",
+    "title": "ValueError: Shape mismatch in layer #1 (named stem_conv)for weight stem_conv/kernel. Weight expects shape (3, 3, 1, 48). Received saved weight with shape (3, 3, 3, 48)"
+  },
+  {
+    "issue_number": 99118,
+    "issue_state": "closed",
+    "created_at": "2025-08-19T05:47:56Z",
+    "closed_at": "2025-08-22T21:37:15Z",
+    "creator_login": "SwuduSusuwu",
+    "title": "If host installs `Windows Sandbox`, TensorFlow (through VirtualBox+Ubuntu) gives `SIGILL ... in google::protobuf::DescriptorProto_ExtensionRange::DescriptorProto_ExtensionRange ... /usr/local/lib/libtensorflow_framework.so.2`"
+  },
+  {
+    "issue_number": 99117,
+    "issue_state": "closed",
+    "created_at": "2025-08-19T04:57:08Z",
+    "closed_at": "2025-10-15T16:06:55Z",
+    "creator_login": "MengAiDev",
+    "title": "Cannot sign CLA in China mainland"
+  },
+  {
+    "issue_number": 99072,
+    "issue_state": "open",
+    "created_at": "2025-08-18T09:38:56Z",
+    "closed_at": null,
+    "creator_login": "AIWintermuteAI",
+    "title": "CONV result mismatch between INT8 reference and optimized kernels"
+  },
+  {
+    "issue_number": 99055,
+    "issue_state": "closed",
+    "created_at": "2025-08-17T07:24:34Z",
+    "closed_at": "2025-08-19T08:33:33Z",
+    "creator_login": "dragonRed-lee",
+    "title": "Cannot import tensorflow"
+  },
+  {
+    "issue_number": 99052,
+    "issue_state": "closed",
+    "created_at": "2025-08-16T22:13:18Z",
+    "closed_at": "2025-10-01T02:12:44Z",
+    "creator_login": "wlimhhn307",
+    "title": "Tensor Flow Lite INT8 Issue"
+  },
+  {
+    "issue_number": 99047,
+    "issue_state": "closed",
+    "created_at": "2025-08-16T14:40:27Z",
+    "closed_at": "2025-09-06T02:02:51Z",
+    "creator_login": "B-JackMao",
+    "title": "MobileViT cannot run using the TFLite GPU delegate"
+  },
+  {
+    "issue_number": 98996,
+    "issue_state": "open",
+    "created_at": "2025-08-15T09:47:26Z",
+    "closed_at": null,
+    "creator_login": "springcrane",
+    "title": "tf.audio.decode_wav crashes on invalid desired_channels input"
+  },
+  {
+    "issue_number": 98994,
+    "issue_state": "closed",
+    "created_at": "2025-08-15T09:25:17Z",
+    "closed_at": "2025-09-04T14:48:33Z",
+    "creator_login": "springcrane",
+    "title": "tf.asinh and other math ops do not support SparseTensor inputs"
+  },
+  {
+    "issue_number": 98988,
+    "issue_state": "open",
+    "created_at": "2025-08-15T08:13:07Z",
+    "closed_at": null,
+    "creator_login": "springcrane",
+    "title": "ArgMax on CPU does not support complex64/complex128 tensors (NotFoundError)"
+  },
+  {
+    "issue_number": 98985,
+    "issue_state": "open",
+    "created_at": "2025-08-15T06:25:03Z",
+    "closed_at": null,
+    "creator_login": "khteh",
+    "title": "`meta_optimizer.cc:967] layout failed: INVALID_ARGUMENT: Size of values 0 does not match size of permutation 4 @ fanin shape insequential_2/dropout_1/stateless_dropout/SelectV2-2-TransposeNHWCToNCHW-LayoutOptimizer`"
+  },
+  {
+    "issue_number": 98980,
+    "issue_state": "open",
+    "created_at": "2025-08-15T03:39:12Z",
+    "closed_at": null,
+    "creator_login": "khteh",
+    "title": "`UserWarning: Protobuf gencode version 5.28.3 is exactly one major version older than the runtime version 6.31.1 at tensorflow/core/...`"
+  },
+  {
+    "issue_number": 98967,
+    "issue_state": "closed",
+    "created_at": "2025-08-14T21:11:10Z",
+    "closed_at": "2025-08-26T17:29:20Z",
+    "creator_login": "mmind",
+    "title": "xnnpack reference in tensorflow-lite references a KleidiAI commit"
+  },
+  {
+    "issue_number": 98964,
+    "issue_state": "closed",
+    "created_at": "2025-08-14T19:56:26Z",
+    "closed_at": "2025-09-16T13:31:51Z",
+    "creator_login": "mkosh10",
+    "title": "TensorFlow Lite On-Device Training: Converter Strips Weights Loaded in tf.Module.init() Causing READ_VARIABLE Runtime Errors"
+  },
+  {
+    "issue_number": 98933,
+    "issue_state": "closed",
+    "created_at": "2025-08-14T08:45:30Z",
+    "closed_at": "2025-09-18T16:55:06Z",
+    "creator_login": "contestormi",
+    "title": "[flutter-tflite] 16KB Page Sizes support"
+  },
+  {
+    "issue_number": 98922,
+    "issue_state": "closed",
+    "created_at": "2025-08-14T03:53:47Z",
+    "closed_at": "2025-08-15T08:09:34Z",
+    "creator_login": "Kiran3002",
+    "title": "DLL error while import"
+  },
+  {
+    "issue_number": 98920,
+    "issue_state": "closed",
+    "created_at": "2025-08-14T03:26:59Z",
+    "closed_at": "2025-08-15T08:10:47Z",
+    "creator_login": "1042422227",
+    "title": "I'm a spammer"
+  },
+  {
+    "issue_number": 98814,
+    "issue_state": "open",
+    "created_at": "2025-08-12T21:14:10Z",
+    "closed_at": null,
+    "creator_login": "Orient-Dorey",
+    "title": "Using a tf.Variable as index when writing to a tf.TensorArray yields error in graph mode"
+  },
+  {
+    "issue_number": 98783,
+    "issue_state": "open",
+    "created_at": "2025-08-12T15:10:16Z",
+    "closed_at": null,
+    "creator_login": "rlewkowicz",
+    "title": "Why does it feel like everything in this space died about 5 years ago? (There's no discussion board)"
+  },
+  {
+    "issue_number": 98779,
+    "issue_state": "closed",
+    "created_at": "2025-08-12T14:20:57Z",
+    "closed_at": "2025-08-12T14:34:38Z",
+    "creator_login": "sjlearmonth",
+    "title": "NotImplementedError: Cannot convert a symbolic Tensor (sub_1:0) to a numpy array."
+  },
+  {
+    "issue_number": 98772,
+    "issue_state": "closed",
+    "created_at": "2025-08-12T13:16:11Z",
+    "closed_at": "2025-08-28T06:45:54Z",
+    "creator_login": "Welsun",
+    "title": "xnnpack TAG error"
+  },
+  {
+    "issue_number": 98662,
+    "issue_state": "closed",
+    "created_at": "2025-08-11T06:26:33Z",
+    "closed_at": "2025-08-26T12:16:13Z",
+    "creator_login": "saucerdish",
+    "title": "The tag version of xnnpack is ambiguous"
+  },
+  {
+    "issue_number": 98640,
+    "issue_state": "closed",
+    "created_at": "2025-08-10T08:44:42Z",
+    "closed_at": "2025-08-11T07:58:06Z",
+    "creator_login": "shoaib-niazi",
+    "title": "DLL load failed while importing _pywrap_tensorflow_internal: A dynamic link library (DLL) initialization routine failed.  During handling of the above exception, another exception occurred:"
+  },
+  {
+    "issue_number": 98563,
+    "issue_state": "open",
+    "created_at": "2025-08-08T11:48:37Z",
+    "closed_at": null,
+    "creator_login": "mtsokol",
+    "title": "Importing TF 2.20.0rc0 and PyArrow results in a `Abort trap: 6` on MacOS ARM"
+  },
+  {
+    "issue_number": 98489,
+    "issue_state": "closed",
+    "created_at": "2025-08-07T12:56:16Z",
+    "closed_at": "2025-10-20T18:19:16Z",
+    "creator_login": "mobi-reader11",
+    "title": "TensorFlow lite task libs does not support 16kb page alignment in Android"
+  },
+  {
+    "issue_number": 98488,
+    "issue_state": "closed",
+    "created_at": "2025-08-07T12:47:37Z",
+    "closed_at": "2025-08-08T14:28:23Z",
+    "creator_login": "Gauri2882",
+    "title": "tensorflow importing issue"
+  },
+  {
+    "issue_number": 98477,
+    "issue_state": "closed",
+    "created_at": "2025-08-07T08:30:44Z",
+    "closed_at": "2025-09-02T06:23:17Z",
+    "creator_login": "Muhammadyousafrana",
+    "title": "Custom Loss subclass API causes poor convergence vs wrapper function in TensorFlow 2.19.0"
+  },
+  {
+    "issue_number": 98410,
+    "issue_state": "open",
+    "created_at": "2025-08-06T13:45:58Z",
+    "closed_at": null,
+    "creator_login": "rookieLiu2018",
+    "title": "`tf.math.abs` returns inconsistent results for complex inf/nan inputs on CPU and GPU"
+  },
+  {
+    "issue_number": 98408,
+    "issue_state": "closed",
+    "created_at": "2025-08-06T13:18:27Z",
+    "closed_at": "2025-08-27T02:07:57Z",
+    "creator_login": "rookieLiu2018",
+    "title": "tf.math.multiply for Complex inf/nan Gives Inconsistent Results on CPU for Tensors with >= 2 Elements"
+  },
+  {
+    "issue_number": 98406,
+    "issue_state": "closed",
+    "created_at": "2025-08-06T12:10:53Z",
+    "closed_at": "2025-08-27T02:07:59Z",
+    "creator_login": "anshusharan312-tech",
+    "title": "ValueError: numpy.dtype size changed, may indicate binary incompatibility. Expected 96 from C header, got 88 from PyObject"
+  },
+  {
+    "issue_number": 98361,
+    "issue_state": "closed",
+    "created_at": "2025-08-06T05:31:33Z",
+    "closed_at": "2025-08-13T13:47:10Z",
+    "creator_login": "Ganeshkumhar1",
+    "title": "tensorflow 2.19.0 build issues with bazel 6.5.0 on MacOS 13.6"
+  },
+  {
+    "issue_number": 98359,
+    "issue_state": "closed",
+    "created_at": "2025-08-06T04:37:20Z",
+    "closed_at": "2025-08-06T08:34:09Z",
+    "creator_login": "anshusharan312-tech",
+    "title": "Tensor Flow import Error"
+  },
+  {
+    "issue_number": 98349,
+    "issue_state": "open",
+    "created_at": "2025-08-05T21:29:42Z",
+    "closed_at": null,
+    "creator_login": "jiren-the-gray",
+    "title": "`tf.raw_ops.MatrixDiag` crashes with `Aborted (core dumped)` with a 6D tensor as input on GPU"
+  },
+  {
+    "issue_number": 98345,
+    "issue_state": "open",
+    "created_at": "2025-08-05T21:06:23Z",
+    "closed_at": null,
+    "creator_login": "jiren-the-gray",
+    "title": "`tf.linalg.lu_solve` returns inconsistent output from CPU vs GPU"
+  },
+  {
+    "issue_number": 98324,
+    "issue_state": "open",
+    "created_at": "2025-08-05T14:25:24Z",
+    "closed_at": null,
+    "creator_login": "aidevmin",
+    "title": "BatchNorm is not fused to Conv layer in TFlite conversion from customized QAT model?"
+  },
+  {
+    "issue_number": 98283,
+    "issue_state": "open",
+    "created_at": "2025-08-05T06:55:09Z",
+    "closed_at": null,
+    "creator_login": "tinywisdom",
+    "title": "Invalid `class_weight` silently ignored in `model.fit()`, no error raised"
+  },
+  {
+    "issue_number": 98233,
+    "issue_state": "closed",
+    "created_at": "2025-08-04T08:33:29Z",
+    "closed_at": "2025-08-27T02:08:02Z",
+    "creator_login": "tinywisdom",
+    "title": "Inconsistent model output after save/load when using `@tf.function(jit_compile=True)`"
+  },
+  {
+    "issue_number": 98230,
+    "issue_state": "closed",
+    "created_at": "2025-08-04T07:43:50Z",
+    "closed_at": "2025-08-27T02:08:04Z",
+    "creator_login": "tinywisdom",
+    "title": "Inconsistent output after model reload when using @tf.function on `call`"
+  },
+  {
+    "issue_number": 98115,
+    "issue_state": "closed",
+    "created_at": "2025-08-01T22:45:52Z",
+    "closed_at": "2025-08-23T02:07:08Z",
+    "creator_login": "cbica-chind",
+    "title": "Installation on Grace Hopper H200 server is not GPU-enabled"
+  },
+  {
+    "issue_number": 98103,
+    "issue_state": "open",
+    "created_at": "2025-08-01T19:09:04Z",
+    "closed_at": null,
+    "creator_login": "easyhardhoon",
+    "title": "Bug in GPU delegate output tensor extraction when Split node is included"
+  },
+  {
+    "issue_number": 98002,
+    "issue_state": "open",
+    "created_at": "2025-07-31T17:37:11Z",
+    "closed_at": null,
+    "creator_login": "FrancescAlted",
+    "title": "EXC_BAD_ACCESS  when using GemmImplUsingEigen in MacOS"
+  },
+  {
+    "issue_number": 97941,
+    "issue_state": "closed",
+    "created_at": "2025-07-31T09:06:54Z",
+    "closed_at": "2025-08-27T02:08:05Z",
+    "creator_login": "ckmadhira",
+    "title": "Issue while converting a model with GRU to .tflite"
+  },
+  {
+    "issue_number": 97805,
+    "issue_state": "closed",
+    "created_at": "2025-07-30T07:55:32Z",
+    "closed_at": "2025-08-23T02:07:10Z",
+    "creator_login": "gaotianyi544",
+    "title": "Precision issues occur when using tf.segment_maxwith floating-point tensors of certain dimensions."
+  },
+  {
+    "issue_number": 97780,
+    "issue_state": "open",
+    "created_at": "2025-07-29T22:20:11Z",
+    "closed_at": null,
+    "creator_login": "jiren-the-gray",
+    "title": "`tf.linalg.eigh` faces OOM on CUDA with 6D tensor and raises SIGABRT"
+  },
+  {
+    "issue_number": 97697,
+    "issue_state": "open",
+    "created_at": "2025-07-28T17:43:29Z",
+    "closed_at": null,
+    "creator_login": "nfergu",
+    "title": "Memory leak in custom_gradient decorator"
+  },
+  {
+    "issue_number": 97688,
+    "issue_state": "open",
+    "created_at": "2025-07-28T13:33:36Z",
+    "closed_at": null,
+    "creator_login": "dan-kazbek",
+    "title": "Add option for deterministic tie-breaking in tf.math.reduce_min"
+  },
+  {
+    "issue_number": 97677,
+    "issue_state": "closed",
+    "created_at": "2025-07-28T06:31:19Z",
+    "closed_at": "2025-08-13T02:15:12Z",
+    "creator_login": "sradhamurali",
+    "title": "Mismatch Between Quantized TFLite Layer Outputs and Expected Mathematical Values"
+  },
+  {
+    "issue_number": 97672,
+    "issue_state": "closed",
+    "created_at": "2025-07-28T02:54:24Z",
+    "closed_at": "2025-08-17T02:15:44Z",
+    "creator_login": "qiqicliff",
+    "title": "tf.image.combined_non_max_suppression crashed with unmatched scores"
+  },
+  {
+    "issue_number": 97599,
+    "issue_state": "open",
+    "created_at": "2025-07-26T02:30:31Z",
+    "closed_at": null,
+    "creator_login": "yian-chen",
+    "title": "The model does not have any trainable weights."
+  },
+  {
+    "issue_number": 97512,
+    "issue_state": "closed",
+    "created_at": "2025-07-24T14:26:29Z",
+    "closed_at": "2025-08-13T02:15:14Z",
+    "creator_login": "lidesheng0477",
+    "title": "tf.no_op DAG cycle issue"
+  },
+  {
+    "issue_number": 97387,
+    "issue_state": "open",
+    "created_at": "2025-07-23T00:59:13Z",
+    "closed_at": null,
+    "creator_login": "MikeHallettUK",
+    "title": "TensorFlow was not built with CUDA kernel binaries compatible with compute capability 12.0 CUDA_ERROR_INVALID_HANDLE"
+  },
+  {
+    "issue_number": 97096,
+    "issue_state": "closed",
+    "created_at": "2025-07-17T05:55:41Z",
+    "closed_at": "2025-10-10T08:59:14Z",
+    "creator_login": "jiren-the-gray",
+    "title": "`tf.math.argmax` throws `InvalidArgumentError` with valid `axis` of `int16` dtype"
+  },
+  {
+    "issue_number": 97058,
+    "issue_state": "closed",
+    "created_at": "2025-07-16T16:17:46Z",
+    "closed_at": "2025-08-21T20:20:04Z",
+    "creator_login": "civilwargeeky",
+    "title": "Tensorflow 2.19 fails to load after Pyside6"
+  },
+  {
+    "issue_number": 96799,
+    "issue_state": "open",
+    "created_at": "2025-07-11T19:32:51Z",
+    "closed_at": null,
+    "creator_login": "karllessard",
+    "title": "TensorFlow Java documentation is outdated"
+  },
+  {
+    "issue_number": 96602,
+    "issue_state": "open",
+    "created_at": "2025-07-09T04:03:29Z",
+    "closed_at": null,
+    "creator_login": "kevinsantoki-chpl",
+    "title": "lib new version not support 16kb pages in android"
+  },
+  {
+    "issue_number": 96450,
+    "issue_state": "closed",
+    "created_at": "2025-07-06T04:20:35Z",
+    "closed_at": "2025-07-11T17:40:25Z",
+    "creator_login": "VrajSharma789",
+    "title": "Support for 16KB page size on Android libs.tensorflow.lite.task.audio"
+  },
+  {
+    "issue_number": 96445,
+    "issue_state": "closed",
+    "created_at": "2025-07-05T18:00:33Z",
+    "closed_at": "2025-10-25T02:06:16Z",
+    "creator_login": "MathematicalSystems",
+    "title": "Arch Linux x86 RTX 3050 source compilation Error in fail: tensorflow/core:stream_executor_headers_lib cannot depend on tensorflow/core:lib"
+  },
+  {
+    "issue_number": 96401,
+    "issue_state": "closed",
+    "created_at": "2025-07-04T08:55:24Z",
+    "closed_at": "2025-07-11T17:39:58Z",
+    "creator_login": "rainboy93",
+    "title": "The native library arm64-v8a/libtask_audio_jni.so (from org.tensorflow:tensorflow-lite-task-audio:0.4.4) is not 16 KB aligned"
+  },
+  {
+    "issue_number": 96239,
+    "issue_state": "open",
+    "created_at": "2025-07-01T09:07:52Z",
+    "closed_at": null,
+    "creator_login": "xin486946",
+    "title": "how to get profile of per operation that delegate gpu opencl like  cpu enable_op_profiling  result, rather than only TfLiteGpuDelegateV2 ?"
+  },
+  {
+    "issue_number": 96203,
+    "issue_state": "open",
+    "created_at": "2025-06-30T21:13:42Z",
+    "closed_at": null,
+    "creator_login": "van-flow",
+    "title": "Unable to use Tensorflow and Tensorflow-TPU on Google Colab"
+  },
+  {
+    "issue_number": 95417,
+    "issue_state": "open",
+    "created_at": "2025-06-15T20:09:23Z",
+    "closed_at": null,
+    "creator_login": "jules15",
+    "title": "building //tensorflow/lite/ios:TensorFlowLiteC_xcframework results in broken header files"
+  },
+  {
+    "issue_number": 95106,
+    "issue_state": "closed",
+    "created_at": "2025-06-10T05:29:19Z",
+    "closed_at": "2025-08-15T02:15:29Z",
+    "creator_login": "muzamil8101",
+    "title": "TensorFlow disables SwiftUI Previews"
+  },
+  {
+    "issue_number": 94709,
+    "issue_state": "closed",
+    "created_at": "2025-06-03T05:40:58Z",
+    "closed_at": "2025-06-21T02:12:36Z",
+    "creator_login": "nishith-fujitsu",
+    "title": "Tensorflow is aborting with CompositeTensorVariant already registered"
+  },
+  {
+    "issue_number": 94657,
+    "issue_state": "open",
+    "created_at": "2025-06-02T13:22:38Z",
+    "closed_at": null,
+    "creator_login": "rookieLiu2018",
+    "title": "`tf.linalg.solve` behaves inconsistently on GPU for singular matrices depending on shape"
+  },
+  {
+    "issue_number": 94593,
+    "issue_state": "open",
+    "created_at": "2025-05-31T09:33:33Z",
+    "closed_at": null,
+    "creator_login": "ielenik",
+    "title": "TensorFlow Docker `tensorflow/tensorflow:latest-gpu` fails to detect GPU due to CUDA/cuDNN mismatch"
+  },
+  {
+    "issue_number": 94134,
+    "issue_state": "open",
+    "created_at": "2025-05-25T20:00:40Z",
+    "closed_at": null,
+    "creator_login": "SilentTester73",
+    "title": "Fatal crash in `tf.raw_ops.TensorScatterMax` with malformed indices"
+  },
+  {
+    "issue_number": 94120,
+    "issue_state": "open",
+    "created_at": "2025-05-24T18:18:45Z",
+    "closed_at": null,
+    "creator_login": "SilentTester73",
+    "title": "FPE in oneDNN `MaxPool3D` with Invalid Dimensions"
+  },
+  {
+    "issue_number": 94035,
+    "issue_state": "closed",
+    "created_at": "2025-05-23T18:00:28Z",
+    "closed_at": "2025-08-13T02:15:18Z",
+    "creator_login": "sevu",
+    "title": "xprof compilation fails with gcc 14.2"
+  },
+  {
+    "issue_number": 93903,
+    "issue_state": "open",
+    "created_at": "2025-05-21T23:49:35Z",
+    "closed_at": null,
+    "creator_login": "SilentTester73",
+    "title": "`tf.conv2d_backprop_filter_v2` Fails with \"no registered kernels\" Error"
+  },
+  {
+    "issue_number": 93733,
+    "issue_state": "closed",
+    "created_at": "2025-05-20T10:30:59Z",
+    "closed_at": "2025-09-17T02:03:27Z",
+    "creator_login": "jiren-the-gray",
+    "title": "`tf.nn.conv2d_transpose` crashes with \"Illegal instruction (core dumped)\""
+  },
+  {
+    "issue_number": 93612,
+    "issue_state": "closed",
+    "created_at": "2025-05-18T04:39:47Z",
+    "closed_at": "2025-06-06T02:12:58Z",
+    "creator_login": "cx104906",
+    "title": "Segmentation fault in tf.repeat"
+  },
+  {
+    "issue_number": 93476,
+    "issue_state": "open",
+    "created_at": "2025-05-15T22:08:24Z",
+    "closed_at": null,
+    "creator_login": "at-brinc",
+    "title": "Depth anything V2 Tflite outputs constants on qualcomm gpus"
+  },
+  {
+    "issue_number": 93250,
+    "issue_state": "open",
+    "created_at": "2025-05-13T09:09:45Z",
+    "closed_at": null,
+    "creator_login": "SwuduSusuwu",
+    "title": "[Bug] `libtensorflow` does not include `tensor.h` (has just 2 files under `tensorflow/core/`)"
+  },
+  {
+    "issue_number": 93130,
+    "issue_state": "open",
+    "created_at": "2025-05-11T09:04:05Z",
+    "closed_at": null,
+    "creator_login": "SwuduSusuwu",
+    "title": "`../tensorflow/third_party/xla/third_party/tsl/tsl/platform/ml_dtypes.h:19:10: error: 'ml_dtypes/include/float8.h' file not found [clang-diagnostic-error]`"
+  },
+  {
+    "issue_number": 92251,
+    "issue_state": "open",
+    "created_at": "2025-04-26T13:15:11Z",
+    "closed_at": null,
+    "creator_login": "sunshinejnjn",
+    "title": "New version of nVidia Windows GPU driver (576+) causing TF in WSL process to crash."
+  },
+  {
+    "issue_number": 92194,
+    "issue_state": "open",
+    "created_at": "2025-04-25T11:20:00Z",
+    "closed_at": null,
+    "creator_login": "sarinstein-yan",
+    "title": "GPU kernel for `tf.linalg.eig` / `tf.linalg.eigvals`"
+  },
+  {
+    "issue_number": 92098,
+    "issue_state": "closed",
+    "created_at": "2025-04-24T03:30:52Z",
+    "closed_at": "2025-09-01T06:13:24Z",
+    "creator_login": "alstjd025",
+    "title": "[TFLite] GPU delegation issues with Vision Transformer (ViT-base) in TFLite: dynamic shape & op support problems"
+  },
+  {
+    "issue_number": 91790,
+    "issue_state": "open",
+    "created_at": "2025-04-19T19:58:18Z",
+    "closed_at": null,
+    "creator_login": "bermeitinger-b",
+    "title": "Out of memory when saving a tf.data.Dataset"
+  },
+  {
+    "issue_number": 91656,
+    "issue_state": "open",
+    "created_at": "2025-04-17T09:53:10Z",
+    "closed_at": null,
+    "creator_login": "Aditya2413",
+    "title": "TensorFlow DLL failed to load with newer version of TF"
+  },
+  {
+    "issue_number": 90790,
+    "issue_state": "open",
+    "created_at": "2025-04-07T08:50:41Z",
+    "closed_at": null,
+    "creator_login": "maxkoretskyi",
+    "title": "Error on WSL - Attempting to register factory for plugin cuDNN when one has already been registered"
+  },
+  {
+    "issue_number": 90305,
+    "issue_state": "open",
+    "created_at": "2025-03-31T11:27:31Z",
+    "closed_at": null,
+    "creator_login": "saddamhijazi",
+    "title": "TensorFlow issue with data generator used for training a Keras LSTM autoencoder"
+  },
+  {
+    "issue_number": 90291,
+    "issue_state": "open",
+    "created_at": "2025-03-31T05:26:22Z",
+    "closed_at": null,
+    "creator_login": "weyn9q",
+    "title": "TensorFlow with CUDA: RTX 5xxx series isn't supported (CUDA_ERROR_INVALID_HANDLE)"
+  },
+  {
+    "issue_number": 89797,
+    "issue_state": "open",
+    "created_at": "2025-03-22T13:33:30Z",
+    "closed_at": null,
+    "creator_login": "ymlau",
+    "title": "colab tpu initialization"
+  },
+  {
+    "issue_number": 89795,
+    "issue_state": "open",
+    "created_at": "2025-03-22T09:15:42Z",
+    "closed_at": null,
+    "creator_login": "tortoise-ben",
+    "title": "fastspeech2 中文中训练"
+  },
+  {
+    "issue_number": 89628,
+    "issue_state": "open",
+    "created_at": "2025-03-20T09:27:50Z",
+    "closed_at": null,
+    "creator_login": "eewindfly",
+    "title": "Add support for SeparableConv2DTranspose (Depthwise Conv2DTranspose)"
+  },
+  {
+    "issue_number": 89600,
+    "issue_state": "open",
+    "created_at": "2025-03-20T02:55:01Z",
+    "closed_at": null,
+    "creator_login": "zhouxiaoyaozzz",
+    "title": "NotImplementedError: StreamingModel.call() not implemented"
+  },
+  {
+    "issue_number": 89599,
+    "issue_state": "open",
+    "created_at": "2025-03-20T02:35:58Z",
+    "closed_at": null,
+    "creator_login": "jq",
+    "title": "How to adapt TFRA with Tensorflow Parameter Strategy V2"
+  },
+  {
+    "issue_number": 89540,
+    "issue_state": "open",
+    "created_at": "2025-03-19T08:11:56Z",
+    "closed_at": null,
+    "creator_login": "zhouxiaoyaozzz",
+    "title": "Compilation error（The call method of the StreamingModel class is not implemented correctly）"
+  },
+  {
+    "issue_number": 89272,
+    "issue_state": "open",
+    "created_at": "2025-03-15T03:40:16Z",
+    "closed_at": null,
+    "creator_login": "maludwig",
+    "title": "TensorFlow on RTX 5090"
+  },
+  {
+    "issue_number": 89118,
+    "issue_state": "open",
+    "created_at": "2025-03-13T00:34:44Z",
+    "closed_at": null,
+    "creator_login": "sjh0849",
+    "title": "API Doc Error for tf.train.ClusterSpec API"
+  },
+  {
+    "issue_number": 89110,
+    "issue_state": "open",
+    "created_at": "2025-03-12T22:33:15Z",
+    "closed_at": null,
+    "creator_login": "adamvvu",
+    "title": "Gradients are zero when clipping values in function definition"
+  },
+  {
+    "issue_number": 88960,
+    "issue_state": "closed",
+    "created_at": "2025-03-10T16:27:36Z",
+    "closed_at": "2025-03-28T02:06:35Z",
+    "creator_login": "nassimus26",
+    "title": "could not find registered transfer manager for platform Host -- check target linkage \t [[{{node StatefulPartitionedCall}}]] [Op:__inference_multi_step_on_iterator_33145]"
+  },
+  {
+    "issue_number": 88451,
+    "issue_state": "open",
+    "created_at": "2025-03-02T16:05:15Z",
+    "closed_at": null,
+    "creator_login": "dicotom",
+    "title": "Tensorflow with C++ Builder 12"
+  },
+  {
+    "issue_number": 87669,
+    "issue_state": "closed",
+    "created_at": "2025-02-20T10:28:50Z",
+    "closed_at": "2025-04-01T02:14:13Z",
+    "creator_login": "Kakarute",
+    "title": "[WSL2 + Docker + TensorFlow] CUDA failed to initialize in TensorFlow container (RTX 5090, CUDA 12.8)"
+  },
+  {
+    "issue_number": 87468,
+    "issue_state": "open",
+    "created_at": "2025-02-18T11:08:09Z",
+    "closed_at": null,
+    "creator_login": "knebojsa11",
+    "title": "[RNN] Conversion of model containing GRU layer to quantized TFLite causes Segmentation Fault"
+  },
+  {
+    "issue_number": 84104,
+    "issue_state": "open",
+    "created_at": "2025-01-03T14:48:36Z",
+    "closed_at": null,
+    "creator_login": "zzzHou01",
+    "title": "KeyError: \"There is no item named 'PetImages\\\\Cat\\\\0.jpg' in the archive\" When Running TensorFlow Locally(CPU) on Anaconda in VS Code."
+  },
+  {
+    "issue_number": 84102,
+    "issue_state": "open",
+    "created_at": "2025-01-03T14:33:01Z",
+    "closed_at": null,
+    "creator_login": "dnmaster1",
+    "title": "Tensorflow not supported on Windows + ARM CPUs"
+  },
+  {
+    "issue_number": 83379,
+    "issue_state": "closed",
+    "created_at": "2024-12-20T06:58:28Z",
+    "closed_at": "2025-10-29T16:27:41Z",
+    "creator_login": "leder11011",
+    "title": "tensorflow-opt-cuda: error running on Linux via GPU"
+  },
+  {
+    "issue_number": 83063,
+    "issue_state": "closed",
+    "created_at": "2024-12-16T13:57:22Z",
+    "closed_at": "2025-10-14T02:05:46Z",
+    "creator_login": "shaoyuyoung",
+    "title": "[XLA] `tf.keras.layers.LSTM` behaves differently on GPU"
+  },
+  {
+    "issue_number": 81273,
+    "issue_state": "open",
+    "created_at": "2024-11-29T07:11:51Z",
+    "closed_at": null,
+    "creator_login": "shkarupa-alex",
+    "title": "MixedPrecision + XLA: Seen floating point types of different precisions"
+  },
+  {
+    "issue_number": 80951,
+    "issue_state": "closed",
+    "created_at": "2024-11-27T15:25:37Z",
+    "closed_at": "2024-12-28T01:59:51Z",
+    "creator_login": "ArnauPujantellNavas",
+    "title": "InvalidArgumentError when using MirroredStrategy but not with tf.distribute.get_strategy()"
+  },
+  {
+    "issue_number": 80538,
+    "issue_state": "open",
+    "created_at": "2024-11-22T08:46:38Z",
+    "closed_at": null,
+    "creator_login": "raul-parada",
+    "title": "Not GPU detected using tensorflow/tensorflow:latest-gpu docker image"
+  },
+  {
+    "issue_number": 79435,
+    "issue_state": "closed",
+    "created_at": "2024-11-05T16:02:00Z",
+    "closed_at": "2025-08-16T02:13:01Z",
+    "creator_login": "delray",
+    "title": "Cannot Convert 51 to a shape - Movenet pose classification tutorial"
+  },
+  {
+    "issue_number": 79377,
+    "issue_state": "closed",
+    "created_at": "2024-11-05T04:20:28Z",
+    "closed_at": "2025-08-16T02:13:02Z",
+    "creator_login": "AdwaithAnand",
+    "title": "Create a trainable tensorflow or LiteRT (with signatures) graph from a frozen tensorflow model"
+  },
+  {
+    "issue_number": 78774,
+    "issue_state": "closed",
+    "created_at": "2024-10-25T17:18:07Z",
+    "closed_at": "2025-08-14T07:22:14Z",
+    "creator_login": "toufa12",
+    "title": "It doesn't support on python3.13"
+  },
+  {
+    "issue_number": 78591,
+    "issue_state": "closed",
+    "created_at": "2024-10-23T07:16:45Z",
+    "closed_at": "2024-11-21T02:04:14Z",
+    "creator_login": "KarthigaNattarasan",
+    "title": "How to use a GPU with TFlite in Python with ubuntu and Cuda"
+  },
+  {
+    "issue_number": 77618,
+    "issue_state": "closed",
+    "created_at": "2024-10-11T02:16:45Z",
+    "closed_at": "2024-10-27T02:05:43Z",
+    "creator_login": "Bigfamily666",
+    "title": "@Name"
+  },
+  {
+    "issue_number": 77367,
+    "issue_state": "open",
+    "created_at": "2024-10-09T13:09:12Z",
+    "closed_at": null,
+    "creator_login": "therooler",
+    "title": "Tensorflow Distributed AlltoAll"
+  },
+  {
+    "issue_number": 77293,
+    "issue_state": "closed",
+    "created_at": "2024-10-08T22:02:42Z",
+    "closed_at": "2025-08-21T17:20:21Z",
+    "creator_login": "isuchy",
+    "title": "RuntimeError: failed to create XNNPACK runtimeNode number 2977 (TfLiteXNNPackDelegate) failed to prepare."
+  },
+  {
+    "issue_number": 77264,
+    "issue_state": "open",
+    "created_at": "2024-10-08T15:02:52Z",
+    "closed_at": null,
+    "creator_login": "faressc",
+    "title": "fatal error: 'NEON_2_SSE.h' file not found - macOS x86_64 build tensorflowlite_c library"
+  },
+  {
+    "issue_number": 77156,
+    "issue_state": "open",
+    "created_at": "2024-10-07T16:24:35Z",
+    "closed_at": null,
+    "creator_login": "sxlllslgh",
+    "title": "Failed to build `tensorflow_cc` in Windows when linking"
+  },
+  {
+    "issue_number": 76908,
+    "issue_state": "closed",
+    "created_at": "2024-10-01T21:16:02Z",
+    "closed_at": "2025-02-13T19:44:06Z",
+    "creator_login": "feranick",
+    "title": "Tf_lite fails to compile in v2.18.0-rc0 in Ubuntu"
+  },
+  {
+    "issue_number": 75622,
+    "issue_state": "closed",
+    "created_at": "2024-09-12T07:47:04Z",
+    "closed_at": "2025-08-11T04:28:19Z",
+    "creator_login": "Justobe",
+    "title": "Got one aborted issue when using `data_flow_ops.MapStagingArea` "
+  },
+  {
+    "issue_number": 74882,
+    "issue_state": "open",
+    "created_at": "2024-08-30T15:34:02Z",
+    "closed_at": null,
+    "creator_login": "kokeshing",
+    "title": "[TFLite] Could log level control be added to the TFLite C API?"
+  },
+  {
+    "issue_number": 72295,
+    "issue_state": "closed",
+    "created_at": "2024-07-22T14:08:43Z",
+    "closed_at": "2025-08-13T07:21:17Z",
+    "creator_login": "KnightGOKU",
+    "title": "tf.raw_ops.MapUnstage: Check failed: 1 == NumElements() (1 vs. 120)Must have a one element tensor Aborted (core dumped)"
+  },
+  {
+    "issue_number": 68593,
+    "issue_state": "open",
+    "created_at": "2024-05-24T11:24:11Z",
+    "closed_at": null,
+    "creator_login": "x0w3n",
+    "title": "Local rendezvous is aborting with status: OUT_OF_RANGE: End of sequence when call some methods of `tf.data`"
+  },
+  {
+    "issue_number": 67251,
+    "issue_state": "open",
+    "created_at": "2024-05-09T13:28:57Z",
+    "closed_at": null,
+    "creator_login": "hectorj2f",
+    "title": "Failed to compile on aarch64"
+  },
+  {
+    "issue_number": 65675,
+    "issue_state": "open",
+    "created_at": "2024-04-14T19:02:53Z",
+    "closed_at": null,
+    "creator_login": "cohaegen",
+    "title": "Memory leak in tf.data when iterating over Dataset.from_generator"
+  },
+  {
+    "issue_number": 65187,
+    "issue_state": "closed",
+    "created_at": "2024-04-06T09:24:56Z",
+    "closed_at": "2024-12-13T02:09:22Z",
+    "creator_login": "perphyguo",
+    "title": "Cannot use @TaskAction annotation on method IncrementalTask.taskAction$gradle_core() because interface org.gradle.api.tasks.incremental.IncrementalTaskInputs is not a valid parameter to an action method."
+  },
+  {
+    "issue_number": 64642,
+    "issue_state": "closed",
+    "created_at": "2024-03-28T03:17:39Z",
+    "closed_at": "2024-04-17T01:47:41Z",
+    "creator_login": "LongZE666",
+    "title": "`tf.raw_ops.AvgPoolGrad`: Heap buffer overflow"
+  },
+  {
+    "issue_number": 63849,
+    "issue_state": "open",
+    "created_at": "2024-03-17T11:08:55Z",
+    "closed_at": null,
+    "creator_login": "ruddyscent",
+    "title": "Adding TensorFlow Hub KerasLayer to Sequential Model Raises ValueError"
+  },
+  {
+    "issue_number": 63353,
+    "issue_state": "open",
+    "created_at": "2024-03-09T14:54:40Z",
+    "closed_at": null,
+    "creator_login": "vwrewsge",
+    "title": "Aborted (core dumped) with tf.raw_ops.AvgPoolGrad"
+  },
+  {
+    "issue_number": 63109,
+    "issue_state": "closed",
+    "created_at": "2024-03-04T01:26:49Z",
+    "closed_at": "2024-10-31T02:03:43Z",
+    "creator_login": "vatsalraicha",
+    "title": "WSL2 - TensorFlow Install Issue Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered"
+  },
+  {
+    "issue_number": 63014,
+    "issue_state": "open",
+    "created_at": "2024-02-21T14:45:55Z",
+    "closed_at": null,
+    "creator_login": "lbertho-gpsw",
+    "title": "Compilation error on macos with GPU delegate"
+  },
+  {
+    "issue_number": 62963,
+    "issue_state": "closed",
+    "created_at": "2024-02-14T23:38:34Z",
+    "closed_at": "2024-04-12T17:32:49Z",
+    "creator_login": "p-s-p-s",
+    "title": "Local rendezvous is aborting with status: OUT_OF_RANGE: End of sequence warning when iterating over a dataset"
+  },
+  {
+    "issue_number": 62942,
+    "issue_state": "closed",
+    "created_at": "2024-02-12T04:30:09Z",
+    "closed_at": "2024-02-12T11:26:56Z",
+    "creator_login": "dsbyprateekg",
+    "title": "TFlite Model Maker installation issue with Python 3.10 in Colab."
+  },
+  {
+    "issue_number": 62866,
+    "issue_state": "closed",
+    "created_at": "2024-01-29T23:10:36Z",
+    "closed_at": "2024-02-01T19:47:51Z",
+    "creator_login": "plopresti",
+    "title": "ml_dtypes.h:19:10: fatal error: 'ml_dtypes/include/float8.h' file not found"
+  },
+  {
+    "issue_number": 62799,
+    "issue_state": "closed",
+    "created_at": "2024-01-16T07:45:25Z",
+    "closed_at": "2024-02-05T01:47:49Z",
+    "creator_login": "lhchg",
+    "title": "Building TFLite for Android with CMake cannot find -lpthread"
+  },
+  {
+    "issue_number": 62785,
+    "issue_state": "closed",
+    "created_at": "2024-01-11T17:05:44Z",
+    "closed_at": "2025-10-23T02:08:08Z",
+    "creator_login": "neon60",
+    "title": "ROCm platform installation guide"
+  },
+  {
+    "issue_number": 62783,
+    "issue_state": "closed",
+    "created_at": "2024-01-11T12:16:19Z",
+    "closed_at": "2025-10-23T02:08:10Z",
+    "creator_login": "alxhoff",
+    "title": "Potential memory leak with SymbolicTensor"
+  },
+  {
+    "issue_number": 62778,
+    "issue_state": "closed",
+    "created_at": "2024-01-11T02:23:23Z",
+    "closed_at": "2025-10-23T02:08:11Z",
+    "creator_login": "basnetr",
+    "title": "Tensorflow numpy_function causes errors when using tf.shape"
+  },
+  {
+    "issue_number": 62770,
+    "issue_state": "closed",
+    "created_at": "2024-01-09T22:45:29Z",
+    "closed_at": "2025-10-23T02:08:13Z",
+    "creator_login": "JakeSummers",
+    "title": "Messages at import time should go to the Python logger rather than stderr"
+  },
+  {
+    "issue_number": 62757,
+    "issue_state": "closed",
+    "created_at": "2024-01-08T13:54:59Z",
+    "closed_at": "2025-10-23T02:08:15Z",
+    "creator_login": "cyanic-selkie",
+    "title": "NCCL + XLA fails for multi-GPU training."
+  },
+  {
+    "issue_number": 62746,
+    "issue_state": "closed",
+    "created_at": "2024-01-06T16:29:41Z",
+    "closed_at": "2025-10-23T02:08:16Z",
+    "creator_login": "mathpluscode",
+    "title": "tensorflow-macos==2.15.0 still requesting ml-dtypes (~=0.2.0) instead of 0.3.1"
+  },
+  {
+    "issue_number": 62743,
+    "issue_state": "closed",
+    "created_at": "2024-01-05T23:35:09Z",
+    "closed_at": "2025-09-19T02:06:14Z",
+    "creator_login": "yury-lysogorskiy",
+    "title": "Tensorflow 2.x: call model inference using C/C++ API from inputs, allocated in GPU memory"
+  },
+  {
+    "issue_number": 62736,
+    "issue_state": "closed",
+    "created_at": "2024-01-04T16:59:35Z",
+    "closed_at": "2025-09-19T02:06:15Z",
+    "creator_login": "MoFHeka",
+    "title": "Need MPMD supporting for GPU to use pipeline parallelism training large scale model"
+  },
+  {
+    "issue_number": 62732,
+    "issue_state": "closed",
+    "created_at": "2024-01-03T22:23:21Z",
+    "closed_at": "2025-09-19T02:06:17Z",
+    "creator_login": "trevor-m",
+    "title": "Can no longer run XLA lit tests"
+  },
+  {
+    "issue_number": 62620,
+    "issue_state": "closed",
+    "created_at": "2023-12-11T21:30:02Z",
+    "closed_at": "2025-09-19T02:06:19Z",
+    "creator_login": "pucha48",
+    "title": "TFlite model signature lost after populating with metadata"
+  },
+  {
+    "issue_number": 62599,
+    "issue_state": "closed",
+    "created_at": "2023-12-08T21:22:43Z",
+    "closed_at": "2025-09-04T13:16:14Z",
+    "creator_login": "mering",
+    "title": "Upgrade protobuf"
+  },
+  {
+    "issue_number": 62598,
+    "issue_state": "open",
+    "created_at": "2023-12-08T21:18:07Z",
+    "closed_at": null,
+    "creator_login": "mering",
+    "title": "Bzlmod support"
+  },
+  {
+    "issue_number": 62597,
+    "issue_state": "closed",
+    "created_at": "2023-12-08T18:05:32Z",
+    "closed_at": "2025-09-19T02:06:20Z",
+    "creator_login": "nadyawilliams",
+    "title": "Failure to compile TF 2.15  from source on rocky 8.8"
+  },
+  {
+    "issue_number": 62495,
+    "issue_state": "closed",
+    "created_at": "2023-11-28T16:43:20Z",
+    "closed_at": "2025-09-19T02:06:22Z",
+    "creator_login": "rcalonso",
+    "title": "Model checkpoint not saved to google cloud storage"
+  },
+  {
+    "issue_number": 62490,
+    "issue_state": "closed",
+    "created_at": "2023-11-28T10:51:12Z",
+    "closed_at": "2025-09-19T02:06:23Z",
+    "creator_login": "smuzaffar",
+    "title": "[AARCH64] Building TF 2.15.0 from sources failed with undefined __Int8x8_t"
+  },
+  {
+    "issue_number": 62459,
+    "issue_state": "closed",
+    "created_at": "2023-11-22T18:58:51Z",
+    "closed_at": "2025-09-19T02:06:25Z",
+    "creator_login": "feranick",
+    "title": "Failure to compile TF 2.15.0/2.16.1 (with Cuda support) using clang in Ubuntu 22.04"
+  },
+  {
+    "issue_number": 62400,
+    "issue_state": "open",
+    "created_at": "2023-11-14T23:52:13Z",
+    "closed_at": null,
+    "creator_login": "JasonGross",
+    "title": "`log_softmax` could be `2**102` to `2**970` times more accurate"
+  },
+  {
+    "issue_number": 62357,
+    "issue_state": "closed",
+    "created_at": "2023-11-08T13:35:41Z",
+    "closed_at": "2023-11-09T21:28:26Z",
+    "creator_login": "sdeoras",
+    "title": "[v2.14.0] Build failed on linux/arm64 w/ clang"
+  },
+  {
+    "issue_number": 62217,
+    "issue_state": "open",
+    "created_at": "2023-10-25T01:11:31Z",
+    "closed_at": null,
+    "creator_login": "mattdangerw",
+    "title": "TypeError: this __dict__ descriptor does not support '_DictWrapper' objects"
+  },
+  {
+    "issue_number": 62171,
+    "issue_state": "closed",
+    "created_at": "2023-10-19T09:39:50Z",
+    "closed_at": "2025-09-19T02:06:27Z",
+    "creator_login": "Marouan-st",
+    "title": "TFLite CNN model quantization error"
+  },
+  {
+    "issue_number": 62120,
+    "issue_state": "closed",
+    "created_at": "2023-10-16T11:10:13Z",
+    "closed_at": "2025-09-19T02:06:29Z",
+    "creator_login": "mitsunami",
+    "title": "Error when loading TFLite model on Android with GPU Delegate"
+  },
+  {
+    "issue_number": 62062,
+    "issue_state": "open",
+    "created_at": "2023-10-06T19:28:19Z",
+    "closed_at": null,
+    "creator_login": "Craigacp",
+    "title": "tensorflow-intel binary packaging"
+  },
+  {
+    "issue_number": 62035,
+    "issue_state": "closed",
+    "created_at": "2023-10-02T19:25:22Z",
+    "closed_at": "2025-09-20T02:02:39Z",
+    "creator_login": "mattdangerw",
+    "title": "`pip install tf-nightly[and-cuda]` fails for recent nightlies"
+  },
+  {
+    "issue_number": 62004,
+    "issue_state": "closed",
+    "created_at": "2023-09-28T14:07:56Z",
+    "closed_at": "2025-09-17T02:03:40Z",
+    "creator_login": "gutza1",
+    "title": "TimeDistributed not compatible with multi-output models"
+  },
+  {
+    "issue_number": 61993,
+    "issue_state": "closed",
+    "created_at": "2023-09-27T16:30:46Z",
+    "closed_at": "2025-09-17T02:03:41Z",
+    "creator_login": "teddy661",
+    "title": "Packaging Problem with  \"pip install -U tensorflow[and-cuda]\" Installs tensorflow 2.13.1"
+  },
+  {
+    "issue_number": 61986,
+    "issue_state": "closed",
+    "created_at": "2023-09-27T09:06:01Z",
+    "closed_at": "2025-09-17T02:03:43Z",
+    "creator_login": "jonas-eschle",
+    "title": "tensorrt==8.5.3.1 from [and-cuda] not available in Python 3.11"
+  },
+  {
+    "issue_number": 61965,
+    "issue_state": "closed",
+    "created_at": "2023-09-23T19:51:17Z",
+    "closed_at": "2025-09-17T02:03:44Z",
+    "creator_login": "YangChenyuan",
+    "title": "XLA compiled `floordiv` allows `integer division by zero`"
+  },
+  {
+    "issue_number": 61954,
+    "issue_state": "closed",
+    "created_at": "2023-09-22T18:59:01Z",
+    "closed_at": "2025-09-17T02:03:45Z",
+    "creator_login": "AndreiMoraru123",
+    "title": "ExtensionType to be considered a complete nested structure"
+  },
+  {
+    "issue_number": 61942,
+    "issue_state": "closed",
+    "created_at": "2023-09-21T16:51:08Z",
+    "closed_at": "2025-09-17T02:03:47Z",
+    "creator_login": "alerem18",
+    "title": "calling Model in a loop would leak memory"
+  },
+  {
+    "issue_number": 61916,
+    "issue_state": "closed",
+    "created_at": "2023-09-19T13:54:42Z",
+    "closed_at": "2025-09-17T02:03:48Z",
+    "creator_login": "drewshark",
+    "title": "tf.linalg.cholesky output normal value on a complex64 matrix that is not positive definite."
+  },
+  {
+    "issue_number": 61912,
+    "issue_state": "closed",
+    "created_at": "2023-09-19T10:48:34Z",
+    "closed_at": "2025-09-17T02:03:50Z",
+    "creator_login": "khurram-ghani",
+    "title": "Randomization generating repeated sequences with `tf.function`, `tf.random.set_seed` and `tf.cond`"
+  },
+  {
+    "issue_number": 61911,
+    "issue_state": "closed",
+    "created_at": "2023-09-19T10:21:44Z",
+    "closed_at": "2025-09-17T02:03:51Z",
+    "creator_login": "isVoid",
+    "title": "`tf.device` context manager does not restore `cudaCurrentDevice` under some conditions"
+  },
+  {
+    "issue_number": 61907,
+    "issue_state": "closed",
+    "created_at": "2023-09-19T05:37:10Z",
+    "closed_at": "2025-09-17T02:03:53Z",
+    "creator_login": "drewshark",
+    "title": "tf.linalg.cholesky fails on half precision"
+  },
+  {
+    "issue_number": 61893,
+    "issue_state": "closed",
+    "created_at": "2023-09-18T13:11:07Z",
+    "closed_at": "2025-09-17T02:03:54Z",
+    "creator_login": "yalwan-sage",
+    "title": "BMP decode channels = 1 support"
+  },
+  {
+    "issue_number": 61884,
+    "issue_state": "closed",
+    "created_at": "2023-09-17T18:49:54Z",
+    "closed_at": "2025-09-17T02:03:55Z",
+    "creator_login": "YangChenyuan",
+    "title": "XLA doesn't do the DCE as autocluster"
+  },
+  {
+    "issue_number": 61882,
+    "issue_state": "closed",
+    "created_at": "2023-09-17T02:11:14Z",
+    "closed_at": "2025-09-17T02:03:57Z",
+    "creator_login": "YangChenyuan",
+    "title": "XLA compiled model skip `build` method"
+  },
+  {
+    "issue_number": 61881,
+    "issue_state": "closed",
+    "created_at": "2023-09-16T21:02:17Z",
+    "closed_at": "2025-09-17T02:03:58Z",
+    "creator_login": "YangChenyuan",
+    "title": "XLA compiled `tf.matmul` can work for two size-incompatible matrices"
+  },
+  {
+    "issue_number": 61879,
+    "issue_state": "closed",
+    "created_at": "2023-09-15T23:55:07Z",
+    "closed_at": "2025-09-17T02:03:59Z",
+    "creator_login": "YangChenyuan",
+    "title": "Invalid `Conv2d` can be executed without compilation"
+  },
+  {
+    "issue_number": 61869,
+    "issue_state": "closed",
+    "created_at": "2023-09-15T07:17:15Z",
+    "closed_at": "2025-09-03T10:06:17Z",
+    "creator_login": "0x0L",
+    "title": "Wrong element_spec when mapping ragged dataset"
+  },
+  {
+    "issue_number": 61866,
+    "issue_state": "closed",
+    "created_at": "2023-09-14T17:44:28Z",
+    "closed_at": "2025-09-17T02:04:01Z",
+    "creator_login": "cjmcgraw",
+    "title": "StringLookup / tf.lookup resource cleanup on model cleared"
+  },
+  {
+    "issue_number": 61862,
+    "issue_state": "closed",
+    "created_at": "2023-09-14T15:39:18Z",
+    "closed_at": "2025-09-17T02:04:02Z",
+    "creator_login": "dengyinlin",
+    "title": "Compiled x.shape throws Tuple out-of-range error"
+  },
+  {
+    "issue_number": 61856,
+    "issue_state": "closed",
+    "created_at": "2023-09-13T21:09:29Z",
+    "closed_at": "2025-09-17T02:04:03Z",
+    "creator_login": "dengyinlin",
+    "title": "XLA compiled `tf.reshape` throws ValueError: Shape must be rank 1 but is rank 0"
+  },
+  {
+    "issue_number": 61854,
+    "issue_state": "closed",
+    "created_at": "2023-09-13T10:38:40Z",
+    "closed_at": "2025-09-02T04:40:49Z",
+    "creator_login": "FrancoisDn",
+    "title": "TFLite - Cannot execute with NNAPI on Samsung Galaxy Tab S9 (Snapdragon 8 Gen 2). On delegate CPU available"
+  },
+  {
+    "issue_number": 61827,
+    "issue_state": "closed",
+    "created_at": "2023-09-10T15:58:12Z",
+    "closed_at": "2025-09-17T02:04:05Z",
+    "creator_login": "drewshark",
+    "title": "tf.linalg.eigvals outputs UnboundLocalError when receiving a float16 tensor"
+  },
+  {
+    "issue_number": 61826,
+    "issue_state": "closed",
+    "created_at": "2023-09-10T15:54:18Z",
+    "closed_at": "2025-09-17T02:04:06Z",
+    "creator_login": "drewshark",
+    "title": "Inconsistent result between tf.linalg.eigvals and numpy/scipy on a (3,3) tensor"
+  },
+  {
+    "issue_number": 61825,
+    "issue_state": "closed",
+    "created_at": "2023-09-10T12:45:13Z",
+    "closed_at": "2025-09-17T02:04:08Z",
+    "creator_login": "LuisFMCuriel",
+    "title": "Pytorch solves gym environments faster than tensorflow using the same training implementation and network architecture"
+  },
+  {
+    "issue_number": 61822,
+    "issue_state": "closed",
+    "created_at": "2023-09-09T17:20:46Z",
+    "closed_at": "2025-09-17T02:04:09Z",
+    "creator_login": "sparrow84001",
+    "title": "Error installing build from source"
+  },
+  {
+    "issue_number": 61821,
+    "issue_state": "closed",
+    "created_at": "2023-09-09T10:42:10Z",
+    "closed_at": "2025-09-17T02:04:10Z",
+    "creator_login": "oawxkw",
+    "title": "Does TensorFloat-32 support `tf.compat.v1.nn.depthwise_conv2d_native`? How can I identify whether an op is supported by TensorFloat-32?"
+  },
+  {
+    "issue_number": 61820,
+    "issue_state": "closed",
+    "created_at": "2023-09-09T09:40:31Z",
+    "closed_at": "2025-09-17T02:04:12Z",
+    "creator_login": "oawxkw",
+    "title": "The `mask` dtype should be asserted to be boolean in `tf.compat.v1.boolean_mask` (and `tf.boolean_mask`)"
+  },
+  {
+    "issue_number": 61815,
+    "issue_state": "closed",
+    "created_at": "2023-09-08T14:16:17Z",
+    "closed_at": "2025-09-17T02:04:13Z",
+    "creator_login": "boweia",
+    "title": "Wrong answer from tflite model with certain configurations of depthwise conv2d"
+  },
+  {
+    "issue_number": 61814,
+    "issue_state": "closed",
+    "created_at": "2023-09-08T08:32:32Z",
+    "closed_at": "2025-09-17T02:04:15Z",
+    "creator_login": "Flamefire",
+    "title": "`tensorflow/python/compiler/xla/jit_test` fails on PPC with $HOME unset"
+  },
+  {
+    "issue_number": 61787,
+    "issue_state": "closed",
+    "created_at": "2023-09-05T03:12:28Z",
+    "closed_at": "2025-09-17T02:04:16Z",
+    "creator_login": "fire-keeper",
+    "title": "hope keras.layers.HashedCrossing support feature crossing with shape [batch_size, None] like tf.feature_column.crossed_column  "
+  },
+  {
+    "issue_number": 61780,
+    "issue_state": "closed",
+    "created_at": "2023-09-03T14:31:11Z",
+    "closed_at": "2025-09-17T02:04:17Z",
+    "creator_login": "oawxkw",
+    "title": "Process aborted when running `tf.gather` and `tf.compat.v1.gather` on GPU with large parameters and indices"
+  },
+  {
+    "issue_number": 61778,
+    "issue_state": "closed",
+    "created_at": "2023-09-03T14:26:52Z",
+    "closed_at": "2025-09-17T02:04:18Z",
+    "creator_login": "oawxkw",
+    "title": "Process aborted when running `tf.keras.layers.MaxPooling1D` on GPU with large `pool_size`"
+  },
+  {
+    "issue_number": 61777,
+    "issue_state": "closed",
+    "created_at": "2023-09-03T04:06:57Z",
+    "closed_at": "2025-09-17T02:04:20Z",
+    "creator_login": "p1utoze",
+    "title": "Add support for fftfreq() and rfftfreq() helper functions in tf.signal()"
+  },
+  {
+    "issue_number": 61774,
+    "issue_state": "closed",
+    "created_at": "2023-09-01T22:27:27Z",
+    "closed_at": "2025-09-17T02:04:21Z",
+    "creator_login": "kulinseth",
+    "title": "FAILED: //tensorflow/tools/proto_splitter/cc:saved_model_splitter_test on mac arm64 wheels"
+  },
+  {
+    "issue_number": 61769,
+    "issue_state": "closed",
+    "created_at": "2023-09-01T10:43:42Z",
+    "closed_at": "2025-09-14T02:09:38Z",
+    "creator_login": "abdulasiraj",
+    "title": "AttributeError: 'tensorflow.python.framework.ops.EagerTensor' object has no attribute '__dlpack__'"
+  },
+  {
+    "issue_number": 61760,
+    "issue_state": "closed",
+    "created_at": "2023-08-31T08:14:44Z",
+    "closed_at": "2025-09-14T02:09:39Z",
+    "creator_login": "justlike-prog",
+    "title": "Full integer quantization not possible with grouped convolution"
+  },
+  {
+    "issue_number": 61743,
+    "issue_state": "closed",
+    "created_at": "2023-08-29T06:27:12Z",
+    "closed_at": "2025-09-14T02:09:41Z",
+    "creator_login": "Alwaysadil",
+    "title": "how to download or install .so file for tflite conversion with gpu delegate"
+  },
+  {
+    "issue_number": 61736,
+    "issue_state": "closed",
+    "created_at": "2023-08-28T22:43:16Z",
+    "closed_at": "2025-09-14T02:09:43Z",
+    "creator_login": "nmatare",
+    "title": "tf.data.Dataset.save deadlocks on error "
+  },
+  {
+    "issue_number": 61712,
+    "issue_state": "closed",
+    "created_at": "2023-08-27T12:47:18Z",
+    "closed_at": "2025-09-14T02:09:44Z",
+    "creator_login": "aegkmq",
+    "title": "ExtensionType does not allow creating tf.function methods"
+  },
+  {
+    "issue_number": 61708,
+    "issue_state": "closed",
+    "created_at": "2023-08-26T06:08:07Z",
+    "closed_at": "2025-09-14T02:09:46Z",
+    "creator_login": "0gur1",
+    "title": "Null pointer exception in constant folding of grappler."
+  },
+  {
+    "issue_number": 61696,
+    "issue_state": "closed",
+    "created_at": "2023-08-25T12:00:28Z",
+    "closed_at": "2025-08-29T20:07:49Z",
+    "creator_login": "Nekto89",
+    "title": "LLVM conflict with libosmesa6"
+  },
+  {
+    "issue_number": 61680,
+    "issue_state": "closed",
+    "created_at": "2023-08-23T17:13:32Z",
+    "closed_at": "2025-09-14T02:09:48Z",
+    "creator_login": "baiztencale",
+    "title": "Share layer weights between processes in cluster"
+  },
+  {
+    "issue_number": 61675,
+    "issue_state": "closed",
+    "created_at": "2023-08-23T13:32:23Z",
+    "closed_at": "2025-09-14T02:09:49Z",
+    "creator_login": "chengdazhi",
+    "title": "tf.linalg.pinv isn't "
+  },
+  {
+    "issue_number": 61674,
+    "issue_state": "closed",
+    "created_at": "2023-08-23T11:39:06Z",
+    "closed_at": "2025-09-14T02:09:51Z",
+    "creator_login": "fehiepsi",
+    "title": "oneDNN matmul is not supported to have a dynamic dimension"
+  },
+  {
+    "issue_number": 61647,
+    "issue_state": "closed",
+    "created_at": "2023-08-20T01:35:20Z",
+    "closed_at": "2025-09-02T04:43:33Z",
+    "creator_login": "wolfgang42",
+    "title": "docs: spurious favicon in template"
+  },
+  {
+    "issue_number": 61616,
+    "issue_state": "closed",
+    "created_at": "2023-08-17T23:10:29Z",
+    "closed_at": "2025-09-14T02:09:52Z",
+    "creator_login": "garryyan2",
+    "title": " Test_on_batch() gives the same loss output on different batches in a single run"
+  },
+  {
+    "issue_number": 61593,
+    "issue_state": "closed",
+    "created_at": "2023-08-16T14:24:31Z",
+    "closed_at": "2025-09-14T02:09:54Z",
+    "creator_login": "Flamefire",
+    "title": "Build: Protobuf fails with \"File already exists in database\""
+  },
+  {
+    "issue_number": 61549,
+    "issue_state": "closed",
+    "created_at": "2023-08-14T03:02:13Z",
+    "closed_at": "2025-09-14T02:09:56Z",
+    "creator_login": "south-ocean",
+    "title": "Based on FP16, the network training of resnet50 was carried out, and the existence accuracy randomly converged to 0.76"
+  },
+  {
+    "issue_number": 61531,
+    "issue_state": "closed",
+    "created_at": "2023-08-12T17:41:26Z",
+    "closed_at": "2025-09-14T02:09:57Z",
+    "creator_login": "dmc1778",
+    "title": "Segmentation fault when running tensorflow.python.framework.kernels.get_registered_kernels_for_op"
+  },
+  {
+    "issue_number": 61529,
+    "issue_state": "closed",
+    "created_at": "2023-08-12T09:04:02Z",
+    "closed_at": "2025-09-15T02:10:35Z",
+    "creator_login": "bfs18",
+    "title": "quantized range of fake_quant_with_min_max_args is -2**num_bits + 1 to 2 ** num_bits."
+  },
+  {
+    "issue_number": 61476,
+    "issue_state": "closed",
+    "created_at": "2023-08-04T12:25:08Z",
+    "closed_at": "2025-09-15T02:10:36Z",
+    "creator_login": "vineel96",
+    "title": "How/Where decision is made to choose between eager execution & graph execution for Tensorflow kernel OPs"
+  },
+  {
+    "issue_number": 61462,
+    "issue_state": "closed",
+    "created_at": "2023-08-03T08:05:54Z",
+    "closed_at": "2025-09-15T02:10:37Z",
+    "creator_login": "Snape3058",
+    "title": "BUG: reference count leak in function `RegisterForwardAccumulatorCleanup` (static analyzer report)"
+  },
+  {
+    "issue_number": 61449,
+    "issue_state": "closed",
+    "created_at": "2023-08-02T09:01:20Z",
+    "closed_at": "2025-09-15T02:10:39Z",
+    "creator_login": "bingo163",
+    "title": "tf.compat.v1.train.MonitoredTrainingSession failed to restore checkpoint_dir variables from s3"
+  },
+  {
+    "issue_number": 61422,
+    "issue_state": "closed",
+    "created_at": "2023-07-28T13:02:04Z",
+    "closed_at": "2025-09-15T02:10:40Z",
+    "creator_login": "christian-steinmeyer",
+    "title": "Unexpected differences in outputs of Conv2D copy with exact subset of weights"
+  },
+  {
+    "issue_number": 61421,
+    "issue_state": "closed",
+    "created_at": "2023-07-28T06:27:06Z",
+    "closed_at": "2025-09-15T02:10:41Z",
+    "creator_login": "ViniciusSuaiden",
+    "title": "tf.debugging.experimental.enable_dump_debug_info (Debugger V2) error with TPU"
+  },
+  {
+    "issue_number": 61420,
+    "issue_state": "closed",
+    "created_at": "2023-07-28T03:54:50Z",
+    "closed_at": "2025-09-15T02:10:42Z",
+    "creator_login": "lwlsaysnuaa",
+    "title": "Support for asynchronous execution in TensorFlow DLPack interface"
+  },
+  {
+    "issue_number": 61379,
+    "issue_state": "closed",
+    "created_at": "2023-07-25T10:34:34Z",
+    "closed_at": "2025-09-15T02:10:44Z",
+    "creator_login": "Nithin061",
+    "title": "PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target"
+  },
+  {
+    "issue_number": 61377,
+    "issue_state": "open",
+    "created_at": "2023-07-25T09:56:31Z",
+    "closed_at": null,
+    "creator_login": "sorousherafat",
+    "title": "`configure`: Error in detecting CUDA toolkit path"
+  },
+  {
+    "issue_number": 61375,
+    "issue_state": "closed",
+    "created_at": "2023-07-25T05:08:46Z",
+    "closed_at": "2025-09-15T02:10:45Z",
+    "creator_login": "DameNianch",
+    "title": "tf.keras.callbacks.SidecarEvaluatorModelExport doc page looks broken."
+  },
+  {
+    "issue_number": 61364,
+    "issue_state": "closed",
+    "created_at": "2023-07-24T14:39:54Z",
+    "closed_at": "2025-09-14T02:10:00Z",
+    "creator_login": "j99ca",
+    "title": "tf.io.gfile.rename not working for directories in S3"
+  },
+  {
+    "issue_number": 61362,
+    "issue_state": "closed",
+    "created_at": "2023-07-24T07:58:58Z",
+    "closed_at": "2025-09-14T02:10:01Z",
+    "creator_login": "mars1248",
+    "title": "When compiling TensorFlow 2.13 using bazel+clang, an error was reported as fatal error: 'stddef. h' file not found"
+  },
+  {
+    "issue_number": 61344,
+    "issue_state": "closed",
+    "created_at": "2023-07-20T20:36:51Z",
+    "closed_at": "2025-09-14T02:10:03Z",
+    "creator_login": "Pyrestone",
+    "title": "Unbounded Memory leak when using tf.py_function in tf.data.Dataset.map()"
+  },
+  {
+    "issue_number": 61337,
+    "issue_state": "closed",
+    "created_at": "2023-07-20T02:21:10Z",
+    "closed_at": "2025-09-14T02:10:05Z",
+    "creator_login": "ljmerza",
+    "title": "AttributeError: cython_sources when installing tflite-model-maker"
+  },
+  {
+    "issue_number": 61328,
+    "issue_state": "closed",
+    "created_at": "2023-07-19T12:58:52Z",
+    "closed_at": "2025-09-14T02:10:06Z",
+    "creator_login": "fcouziniedevy",
+    "title": "Random predictions with intel-tensorflow when OMP_THREAD_LIMIT is set"
+  },
+  {
+    "issue_number": 61323,
+    "issue_state": "closed",
+    "created_at": "2023-07-19T09:31:11Z",
+    "closed_at": "2025-09-14T02:10:08Z",
+    "creator_login": "willisacs-arm",
+    "title": "TensorFlow Lite Converter wraps unpack operator with dequantize/quantize"
+  },
+  {
+    "issue_number": 61322,
+    "issue_state": "closed",
+    "created_at": "2023-07-19T09:17:40Z",
+    "closed_at": "2025-09-14T02:10:10Z",
+    "creator_login": "akote123",
+    "title": "Tensorflow and onednn logs"
+  },
+  {
+    "issue_number": 61317,
+    "issue_state": "closed",
+    "created_at": "2023-07-18T15:50:06Z",
+    "closed_at": "2025-09-14T02:10:11Z",
+    "creator_login": "maciejskorski",
+    "title": "snapshot op wrongly changes data fingerprint "
+  },
+  {
+    "issue_number": 61314,
+    "issue_state": "closed",
+    "created_at": "2023-07-18T14:56:01Z",
+    "closed_at": "2025-08-29T08:22:30Z",
+    "creator_login": "nikita-savelyevv",
+    "title": "TensorFlow 2.13 distributed training fail"
+  },
+  {
+    "issue_number": 61313,
+    "issue_state": "closed",
+    "created_at": "2023-07-18T14:37:30Z",
+    "closed_at": "2025-09-14T02:10:12Z",
+    "creator_login": "maciejskorski",
+    "title": "snapshoting failure on dataset made from generator"
+  },
+  {
+    "issue_number": 61308,
+    "issue_state": "closed",
+    "created_at": "2023-07-18T03:57:22Z",
+    "closed_at": "2025-09-14T02:10:14Z",
+    "creator_login": "DManowitz",
+    "title": "Question about tensorflow <2.11 and protobuf compatibility"
+  },
+  {
+    "issue_number": 61297,
+    "issue_state": "open",
+    "created_at": "2023-07-17T09:34:24Z",
+    "closed_at": null,
+    "creator_login": "sronen71",
+    "title": "CTC Loss errors on TPU"
+  },
+  {
+    "issue_number": 61293,
+    "issue_state": "closed",
+    "created_at": "2023-07-17T05:53:45Z",
+    "closed_at": "2025-09-14T02:10:16Z",
+    "creator_login": "AakashKumarNain",
+    "title": "Unable to hide TPUs"
+  },
+  {
+    "issue_number": 61290,
+    "issue_state": "closed",
+    "created_at": "2023-07-16T18:32:37Z",
+    "closed_at": "2025-09-14T02:10:17Z",
+    "creator_login": "drubinstein",
+    "title": "Add ComplexOp to TFLite"
+  },
+  {
+    "issue_number": 61285,
+    "issue_state": "closed",
+    "created_at": "2023-07-15T11:35:56Z",
+    "closed_at": "2025-08-29T08:02:56Z",
+    "creator_login": "innat",
+    "title": "ValueError: No gradients provided for any variable"
+  },
+  {
+    "issue_number": 61270,
+    "issue_state": "closed",
+    "created_at": "2023-07-13T10:48:41Z",
+    "closed_at": "2025-09-14T02:10:19Z",
+    "creator_login": "optiluca",
+    "title": "keras.models.load_model broken if custom objects present (.keras format)"
+  },
+  {
+    "issue_number": 61264,
+    "issue_state": "closed",
+    "created_at": "2023-07-12T19:41:50Z",
+    "closed_at": "2025-09-14T02:10:20Z",
+    "creator_login": "oliviafranken",
+    "title": "TensorFlow-io package not possible on computer"
+  },
+  {
+    "issue_number": 61249,
+    "issue_state": "closed",
+    "created_at": "2023-07-12T05:06:25Z",
+    "closed_at": "2025-09-14T02:10:22Z",
+    "creator_login": "drewshark",
+    "title": "tf.linalg.logdet outputs -inf on a matrix with complex data type"
+  },
+  {
+    "issue_number": 61247,
+    "issue_state": "closed",
+    "created_at": "2023-07-11T19:30:47Z",
+    "closed_at": "2023-07-16T17:53:46Z",
+    "creator_login": "MH0386",
+    "title": "AttributeError: module 'tensorflow_datasets' has no attribute 'load'"
+  },
+  {
+    "issue_number": 61246,
+    "issue_state": "closed",
+    "created_at": "2023-07-11T16:05:56Z",
+    "closed_at": "2025-09-14T02:10:23Z",
+    "creator_login": "drewshark",
+    "title": "tf.image.adjust_contrast fails on the tf.half data type"
+  },
+  {
+    "issue_number": 61232,
+    "issue_state": "closed",
+    "created_at": "2023-07-10T13:08:39Z",
+    "closed_at": "2025-09-14T02:10:25Z",
+    "creator_login": "usama-baloch",
+    "title": "Request for the implementation of nanmedian function"
+  },
+  {
+    "issue_number": 61212,
+    "issue_state": "open",
+    "created_at": "2023-07-07T13:01:22Z",
+    "closed_at": null,
+    "creator_login": "ghost",
+    "title": "Tensorflow profiler is not showing anything. Gives \"No profile data was found\" text on selecting Profile in Tensorboard"
+  },
+  {
+    "issue_number": 61210,
+    "issue_state": "closed",
+    "created_at": "2023-07-07T05:56:10Z",
+    "closed_at": "2025-09-14T02:10:27Z",
+    "creator_login": "JustASquid",
+    "title": "Tensorflow Profiler does not work on WSL2: Failed to load libcupti (is it installed and accessible?) "
+  },
+  {
+    "issue_number": 61204,
+    "issue_state": "closed",
+    "created_at": "2023-07-06T21:33:14Z",
+    "closed_at": "2025-09-14T02:10:28Z",
+    "creator_login": "bogdan-galileo",
+    "title": "import of DistributedDatasetInterface not valid anymore"
+  },
+  {
+    "issue_number": 61199,
+    "issue_state": "closed",
+    "created_at": "2023-07-06T09:57:20Z",
+    "closed_at": "2025-09-14T02:10:30Z",
+    "creator_login": "yavorkovachev",
+    "title": "gradient returns `None`"
+  },
+  {
+    "issue_number": 61180,
+    "issue_state": "closed",
+    "created_at": "2023-07-05T16:03:35Z",
+    "closed_at": "2025-09-14T02:10:31Z",
+    "creator_login": "elfringham",
+    "title": "//tensorflow/compiler/xla/service/gpu:fusion_merger_test fails on AARCH64"
+  },
+  {
+    "issue_number": 61172,
+    "issue_state": "closed",
+    "created_at": "2023-07-04T14:03:34Z",
+    "closed_at": "2025-09-14T02:10:33Z",
+    "creator_login": "elfringham",
+    "title": "//tensorflow/python/data/experimental/kernel_tests/service:distributed_save_ft_test is flaky"
+  },
+  {
+    "issue_number": 61169,
+    "issue_state": "closed",
+    "created_at": "2023-07-04T10:39:13Z",
+    "closed_at": "2025-09-14T02:10:34Z",
+    "creator_login": "elfringham",
+    "title": "//tensorflow/python/distribute:parameter_server_strategy_v2_test_cpu is flaky"
+  },
+  {
+    "issue_number": 61168,
+    "issue_state": "closed",
+    "created_at": "2023-07-04T08:47:03Z",
+    "closed_at": "2025-09-14T02:10:36Z",
+    "creator_login": "PhyllisJi",
+    "title": "Functions that limit video memory do not work"
+  },
+  {
+    "issue_number": 61166,
+    "issue_state": "closed",
+    "created_at": "2023-07-03T16:32:51Z",
+    "closed_at": "2025-09-14T02:10:37Z",
+    "creator_login": "elfringham",
+    "title": "//tensorflow/python/data/experimental/kernel_tests/service:worker_tags_test is flaky"
+  },
+  {
+    "issue_number": 61164,
+    "issue_state": "closed",
+    "created_at": "2023-07-03T16:06:21Z",
+    "closed_at": "2025-09-14T02:10:39Z",
+    "creator_login": "elfringham",
+    "title": "//tensorflow/dtensor/mlir/tests:spmd_expansion.mlir.test is flaky"
+  },
+  {
+    "issue_number": 61162,
+    "issue_state": "closed",
+    "created_at": "2023-07-03T13:08:00Z",
+    "closed_at": "2025-09-14T02:10:40Z",
+    "creator_login": "ghost",
+    "title": "Vectorizing a mapping function containing tf.io.read_file in tf.data pipeline is not working."
+  },
+  {
+    "issue_number": 61157,
+    "issue_state": "closed",
+    "created_at": "2023-07-03T07:56:16Z",
+    "closed_at": "2025-09-14T02:10:44Z",
+    "creator_login": "AviadCo",
+    "title": "[MLIR] Fix tf.StridedSlice lowering to tosa with new_axis_mask/shrink_axis_mask"
+  },
+  {
+    "issue_number": 61126,
+    "issue_state": "closed",
+    "created_at": "2023-06-30T04:21:02Z",
+    "closed_at": "2025-09-14T02:10:46Z",
+    "creator_login": "soupslurpr",
+    "title": "Internal error: Error applying delegate when trying to use TensorFlow Lite NNAPI delegate on Google Pixel 7"
+  },
+  {
+    "issue_number": 61117,
+    "issue_state": "closed",
+    "created_at": "2023-06-28T16:17:39Z",
+    "closed_at": "2025-09-14T02:10:48Z",
+    "creator_login": "trickiwoo",
+    "title": "`tf.math.reduce_prod` produces wrong second-order gradient"
+  },
+  {
+    "issue_number": 61115,
+    "issue_state": "closed",
+    "created_at": "2023-06-28T15:54:29Z",
+    "closed_at": "2025-09-14T02:10:50Z",
+    "creator_login": "elfringham",
+    "title": "//tensorflow/python/distribute/experimental/rpc:rpc_ops_test is flaky"
+  },
+  {
+    "issue_number": 61113,
+    "issue_state": "closed",
+    "created_at": "2023-06-28T15:34:17Z",
+    "closed_at": "2025-09-14T02:10:51Z",
+    "creator_login": "elfringham",
+    "title": "//tensorflow/python/data/experimental/kernel_tests/service:local_workers_test is flaky"
+  },
+  {
+    "issue_number": 61112,
+    "issue_state": "closed",
+    "created_at": "2023-06-28T15:03:57Z",
+    "closed_at": "2025-09-14T02:10:53Z",
+    "creator_login": "elfringham",
+    "title": "//tensorflow/python/distribute:vars_test_2gpu is flaky"
+  },
+  {
+    "issue_number": 61111,
+    "issue_state": "closed",
+    "created_at": "2023-06-28T14:07:42Z",
+    "closed_at": "2025-09-14T02:10:54Z",
+    "creator_login": "elfringham",
+    "title": "//tensorflow/python/distribute/failure_handling:gce_failure_handler_test is flaky"
+  },
+  {
+    "issue_number": 61109,
+    "issue_state": "closed",
+    "created_at": "2023-06-28T13:20:03Z",
+    "closed_at": "2025-09-14T02:10:56Z",
+    "creator_login": "elfringham",
+    "title": "//tensorflow/python/data/experimental/kernel_tests/service:auto_shard_test is flaky"
+  },
+  {
+    "issue_number": 61107,
+    "issue_state": "closed",
+    "created_at": "2023-06-28T12:15:43Z",
+    "closed_at": "2025-09-14T02:10:58Z",
+    "creator_login": "elfringham",
+    "title": "//tensorflow/python/distribute:cross_device_ops_test_2gpu is flaky"
+  },
+  {
+    "issue_number": 61105,
+    "issue_state": "closed",
+    "created_at": "2023-06-28T11:56:02Z",
+    "closed_at": "2025-09-14T02:10:59Z",
+    "creator_login": "elfringham",
+    "title": "//tensorflow/python/distribute:moving_averages_test is flaky"
+  },
+  {
+    "issue_number": 61104,
+    "issue_state": "closed",
+    "created_at": "2023-06-28T10:57:28Z",
+    "closed_at": "2025-09-14T02:11:01Z",
+    "creator_login": "elfringham",
+    "title": "//tensorflow/python/distribute/failure_handling:failure_handler_test is flaky"
+  },
+  {
+    "issue_number": 61096,
+    "issue_state": "closed",
+    "created_at": "2023-06-27T17:38:43Z",
+    "closed_at": "2025-09-13T02:00:41Z",
+    "creator_login": "p3achyjr",
+    "title": "Concurrent Read/Writes to tensorflow::*File across different processes"
+  },
+  {
+    "issue_number": 61084,
+    "issue_state": "closed",
+    "created_at": "2023-06-26T19:39:17Z",
+    "closed_at": "2025-09-13T02:00:43Z",
+    "creator_login": "zackwohl",
+    "title": "tf.data.Dataset prefetch not fetching data asynchronously"
+  },
+  {
+    "issue_number": 61080,
+    "issue_state": "closed",
+    "created_at": "2023-06-26T10:50:30Z",
+    "closed_at": "2025-09-13T02:00:44Z",
+    "creator_login": "sogartar",
+    "title": "MHLO -> HLO does not respect sharding, inserting a tuple without sharding"
+  },
+  {
+    "issue_number": 60944,
+    "issue_state": "open",
+    "created_at": "2023-06-21T20:31:24Z",
+    "closed_at": null,
+    "creator_login": "zamazan4ik",
+    "title": "Apply Profile-Guided Optimization (PGO) on Tensorflow"
+  },
+  {
+    "issue_number": 60930,
+    "issue_state": "closed",
+    "created_at": "2023-06-20T03:50:49Z",
+    "closed_at": "2025-09-13T02:00:46Z",
+    "creator_login": "BealZephyr",
+    "title": "The repository '@llvm_zlib' could not be resolved and referenced by '@llvm-project//llvm:Support'"
+  },
+  {
+    "issue_number": 60912,
+    "issue_state": "closed",
+    "created_at": "2023-06-18T09:52:32Z",
+    "closed_at": "2025-09-13T02:00:47Z",
+    "creator_login": "dentiny",
+    "title": "Add support for IO optimization"
+  },
+  {
+    "issue_number": 60906,
+    "issue_state": "closed",
+    "created_at": "2023-06-17T04:52:55Z",
+    "closed_at": "2025-09-13T02:00:48Z",
+    "creator_login": "abhaskumarsinha",
+    "title": "Errors when custom gradients are being used in TPU"
+  },
+  {
+    "issue_number": 60901,
+    "issue_state": "closed",
+    "created_at": "2023-06-16T12:50:06Z",
+    "closed_at": "2025-09-13T02:00:50Z",
+    "creator_login": "bergentruckung",
+    "title": "TF 2 building from source fails"
+  },
+  {
+    "issue_number": 60895,
+    "issue_state": "closed",
+    "created_at": "2023-06-16T07:46:52Z",
+    "closed_at": "2025-09-13T02:00:52Z",
+    "creator_login": "mergian",
+    "title": "TF throws: \"'visible_device_list' listed an invalid Device id\" when using non-GPU PluggableDevices"
+  },
+  {
+    "issue_number": 60890,
+    "issue_state": "closed",
+    "created_at": "2023-06-15T20:54:26Z",
+    "closed_at": "2025-09-05T02:05:42Z",
+    "creator_login": "chrisc36",
+    "title": "Spurious(?) type inference failed warning for flattened tf.data.Dataset with a RaggedTensor"
+  },
+  {
+    "issue_number": 60883,
+    "issue_state": "closed",
+    "created_at": "2023-06-15T12:51:29Z",
+    "closed_at": "2025-09-05T02:05:44Z",
+    "creator_login": "mergian",
+    "title": "Unnecessary memcopies between CPU and GPU when using tf.function"
+  },
+  {
+    "issue_number": 60880,
+    "issue_state": "closed",
+    "created_at": "2023-06-15T10:19:18Z",
+    "closed_at": "2025-09-05T02:05:46Z",
+    "creator_login": "liv4unix",
+    "title": "Tensorflow-Quantum Module Import Error"
+  },
+  {
+    "issue_number": 60876,
+    "issue_state": "closed",
+    "created_at": "2023-06-15T07:21:45Z",
+    "closed_at": "2025-09-05T02:05:47Z",
+    "creator_login": "ychensha",
+    "title": " When will TFRT integration be fully released?"
+  },
+  {
+    "issue_number": 60861,
+    "issue_state": "open",
+    "created_at": "2023-06-14T14:21:08Z",
+    "closed_at": null,
+    "creator_login": "zhezherun",
+    "title": "tf.data debug mode breaks dataset.save()"
+  },
+  {
+    "issue_number": 60856,
+    "issue_state": "closed",
+    "created_at": "2023-06-14T03:09:42Z",
+    "closed_at": "2025-09-05T02:05:49Z",
+    "creator_login": "chengchen666",
+    "title": "CopyTensor::ViaDMA function, allocator type sometimes not match actual input underlying memory type"
+  },
+  {
+    "issue_number": 60843,
+    "issue_state": "closed",
+    "created_at": "2023-06-12T16:23:43Z",
+    "closed_at": "2025-09-05T02:05:51Z",
+    "creator_login": "casparvl",
+    "title": "OMP_PROC_BIND or OMP_PLACES either ignored or respected incorrectly"
+  },
+  {
+    "issue_number": 60833,
+    "issue_state": "closed",
+    "created_at": "2023-06-10T17:49:40Z",
+    "closed_at": "2025-09-05T02:05:52Z",
+    "creator_login": "m5k5",
+    "title": "Duplicate logging inside custom training loop"
+  },
+  {
+    "issue_number": 60826,
+    "issue_state": "closed",
+    "created_at": "2023-06-09T12:01:54Z",
+    "closed_at": "2025-09-05T02:05:54Z",
+    "creator_login": "abhinavchawla7",
+    "title": "Unable to run RNN Model"
+  },
+  {
+    "issue_number": 60813,
+    "issue_state": "closed",
+    "created_at": "2023-06-08T10:16:56Z",
+    "closed_at": "2025-09-05T02:05:55Z",
+    "creator_login": "Yuanjimengmengda",
+    "title": "tf.keras.Model.predict passing x=tf.keras.utils.Sequence causing exceptions  ValueError: Data is expected to be in format `x`, `(x,)`, `(x, y)`, or `(x, y, sample_weight)`"
+  },
+  {
+    "issue_number": 60805,
+    "issue_state": "open",
+    "created_at": "2023-06-07T16:12:49Z",
+    "closed_at": null,
+    "creator_login": "javidcf",
+    "title": "Exception in tf.function due to operation in inactive condition branch"
+  },
+  {
+    "issue_number": 60790,
+    "issue_state": "closed",
+    "created_at": "2023-06-06T20:06:53Z",
+    "closed_at": "2025-09-05T02:05:57Z",
+    "creator_login": "gg4u",
+    "title": "could not run GPU on jupyter "
+  },
+  {
+    "issue_number": 60785,
+    "issue_state": "closed",
+    "created_at": "2023-06-06T07:25:18Z",
+    "closed_at": "2025-09-05T02:05:59Z",
+    "creator_login": "Weili17",
+    "title": "Inference model error when xla enabled with error message \"OP_REQUIRES failed at xla_ops.cc:462 : NOT_FOUND: could not find registered platform with id: 0x7f7537df9c24\""
+  },
+  {
+    "issue_number": 60773,
+    "issue_state": "open",
+    "created_at": "2023-06-03T20:22:40Z",
+    "closed_at": null,
+    "creator_login": "jrmcclurg",
+    "title": "inconsistent .proto file package names break gRPC message/field parsing in Wireshark"
+  },
+  {
+    "issue_number": 60765,
+    "issue_state": "closed",
+    "created_at": "2023-06-02T10:59:11Z",
+    "closed_at": "2025-09-05T02:06:01Z",
+    "creator_login": "Lyutoon",
+    "title": "Inconsistency-bug in `tf.raw_ops.AddN` between jit mode and normal mode"
+  },
+  {
+    "issue_number": 60764,
+    "issue_state": "closed",
+    "created_at": "2023-06-02T10:50:29Z",
+    "closed_at": "2025-09-05T02:06:03Z",
+    "creator_login": "Lyutoon",
+    "title": "Inconsistency-bug in `tf.raw_ops.Acos` between jit mode and normal mode"
+  },
+  {
+    "issue_number": 60760,
+    "issue_state": "closed",
+    "created_at": "2023-06-02T04:15:37Z",
+    "closed_at": "2025-09-05T02:06:04Z",
+    "creator_login": "ramizouari",
+    "title": "Configure script automatically selects CUDA/cuDNN path instead of waiting for user input"
+  },
+  {
+    "issue_number": 60758,
+    "issue_state": "closed",
+    "created_at": "2023-06-02T03:41:51Z",
+    "closed_at": "2025-09-06T02:04:48Z",
+    "creator_login": "Lyutoon",
+    "title": "Check fail can be triggered in `tf.raw_ops.EmptyTensorList` due to overflow under jit compile mode."
+  },
+  {
+    "issue_number": 60756,
+    "issue_state": "closed",
+    "created_at": "2023-06-02T03:14:31Z",
+    "closed_at": "2025-09-06T02:04:50Z",
+    "creator_login": "Lyutoon",
+    "title": "Check fail can be triggered in `tf.raw_ops.GatherV2` under jit compile mode."
+  },
+  {
+    "issue_number": 60732,
+    "issue_state": "closed",
+    "created_at": "2023-05-30T22:11:27Z",
+    "closed_at": "2025-09-06T02:04:51Z",
+    "creator_login": "MeghnaNatraj",
+    "title": "[TF 2.0] Signature for unranked tensor not working as intended"
+  },
+  {
+    "issue_number": 60722,
+    "issue_state": "closed",
+    "created_at": "2023-05-29T19:27:59Z",
+    "closed_at": "2025-09-06T02:04:53Z",
+    "creator_login": "MoFHeka",
+    "title": "The work of re-implement checkpoint saving(c1e6672f3141015371968b9fb371a5b40abee837) ruined custom saving and restoring op！"
+  },
+  {
+    "issue_number": 60718,
+    "issue_state": "closed",
+    "created_at": "2023-05-27T22:40:40Z",
+    "closed_at": "2025-09-06T02:04:55Z",
+    "creator_login": "peratrepic",
+    "title": "[TFLite C++] Signature calculating CategoricalCrossentropy loss produces wrong result"
+  },
+  {
+    "issue_number": 60549,
+    "issue_state": "closed",
+    "created_at": "2023-05-09T20:14:39Z",
+    "closed_at": "2025-09-06T02:04:56Z",
+    "creator_login": "jiannanWang",
+    "title": "Large inconsistencies in tf.signal.stft's and tf.signal.inverse_stft's results with @tf.function decorator for certain inputs"
+  },
+  {
+    "issue_number": 60503,
+    "issue_state": "open",
+    "created_at": "2023-05-04T17:25:49Z",
+    "closed_at": null,
+    "creator_login": "De-Been-Tech-Solutions",
+    "title": "TensorFlow Refuses to See my GPU All The Time"
+  },
+  {
+    "issue_number": 60485,
+    "issue_state": "open",
+    "created_at": "2023-05-03T16:51:04Z",
+    "closed_at": null,
+    "creator_login": "AndreasMadsen",
+    "title": "XLA cumsum not supported for int8 and int16"
+  },
+  {
+    "issue_number": 60472,
+    "issue_state": "open",
+    "created_at": "2023-05-02T16:34:56Z",
+    "closed_at": null,
+    "creator_login": "AndreasMadsen",
+    "title": "XLA size-inference integration bug (tf.where, tf.TensorArray, slice, loop)"
+  },
+  {
+    "issue_number": 60468,
+    "issue_state": "open",
+    "created_at": "2023-05-02T13:48:05Z",
+    "closed_at": null,
+    "creator_login": "elfprince13",
+    "title": "Graph/memory corruption involving custom_gradient of functions involving pow"
+  },
+  {
+    "issue_number": 60465,
+    "issue_state": "closed",
+    "created_at": "2023-05-02T03:15:27Z",
+    "closed_at": "2025-09-07T02:10:04Z",
+    "creator_login": "yama-can",
+    "title": "About the Tensorflow C++ API documentation"
+  },
+  {
+    "issue_number": 60462,
+    "issue_state": "closed",
+    "created_at": "2023-05-01T22:29:58Z",
+    "closed_at": "2025-09-07T02:10:06Z",
+    "creator_login": "jf9123",
+    "title": "Inference significantly slower for Lenet5 models on both CPU and GPU when compared to other frameworks"
+  },
+  {
+    "issue_number": 60458,
+    "issue_state": "open",
+    "created_at": "2023-05-01T14:17:26Z",
+    "closed_at": null,
+    "creator_login": "AndreasMadsen",
+    "title": "AutoGraph error when function is inside a match "
+  },
+  {
+    "issue_number": 60438,
+    "issue_state": "closed",
+    "created_at": "2023-04-29T03:41:12Z",
+    "closed_at": "2025-08-28T17:00:35Z",
+    "creator_login": "Liqi1003",
+    "title": "Inconsistency in SyncBatchNormalization/BatchNormalization(synchronized=True) Results during Distributed Training on CPUs"
+  },
+  {
+    "issue_number": 60420,
+    "issue_state": "closed",
+    "created_at": "2023-04-26T19:42:55Z",
+    "closed_at": "2025-09-05T02:06:09Z",
+    "creator_login": "gzmkl",
+    "title": "Linux clang build issue"
+  },
+  {
+    "issue_number": 60412,
+    "issue_state": "closed",
+    "created_at": "2023-04-25T22:52:58Z",
+    "closed_at": "2025-08-28T02:08:27Z",
+    "creator_login": "mariecwhite",
+    "title": "Include `run_hlo_module` in Tensorflow releases"
+  },
+  {
+    "issue_number": 60406,
+    "issue_state": "closed",
+    "created_at": "2023-04-24T04:07:40Z",
+    "closed_at": "2025-08-28T02:08:28Z",
+    "creator_login": "yisonzhu",
+    "title": "The dim size of inferred shape in GraphProperties is less than -1, which is inconsistent with TensorShapeProto"
+  },
+  {
+    "issue_number": 60368,
+    "issue_state": "closed",
+    "created_at": "2023-04-19T13:32:33Z",
+    "closed_at": "2025-08-28T02:08:30Z",
+    "creator_login": "tomchen1000",
+    "title": "Tensorflow 2.11.1 bazel failed with option framework_shared_object=false"
+  },
+  {
+    "issue_number": 60326,
+    "issue_state": "closed",
+    "created_at": "2023-04-14T09:42:40Z",
+    "closed_at": "2025-08-12T08:23:23Z",
+    "creator_login": "TianciXiao",
+    "title": "ImportError: libtensorflow_cc.so.2: cannot open shared object file: No such file or directory"
+  },
+  {
+    "issue_number": 59530,
+    "issue_state": "closed",
+    "created_at": "2023-02-02T19:47:49Z",
+    "closed_at": "2025-08-28T02:08:31Z",
+    "creator_login": "jmc128",
+    "title": "Status of int8 dot/conv with XLA+CUDA"
+  },
+  {
+    "issue_number": 59279,
+    "issue_state": "closed",
+    "created_at": "2023-01-17T10:29:54Z",
+    "closed_at": "2025-08-20T18:38:43Z",
+    "creator_login": "DanielYang59",
+    "title": "Add warning in `Dataset.shuffle` for silent data leakage"
+  },
+  {
+    "issue_number": 59112,
+    "issue_state": "closed",
+    "created_at": "2023-01-05T18:27:45Z",
+    "closed_at": "2024-11-27T23:00:07Z",
+    "creator_login": "tensorbuffer",
+    "title": "benchmark_model elinux_aarch64 build with define CL_DELEGATE_NO_GL fails"
+  },
+  {
+    "issue_number": 57552,
+    "issue_state": "closed",
+    "created_at": "2022-08-31T11:03:40Z",
+    "closed_at": "2022-09-06T03:45:37Z",
+    "creator_login": "zhaozheng09",
+    "title": "Why are tensors used after they are freed in a gpu sync operation?"
+  },
+  {
+    "issue_number": 55298,
+    "issue_state": "closed",
+    "created_at": "2022-03-19T13:28:17Z",
+    "closed_at": "2022-04-01T08:03:42Z",
+    "creator_login": "IoanaKitsune",
+    "title": "org.tensorflow:tensorflow-lite-support:0.3.1 has missing files"
+  },
+  {
+    "issue_number": 51805,
+    "issue_state": "closed",
+    "created_at": "2021-09-02T20:26:50Z",
+    "closed_at": "2021-09-07T18:02:54Z",
+    "creator_login": "GustasKlisauskas",
+    "title": "Can not install python3-pip"
+  },
+  {
+    "issue_number": 50940,
+    "issue_state": "closed",
+    "created_at": "2021-07-25T11:08:48Z",
+    "closed_at": "2022-01-26T10:26:02Z",
+    "creator_login": "DwayneDuane",
+    "title": "Build TensorFlowLite C API with GPU delegate with CMake"
+  },
+  {
+    "issue_number": 46685,
+    "issue_state": "closed",
+    "created_at": "2021-01-26T09:47:04Z",
+    "closed_at": "2021-01-27T07:18:59Z",
+    "creator_login": "tabVersion",
+    "title": "get \"Tensor(\"args_0:0\", shape=(), dtype=string)\" when using tf.data.TextLineDataset.map()"
+  },
+  {
+    "issue_number": 44651,
+    "issue_state": "closed",
+    "created_at": "2020-11-06T13:59:11Z",
+    "closed_at": "2021-02-03T01:44:00Z",
+    "creator_login": "justeph",
+    "title": "Tensorflow lite Makefile: add support of gpu "
+  },
+  {
+    "issue_number": 43102,
+    "issue_state": "closed",
+    "created_at": "2020-09-10T09:50:18Z",
+    "closed_at": "2020-09-22T06:06:32Z",
+    "creator_login": "rxiang040",
+    "title": "Huge size difference of GPU delegate library between static and dynamic"
+  },
+  {
+    "issue_number": 43063,
+    "issue_state": "closed",
+    "created_at": "2020-09-09T06:21:32Z",
+    "closed_at": "2020-10-08T08:45:49Z",
+    "creator_login": "wangqiang624731186",
+    "title": "imx8 tflite opencl "
+  },
+  {
+    "issue_number": 42649,
+    "issue_state": "closed",
+    "created_at": "2020-08-25T10:39:31Z",
+    "closed_at": "2023-09-13T01:49:30Z",
+    "creator_login": "koodzi",
+    "title": "[tflite] Conv2DTranspose output difference between mobile CPU and mobile GPU "
+  },
+  {
+    "issue_number": 42596,
+    "issue_state": "closed",
+    "created_at": "2020-08-23T09:26:40Z",
+    "closed_at": "2020-08-27T18:11:17Z",
+    "creator_login": "sclarkson",
+    "title": "Protobuf MergeFrom errors when tensorflow and python protobuf share a libprotobuf copy"
+  },
+  {
+    "issue_number": 41570,
+    "issue_state": "closed",
+    "created_at": "2020-07-20T22:33:54Z",
+    "closed_at": "2020-07-21T06:10:55Z",
+    "creator_login": "awang27",
+    "title": "TFLite interpreter.invoke() crashes on GPU despite successful TFLite conversion"
+  },
+  {
+    "issue_number": 41270,
+    "issue_state": "closed",
+    "created_at": "2020-07-10T08:43:59Z",
+    "closed_at": "2020-07-14T04:28:49Z",
+    "creator_login": "y-ich",
+    "title": "GPU delegate library is libtensorflowlite_gpu_delegate.so, not libtensorflowlite_gpu_gl.so."
+  },
+  {
+    "issue_number": 40613,
+    "issue_state": "closed",
+    "created_at": "2020-06-19T13:39:32Z",
+    "closed_at": "2020-07-01T15:48:38Z",
+    "creator_login": "zldrobit",
+    "title": "TFLite GPU Delegate with OpenCL backend produces wrong result"
+  },
+  {
+    "issue_number": 40144,
+    "issue_state": "closed",
+    "created_at": "2020-06-04T08:31:52Z",
+    "closed_at": "2020-06-12T10:21:44Z",
+    "creator_login": "ArtanBerisha1",
+    "title": "GPU Delegate doesn't work for tflite model on Android device"
+  },
+  {
+    "issue_number": 40056,
+    "issue_state": "closed",
+    "created_at": "2020-06-01T17:02:20Z",
+    "closed_at": "2020-06-11T09:59:27Z",
+    "creator_login": "amitDaMan",
+    "title": "org.tensorflow:tensorflow-lite-gpu nightly build error vs 2.2.0"
+  },
+  {
+    "issue_number": 39025,
+    "issue_state": "closed",
+    "created_at": "2020-04-29T12:30:08Z",
+    "closed_at": "2020-05-08T04:23:46Z",
+    "creator_login": "user-vm",
+    "title": "Linker errors in individual TensorFlow Lite OpenGL delegate op tests for android_arm64"
+  },
+  {
+    "issue_number": 39001,
+    "issue_state": "closed",
+    "created_at": "2020-04-28T22:34:06Z",
+    "closed_at": "2020-05-01T06:34:36Z",
+    "creator_login": "davidbayon",
+    "title": "'Sequential' object has no attribute '_get_save_spec'"
+  },
+  {
+    "issue_number": 37116,
+    "issue_state": "closed",
+    "created_at": "2020-02-27T06:11:51Z",
+    "closed_at": "2020-02-27T23:31:36Z",
+    "creator_login": "pranathibl",
+    "title": "How to build Tflite-gpu to use GPU delegate, NNAPI delegate for devices like Hikey (AARCH64)"
+  },
+  {
+    "issue_number": 34727,
+    "issue_state": "closed",
+    "created_at": "2019-12-01T06:19:40Z",
+    "closed_at": "2019-12-01T06:27:59Z",
+    "creator_login": "catqaq",
+    "title": "AttributeError: module 'tensorflow_datasets' has no attribute 'load'"
+  },
+  {
+    "issue_number": 34525,
+    "issue_state": "closed",
+    "created_at": "2019-11-22T17:14:48Z",
+    "closed_at": "2020-03-12T13:32:12Z",
+    "creator_login": "ghiles-bgp",
+    "title": "Cannot Use GpuDelegate on simple model with 3D input"
+  },
+  {
+    "issue_number": 34287,
+    "issue_state": "closed",
+    "created_at": "2019-11-14T22:35:35Z",
+    "closed_at": "2019-12-03T10:48:45Z",
+    "creator_login": "devanshshah7560",
+    "title": "Cannot dlopen some GPU libraries - Tensorflow2.0 "
+  },
+  {
+    "issue_number": 33478,
+    "issue_state": "closed",
+    "created_at": "2019-10-17T17:01:13Z",
+    "closed_at": "2020-04-05T05:45:50Z",
+    "creator_login": "n2cholas",
+    "title": "Need a way to get Intermediate Layer Inputs/Activations for tf.keras Models"
+  },
+  {
+    "issue_number": 28830,
+    "issue_state": "closed",
+    "created_at": "2019-05-18T19:42:10Z",
+    "closed_at": "2019-06-07T23:18:08Z",
+    "creator_login": "fire",
+    "title": "Add Tensorflow Lite GPU Delegates for the desktop"
+  },
+  {
+    "issue_number": 24419,
+    "issue_state": "closed",
+    "created_at": "2018-12-18T09:29:09Z",
+    "closed_at": "2018-12-26T03:12:30Z",
+    "creator_login": "jinze1994",
+    "title": "Import Custom C++ Op Error: dynamic module does not define module export function"
+  },
+  {
+    "issue_number": 9525,
+    "issue_state": "closed",
+    "created_at": "2017-04-28T22:55:08Z",
+    "closed_at": "2018-04-26T19:23:09Z",
+    "creator_login": "skye",
+    "title": "Statically-linked libraries in TF binary can cause symbol collisions"
+  },
+  {
+    "issue_number": 252,
+    "issue_state": "closed",
+    "created_at": "2015-11-17T08:07:22Z",
+    "closed_at": "2025-10-13T15:45:31Z",
+    "creator_login": "FabHan",
+    "title": "Make TensorFlow compatible with PyPy"
+  }
+]
