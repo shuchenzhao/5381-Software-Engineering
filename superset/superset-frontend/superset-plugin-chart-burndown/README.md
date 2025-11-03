@@ -6,4 +6,4 @@ Data expectations:
 - x column: `ds` (date)
 - y column: `remaining` (remaining work)
 
-To run the plugin, run the script file run_burndown_storybook.sh
+To run the plugin, run the file run_burndown_storybook.sh
