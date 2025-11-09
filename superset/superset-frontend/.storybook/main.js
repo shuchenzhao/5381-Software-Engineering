@@ -21,10 +21,28 @@ import { dirname, join } from 'path';
 const customConfig = require('../webpack.config.js');
 
 module.exports = {
-  stories: [
-    '../src/@(components|common|filters|explore|views|dashboard|features)/**/*.stories.@(tsx|jsx)',
-    '../packages/superset-ui-demo/storybook/stories/**/*.*.@(tsx|jsx)',
-  ],
+    // If PLUGIN_STORYBOOK is set in the environment, only load that plugin's stories.
+    // Supported values:
+    //  - '1' -> superset-plugin-chart-collab-forcedirected
+    //  - '2' -> superset-plugin-chart-health-radar
+    //  - '3' -> superset-plugin-chart-burndown
+    stories: (() => {
+      const plugin = process.env.PLUGIN_STORYBOOK;
+      const map = {
+        '1': '../superset-plugin-chart-collab-forcedirected/src/stories/**/*.stories.@(js|jsx|ts|tsx)',
+        '2': '../superset-plugin-chart-health-radar/src/stories/**/*.stories.@(js|jsx|ts|tsx)',
+        '3': '../superset-plugin-chart-burndown/src/stories/**/*.stories.@(js|jsx|ts|tsx)',
+      };
+      if (plugin && map[plugin]) {
+        return [map[plugin]];
+      }
+      // Default: load all custom plugins
+      return [
+        '../superset-plugin-chart-collab-forcedirected/src/stories/**/*.stories.@(js|jsx|ts|tsx)',
+        '../superset-plugin-chart-health-radar/src/stories/**/*.stories.@(js|jsx|ts|tsx)',
+        '../superset-plugin-chart-burndown/src/stories/**/*.stories.@(js|jsx|ts|tsx)'
+      ];
+    })(),
 
   addons: [
     getAbsolutePath('@storybook/addon-essentials'),
