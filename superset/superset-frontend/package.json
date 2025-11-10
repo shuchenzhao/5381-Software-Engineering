@@ -197,6 +197,8 @@
     "rison": "^0.1.1",
     "scroll-into-view-if-needed": "^3.1.0",
     "simple-zstd": "^1.4.2",
+    "superset-plugin-chart-collaboration-graph": "file:superset-plugin-chart-collaboration-graph",
+    "superset-plugin-chart-health-radar": "file:superset-plugin-chart-health-radar",
     "tinycolor2": "^1.4.2",
     "urijs": "^1.19.8",
     "use-event-callback": "^0.1.0",

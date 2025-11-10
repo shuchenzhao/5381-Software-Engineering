@@ -13,6 +13,7 @@ function deactivate  -d "Exit virtual environment and return to normal shell env
     end
 
     if test -n "$_OLD_FISH_PROMPT_OVERRIDE"
+<<<<<<< HEAD
         set -e _OLD_FISH_PROMPT_OVERRIDE
         # prevents error when using nested fish instances (Issue #93858)
         if functions -q _old_fish_prompt
@@ -24,6 +25,15 @@ function deactivate  -d "Exit virtual environment and return to normal shell env
 
     set -e VIRTUAL_ENV
     set -e VIRTUAL_ENV_PROMPT
+=======
+        functions -e fish_prompt
+        set -e _OLD_FISH_PROMPT_OVERRIDE
+        functions -c _old_fish_prompt fish_prompt
+        functions -e _old_fish_prompt
+    end
+
+    set -e VIRTUAL_ENV
+>>>>>>> origin/Tang-Tianhao
     if test "$argv[1]" != "nondestructive"
         # Self-destruct!
         functions -e deactivate
@@ -33,10 +43,17 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
+<<<<<<< HEAD
 set -gx VIRTUAL_ENV /Users/xiechunren/CityU/DevInsight/5381-Software-Engineering/superset/superset-github-connector/.venv
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/"bin $PATH
+=======
+set -gx VIRTUAL_ENV "/Users/tangliam/Projects/5381-Software-Engineering/superset/superset-github-connector/.venv"
+
+set -gx _OLD_VIRTUAL_PATH $PATH
+set -gx PATH "$VIRTUAL_ENV/bin" $PATH
+>>>>>>> origin/Tang-Tianhao
 
 # Unset PYTHONHOME if set.
 if set -q PYTHONHOME
@@ -56,7 +73,11 @@ if test -z "$VIRTUAL_ENV_DISABLE_PROMPT"
         set -l old_status $status
 
         # Output the venv prompt; color taken from the blue of the Python logo.
+<<<<<<< HEAD
         printf "%s%s%s" (set_color 4B8BBE) '(.venv) ' (set_color normal)
+=======
+        printf "%s%s%s" (set_color 4B8BBE) "(.venv) " (set_color normal)
+>>>>>>> origin/Tang-Tianhao
 
         # Restore the return status of the previous command.
         echo "exit $old_status" | .
@@ -65,5 +86,8 @@ if test -z "$VIRTUAL_ENV_DISABLE_PROMPT"
     end
 
     set -gx _OLD_FISH_PROMPT_OVERRIDE "$VIRTUAL_ENV"
+<<<<<<< HEAD
     set -gx VIRTUAL_ENV_PROMPT '(.venv) '
+=======
+>>>>>>> origin/Tang-Tianhao
 end

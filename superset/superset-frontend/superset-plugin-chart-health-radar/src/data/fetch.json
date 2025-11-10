@@ -1,0 +1,1135 @@
+[
+  {
+    "id": "pr-5840",
+    "type": "pull_request",
+    "actor": "ARUSHIGULBHILE",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5840",
+    "timestamp": "2025-10-31T14:08:37Z",
+    "title": "docs: enhance README with comprehensive examples and troubleshooting",
+    "files": [
+      "README.md"
+    ]
+  },
+  {
+    "id": "cmt-3470506696",
+    "type": "comment",
+    "actor": "davidism",
+    "target": "serbinskis",
+    "repo": "pallets/flask",
+    "issue_id": "ISSUE-5839",
+    "comment_id": 3470506696,
+    "timestamp": "2025-10-30T22:39:08Z",
+    "body": "Regardless of frustration you may be feeling, your approach to reporting this issue and asking for help was not acceptable. Please reflect on how you'd like people to interact with you, then apply that to future interactions with others."
+  },
+  {
+    "id": "cmt-3470406748",
+    "type": "comment",
+    "actor": "serbinskis",
+    "target": "serbinskis",
+    "repo": "pallets/flask",
+    "issue_id": "ISSUE-5839",
+    "comment_id": 3470406748,
+    "timestamp": "2025-10-30T21:53:12Z",
+    "body": "Yeah, I set the limit to 2 GB, but I don’t want it to keep uploading the full 2 GB. It does start immediately tho. I can then get the stream with `request.files.get('file')`, but reading the header takes quite some time `header = file.stream.read(1024)`. So I decided to check if I could just abort the connection immediately, like in the example, and no, I can’t.\n\nFIX: Actually, I think it’s a Chrome problem now. I’ve never experienced anything like that because it works fine when using curl."
+  },
+  {
+    "id": "cmt-3470371619",
+    "type": "comment",
+    "actor": "ThiefMaster",
+    "target": "serbinskis",
+    "repo": "pallets/flask",
+    "issue_id": "ISSUE-5839",
+    "comment_id": 3470371619,
+    "timestamp": "2025-10-30T21:38:48Z",
+    "body": "Also, your webserver should typically be configured with sane limits. In fact, the code in your function won't even run until the file has been uploaded."
+  },
+  {
+    "id": "cmt-3470368634",
+    "type": "comment",
+    "actor": "ThiefMaster",
+    "target": "serbinskis",
+    "repo": "pallets/flask",
+    "issue_id": "ISSUE-5839",
+    "comment_id": 3470368634,
+    "timestamp": "2025-10-30T21:37:31Z",
+    "body": "Now try again without being passive aggressive. This is not appreciated anywhere, but in particular not by open source maintainers."
+  },
+  {
+    "id": "i-5839",
+    "type": "issue",
+    "actor": "serbinskis",
+    "repo": "pallets/flask",
+    "issue_id": "ISSUE-5839",
+    "timestamp": "2025-10-30T21:35:46Z",
+    "title": "Really, I can't close connection???",
+    "body": "Jesus Christ, what kind of library doesn’t allow forcefully closing a connection? Even after returning or using abort, it still continues to process data in the background. This is disappointing, there’s no way, for example, to forcefully stop a file upload after checking its header. It will still continue to process the remaining 100 GB of the file.\n\n```\n@app.route('/upload', methods=['POST'])\ndef upload_file():\n    print(1)\n    return \"wtf\", 400 # still continues to process data\n```"
+  },
+  {
+    "id": "pr-5838",
+    "type": "pull_request",
+    "actor": "bodduNaidu",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5838",
+    "timestamp": "2025-10-29T20:59:42Z",
+    "title": "Update app.py",
+    "files": [
+      "src/flask/app.py"
+    ]
+  },
+  {
+    "id": "pr-5837",
+    "type": "pull_request",
+    "actor": "bodduNaidu",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5837",
+    "timestamp": "2025-10-29T20:53:12Z",
+    "title": "Create jenkinsfile",
+    "files": [
+      "jenkinsfile"
+    ]
+  },
+  {
+    "id": "cmt-3447740623",
+    "type": "comment",
+    "actor": "dotlambda",
+    "target": "dotlambda",
+    "repo": "pallets/flask",
+    "issue_id": "ISSUE-5836",
+    "comment_id": 3447740623,
+    "timestamp": "2025-10-25T20:12:12Z",
+    "body": "`test_run_exclude_patterns` can be fixed by replacing\nhttps://github.com/pallets/flask/blob/88a65bb374e87a18816a780dbd4ae69d307aa85c/src/flask/cli.py#L861\nwith\n```python\nif cert is not None and cert != click._utils.UNSET and not (is_adhoc or is_context):\n```\nbut this is probably an upstream bug\ncc @rowlando13"
+  },
+  {
+    "id": "i-5836",
+    "type": "issue",
+    "actor": "dotlambda",
+    "repo": "pallets/flask",
+    "issue_id": "ISSUE-5836",
+    "timestamp": "2025-10-25T20:08:38Z",
+    "title": "Test failures with click 8.3.1",
+    "body": "Click 8.3.1 was [tagged](https://github.com/pallets/click/releases/tag/8.3.1) but not released on PyPI. Running flask's test suite with that version results in\n```\n============================= test session starts ==============================\nplatform linux -- Python 3.13.8, pytest-8.4.2, pluggy-1.6.0\nrootdir: /build/flask-3.1.2\nconfigfile: pyproject.toml\ntestpaths: tests\ncollected 490 items                                                            \n\ntests/test_appctx.py ..............                                      [  2%]\ntests/test_async.py ........                                             [  4%]\ntests/test_basic.py .................................................... [ 15%]\n........................................................................ [ 29%]\n......                                                                   [ 31%]\ntests/test_blueprints.py ............................................... [ 40%]\n.............                                                            [ 43%]\ntests/test_cli.py ...................................................F.. [ 54%]\n...F                                                                     [ 55%]\ntests/test_config.py ...................                                 [ 58%]\ntests/test_converters.py ..                                              [ 59%]\ntests/test_helpers.py ...................................                [ 66%]\ntests/test_instance_config.py .......                                    [ 67%]\ntests/test_json.py ...............................                       [ 74%]\ntests/test_json_tag.py ..............                                    [ 77%]\ntests/test_logging.py ......                                             [ 78%]\ntests/test_regression.py .                                               [ 78%]\ntests/test_reqctx.py .......ss.....                                      [ 81%]\ntests/test_request.py ...                                                [ 82%]\ntests/test_session_interface.py .                                        [ 82%]\ntests/test_signals.py .......                                            [ 83%]\ntests/test_subclassing.py .                                              [ 83%]\ntests/test_templating.py ................................                [ 90%]\ntests/test_testing.py .........................                          [ 95%]\ntests/test_user_error_handler.py .........                               [ 97%]\ntests/test_views.py .............                                        [100%]\n\n=================================== FAILURES ===================================\n______________________________ test_run_cert_path ______________________________\n\n    def test_run_cert_path():\n        # no key\n        with pytest.raises(click.BadParameter):\n            run_command.make_context(\"run\", [\"--cert\", __file__])\n    \n        # no cert\n>       with pytest.raises(click.BadParameter):\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       Failed: DID NOT RAISE <class 'click.exceptions.BadParameter'>\n\n\ntests/test_cli.py:590: Failed\n__________________________ test_run_exclude_patterns ___________________________\n\n    def test_run_exclude_patterns():\n>       ctx = run_command.make_context(\"run\", [\"--exclude-patterns\", __file__])\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\ntests/test_cli.py:701: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/nix/store/53y968aagcaaq46hq3rg2a3mmxwmzvm1-python3.13-click-8.3.1/lib/python3.13/site-packages/click/core.py:1216: in make_context\n    self.parse_args(ctx, args)\n        args       = []\n        ctx        = <click.core.Context object at 0x7ffff4c02b10>\n        extra      = {}\n        info_name  = 'run'\n        parent     = None\n        self       = <Command run>\n/nix/store/53y968aagcaaq46hq3rg2a3mmxwmzvm1-python3.13-click-8.3.1/lib/python3.13/site-packages/click/core.py:1227: in parse_args\n    _, args = param.handle_parse_result(ctx, opts, args)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        _          = 5000\n        args       = []\n        ctx        = <click.core.Context object at 0x7ffff4c02b10>\n        opts       = {'exclude_patterns': '/build/flask-3.1.2/tests/test_cli.py'}\n        param      = <Option key>\n        param_order = [<Option exclude_patterns>]\n        parser     = <click.parser._OptionParser object at 0x7ffff4b08bd0>\n        self       = <Command run>\n/nix/store/53y968aagcaaq46hq3rg2a3mmxwmzvm1-python3.13-click-8.3.1/lib/python3.13/site-packages/click/core.py:2548: in handle_parse_result\n    value = self.process_value(ctx, value)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        args       = []\n        ctx        = <click.core.Context object at 0x7ffff4c02b10>\n        opts       = {'exclude_patterns': '/build/flask-3.1.2/tests/test_cli.py'}\n        self       = <Option key>\n        source     = <ParameterSource.DEFAULT: 3>\n        value      = Sentinel.UNSET\n/nix/store/53y968aagcaaq46hq3rg2a3mmxwmzvm1-python3.13-click-8.3.1/lib/python3.13/site-packages/click/core.py:3283: in process_value\n    return super().process_value(ctx, value)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        __class__  = <class 'click.core.Option'>\n        ctx        = <click.core.Context object at 0x7ffff4c02b10>\n        self       = <Option key>\n        value      = Sentinel.UNSET\n/nix/store/53y968aagcaaq46hq3rg2a3mmxwmzvm1-python3.13-click-8.3.1/lib/python3.13/site-packages/click/core.py:2443: in process_value\n    value = self.callback(ctx, self, value)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        ctx        = <click.core.Context object at 0x7ffff4c02b10>\n        self       = <Option key>\n        value      = None\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nctx = <click.core.Context object at 0x7ffff4c02b10>, param = <Option key>\nvalue = None\n\n    def _validate_key(ctx: click.Context, param: click.Parameter, value: t.Any) -> t.Any:\n        \"\"\"The ``--key`` option must be specified when ``--cert`` is a file.\n        Modifies the ``cert`` param to be a ``(cert, key)`` pair if needed.\n        \"\"\"\n        cert = ctx.params.get(\"cert\")\n        is_adhoc = cert == \"adhoc\"\n    \n        try:\n            import ssl\n        except ImportError:\n            is_context = False\n        else:\n            is_context = isinstance(cert, ssl.SSLContext)\n    \n        if value is not None:\n            if is_adhoc:\n                raise click.BadParameter(\n                    'When \"--cert\" is \"adhoc\", \"--key\" is not used.', ctx, param\n                )\n    \n            if is_context:\n                raise click.BadParameter(\n                    'When \"--cert\" is an SSLContext object, \"--key\" is not used.',\n                    ctx,\n                    param,\n                )\n    \n            if not cert:\n                raise click.BadParameter('\"--cert\" must also be specified.', ctx, param)\n    \n            ctx.params[\"cert\"] = cert, value\n    \n        else:\n            if cert and not (is_adhoc or is_context):\n>               raise click.BadParameter('Required when using \"--cert\".', ctx, param)\nE               click.exceptions.BadParameter: Required when using \"--cert\".\n\ncert       = Sentinel.UNSET\nctx        = <click.core.Context object at 0x7ffff4c02b10>\nis_adhoc   = False\nis_context = False\nparam      = <Option key>\nssl        = <module 'ssl' from '/nix/store/cfapjd2rvqrpry4grb0kljnp8bvnvfxz-python3-3.13.8/lib/python3.13/ssl.py'>\nvalue      = None\n\n/nix/store/12gfdjrf93rixvjrkj9pbfy5349q3j4m-python3.13-flask-3.1.2/lib/python3.13/site-packages/flask/cli.py:870: BadParameter\n=========================== short test summary info ============================\nFAILED tests/test_cli.py::test_run_cert_path - Failed: DID NOT RAISE <class 'click.exceptions.BadParameter'>\nFAILED tests/test_cli.py::test_run_exclude_patterns - click.exceptions.BadParameter: Required when using \"--cert\".\n================== 2 failed, 486 passed, 2 skipped in 13.73s ===================\n```"
+  },
+  {
+    "id": "pr-5835",
+    "type": "pull_request",
+    "actor": "GeoSegun",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5835",
+    "timestamp": "2025-10-23T10:30:06Z",
+    "title": "Add Seenode deployment instructions to documentation",
+    "files": [
+      "docs/deploying/index.rst"
+    ]
+  },
+  {
+    "id": "pr-5834",
+    "type": "pull_request",
+    "actor": "cclauss",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5834",
+    "timestamp": "2025-10-22T08:30:20Z",
+    "title": "`pre-commit autoupdate --freeze` 2025-10-23",
+    "files": [
+      ".pre-commit-config.yaml"
+    ]
+  },
+  {
+    "id": "pr-5833",
+    "type": "pull_request",
+    "actor": "cclauss",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5833",
+    "timestamp": "2025-10-22T08:19:47Z",
+    "title": "fix typos discovered by  codespell",
+    "files": [
+      "docs/appcontext.rst",
+      "docs/quickstart.rst",
+      "docs/templating.rst"
+    ]
+  },
+  {
+    "id": "pr-5832",
+    "type": "pull_request",
+    "actor": "cclauss",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5832",
+    "timestamp": "2025-10-22T05:58:58Z",
+    "title": "GitHub Actions: Add Python 3.14 and 3.14t to the testing",
+    "files": [
+      ".github/workflows/tests.yaml",
+      "uv.lock"
+    ]
+  },
+  {
+    "id": "r-3354507490",
+    "type": "review",
+    "actor": "MeowyCat1",
+    "target": "MeowyCat1",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5831",
+    "timestamp": "2025-10-19T12:31:08Z",
+    "state": "COMMENTED",
+    "comments": 0,
+    "body": ""
+  },
+  {
+    "id": "r-3354477034",
+    "type": "review",
+    "actor": "MeowyCat1",
+    "target": "MeowyCat1",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5831",
+    "timestamp": "2025-10-19T11:05:18Z",
+    "state": "COMMENTED",
+    "comments": 0,
+    "body": ""
+  },
+  {
+    "id": "r-3354473311",
+    "type": "review",
+    "actor": "ThiefMaster",
+    "target": "MeowyCat1",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5831",
+    "timestamp": "2025-10-19T10:53:17Z",
+    "state": "COMMENTED",
+    "comments": 0,
+    "body": ""
+  },
+  {
+    "id": "r-3354472981",
+    "type": "review",
+    "actor": "ThiefMaster",
+    "target": "MeowyCat1",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5831",
+    "timestamp": "2025-10-19T10:52:20Z",
+    "state": "COMMENTED",
+    "comments": 0,
+    "body": ""
+  },
+  {
+    "id": "r-3354472705",
+    "type": "review",
+    "actor": "MeowyCat1",
+    "target": "MeowyCat1",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5831",
+    "timestamp": "2025-10-19T10:51:20Z",
+    "state": "COMMENTED",
+    "comments": 0,
+    "body": ""
+  },
+  {
+    "id": "r-3354470035",
+    "type": "review",
+    "actor": "ThiefMaster",
+    "target": "MeowyCat1",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5831",
+    "timestamp": "2025-10-19T10:43:25Z",
+    "state": "COMMENTED",
+    "comments": 0,
+    "body": ""
+  },
+  {
+    "id": "pr-5831",
+    "type": "pull_request",
+    "actor": "MeowyCat1",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5831",
+    "timestamp": "2025-10-19T10:08:40Z",
+    "title": "Update installation instructions for Windows PowerShell",
+    "files": [
+      "docs/installation.rst"
+    ]
+  },
+  {
+    "id": "c-88a65bb",
+    "type": "commit",
+    "actor": "hynek",
+    "repo": "pallets/flask",
+    "timestamp": "2025-10-14T20:26:26Z",
+    "files": [
+      "docs/appcontext.rst",
+      "docs/design.rst"
+    ],
+    "lines_added": 5,
+    "lines_deleted": 5,
+    "message": "Docs typo/markup fixes (#5829)"
+  },
+  {
+    "id": "pr-5829",
+    "type": "pull_request",
+    "actor": "hynek",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5829",
+    "timestamp": "2025-10-14T07:43:09Z",
+    "title": "Docs typo/markup fixes",
+    "files": [
+      "docs/appcontext.rst",
+      "docs/design.rst"
+    ]
+  },
+  {
+    "id": "pr-5828",
+    "type": "pull_request",
+    "actor": "sachintha180",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5828",
+    "timestamp": "2025-10-13T15:33:59Z",
+    "title": "docs: fix missing quote in flashing example",
+    "files": [
+      "docs/patterns/flashing.rst"
+    ]
+  },
+  {
+    "id": "pr-5827",
+    "type": "pull_request",
+    "actor": "adityasah104",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5827",
+    "timestamp": "2025-10-09T07:06:09Z",
+    "title": "docs: clarify 415 vs 400 errors for request.json",
+    "files": [
+      "docs/patterns/javascript.rst"
+    ]
+  },
+  {
+    "id": "pr-5826",
+    "type": "pull_request",
+    "actor": "Samarthegde",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5826",
+    "timestamp": "2025-10-08T13:14:31Z",
+    "title": "docs: clarify JSON parsing error conditions in Flask views",
+    "files": [
+      "docs/patterns/javascript.rst"
+    ]
+  },
+  {
+    "id": "pr-5824",
+    "type": "pull_request",
+    "actor": "relu101",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5824",
+    "timestamp": "2025-09-29T17:11:11Z",
+    "title": "Clarify asyncio and gevent incompatibility in docs (#5817)",
+    "files": [
+      "docs/async-await.rst"
+    ]
+  },
+  {
+    "id": "pr-5821",
+    "type": "pull_request",
+    "actor": "SebaCry",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5821",
+    "timestamp": "2025-09-26T16:13:37Z",
+    "title": "Add type hints to tutorial and Javascript examples",
+    "files": [
+      "examples/javascript/js_example/views.py",
+      "examples/tutorial/flaskr/auth.py",
+      "examples/tutorial/flaskr/blog.py",
+      "examples/tutorial/flaskr/db.py"
+    ]
+  },
+  {
+    "id": "r-3248973890",
+    "type": "review",
+    "actor": "pgjones",
+    "target": "davidism",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5818",
+    "timestamp": "2025-09-20T10:11:26Z",
+    "state": "APPROVED",
+    "comments": 0,
+    "body": "Looks good to me"
+  },
+  {
+    "id": "pr-5818",
+    "type": "pull_request",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5818",
+    "timestamp": "2025-09-20T00:47:44Z",
+    "title": "pass context through dispatch methods",
+    "files": [
+      "CHANGES.rst",
+      "src/flask/app.py",
+      "src/flask/ctx.py",
+      "src/flask/templating.py",
+      "tests/test_reqctx.py",
+      "tests/test_subclassing.py"
+    ]
+  },
+  {
+    "id": "c-adf3636",
+    "type": "commit",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "timestamp": "2025-09-19T23:45:27Z",
+    "files": [
+      "CHANGES.rst",
+      "docs/api.rst",
+      "docs/appcontext.rst",
+      "docs/design.rst",
+      "docs/extensiondev.rst",
+      "docs/index.rst",
+      "docs/lifecycle.rst",
+      "docs/patterns/sqlalchemy.rst",
+      "docs/patterns/sqlite3.rst",
+      "docs/patterns/streaming.rst",
+      "docs/quickstart.rst",
+      "docs/reqcontext.rst",
+      "docs/shell.rst",
+      "docs/signals.rst",
+      "docs/testing.rst",
+      "docs/tutorial/blog.rst",
+      "docs/tutorial/database.rst",
+      "docs/tutorial/templates.rst",
+      "docs/tutorial/tests.rst",
+      "docs/tutorial/views.rst",
+      "src/flask/app.py",
+      "src/flask/cli.py",
+      "src/flask/ctx.py",
+      "src/flask/debughelpers.py",
+      "src/flask/globals.py",
+      "src/flask/helpers.py",
+      "src/flask/json/__init__.py",
+      "src/flask/sansio/app.py",
+      "src/flask/sansio/scaffold.py",
+      "src/flask/templating.py",
+      "src/flask/testing.py",
+      "tests/conftest.py",
+      "tests/test_appctx.py",
+      "tests/test_reqctx.py",
+      "tests/test_session_interface.py",
+      "tests/test_testing.py"
+    ],
+    "lines_added": 779,
+    "lines_deleted": 1007,
+    "message": "merge app and request context (#5812)"
+  },
+  {
+    "id": "pr-5814",
+    "type": "pull_request",
+    "actor": "afzaal-ai-infra-engineer",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5814",
+    "timestamp": "2025-09-13T07:03:30Z",
+    "title": "this is issue here",
+    "files": [
+      ".github/workflows/.gitlab-ci.yml",
+      ".github/workflows/codeql-analysis.yml"
+    ]
+  },
+  {
+    "id": "pr-5813",
+    "type": "pull_request",
+    "actor": "afzaal-ai-infra-engineer",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5813",
+    "timestamp": "2025-09-13T06:39:12Z",
+    "title": "Create codeql-analysis.yml",
+    "files": [
+      ".github/workflows/codeql-analysis.yml"
+    ]
+  },
+  {
+    "id": "pr-5812",
+    "type": "pull_request",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5812",
+    "timestamp": "2025-09-12T22:45:00Z",
+    "title": "merge app and request context",
+    "files": [
+      "CHANGES.rst",
+      "docs/api.rst",
+      "docs/appcontext.rst",
+      "docs/design.rst",
+      "docs/extensiondev.rst",
+      "docs/index.rst",
+      "docs/lifecycle.rst",
+      "docs/patterns/sqlalchemy.rst",
+      "docs/patterns/sqlite3.rst",
+      "docs/patterns/streaming.rst",
+      "docs/quickstart.rst",
+      "docs/reqcontext.rst",
+      "docs/shell.rst",
+      "docs/signals.rst",
+      "docs/testing.rst",
+      "docs/tutorial/blog.rst",
+      "docs/tutorial/database.rst",
+      "docs/tutorial/templates.rst",
+      "docs/tutorial/tests.rst",
+      "docs/tutorial/views.rst",
+      "src/flask/app.py",
+      "src/flask/cli.py",
+      "src/flask/ctx.py",
+      "src/flask/debughelpers.py",
+      "src/flask/globals.py",
+      "src/flask/helpers.py",
+      "src/flask/json/__init__.py",
+      "src/flask/sansio/app.py",
+      "src/flask/sansio/scaffold.py",
+      "src/flask/templating.py",
+      "src/flask/testing.py",
+      "tests/conftest.py",
+      "tests/test_appctx.py",
+      "tests/test_reqctx.py",
+      "tests/test_session_interface.py",
+      "tests/test_testing.py"
+    ]
+  },
+  {
+    "id": "c-c2705ff",
+    "type": "commit",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "timestamp": "2025-09-12T21:52:03Z",
+    "files": [
+      "CHANGES.rst",
+      "docs/api.rst",
+      "docs/appcontext.rst",
+      "docs/design.rst",
+      "docs/extensiondev.rst",
+      "docs/index.rst",
+      "docs/lifecycle.rst",
+      "docs/patterns/sqlalchemy.rst",
+      "docs/patterns/sqlite3.rst",
+      "docs/patterns/streaming.rst",
+      "docs/quickstart.rst",
+      "docs/reqcontext.rst",
+      "docs/shell.rst",
+      "docs/signals.rst",
+      "docs/testing.rst",
+      "docs/tutorial/blog.rst",
+      "docs/tutorial/database.rst",
+      "docs/tutorial/templates.rst",
+      "docs/tutorial/tests.rst",
+      "docs/tutorial/views.rst",
+      "src/flask/app.py",
+      "src/flask/cli.py",
+      "src/flask/ctx.py",
+      "src/flask/debughelpers.py",
+      "src/flask/globals.py",
+      "src/flask/helpers.py",
+      "src/flask/json/__init__.py",
+      "src/flask/sansio/app.py",
+      "src/flask/sansio/scaffold.py",
+      "src/flask/templating.py",
+      "src/flask/testing.py",
+      "tests/conftest.py",
+      "tests/test_appctx.py",
+      "tests/test_reqctx.py",
+      "tests/test_session_interface.py",
+      "tests/test_testing.py"
+    ],
+    "lines_added": 779,
+    "lines_deleted": 1007,
+    "message": "merge app and request context"
+  },
+  {
+    "id": "pr-5811",
+    "type": "pull_request",
+    "actor": "rutmananna",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5811",
+    "timestamp": "2025-09-11T05:25:34Z",
+    "title": "Add various bugs for BugBot demo",
+    "files": [
+      "src/flask/app.py",
+      "src/flask/config.py",
+      "src/flask/helpers.py",
+      "src/flask/views.py",
+      "tests/test_basic.py"
+    ]
+  },
+  {
+    "id": "pr-5810",
+    "type": "pull_request",
+    "actor": "rutmananna",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5810",
+    "timestamp": "2025-09-11T05:20:42Z",
+    "title": "Add various bugs for BugBot demo",
+    "files": [
+      "src/flask/app.py",
+      "src/flask/config.py",
+      "src/flask/helpers.py",
+      "src/flask/views.py",
+      "tests/test_basic.py"
+    ]
+  },
+  {
+    "id": "pr-5809",
+    "type": "pull_request",
+    "actor": "Ujjwal0110",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5809",
+    "timestamp": "2025-09-10T13:20:16Z",
+    "title": "Added a line for first contributionme",
+    "files": [
+      "README.md"
+    ]
+  },
+  {
+    "id": "pr-5808",
+    "type": "pull_request",
+    "actor": "subhajitsaha01",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5808",
+    "timestamp": "2025-09-06T16:33:44Z",
+    "title": "Changed the static annotated type filename parameter of select_jinja_autoescape method in src/flask/sansio/app.py",
+    "files": [
+      "src/flask/sansio/app.py"
+    ]
+  },
+  {
+    "id": "pr-5807",
+    "type": "pull_request",
+    "actor": "subhajitsaha01",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5807",
+    "timestamp": "2025-09-06T16:14:19Z",
+    "title": "Changed the static annotated type of select_jinja_autoescape method in src/flask/sansio/app.py",
+    "files": [
+      ".github/workflows/tests.yaml",
+      "CHANGES.rst",
+      "docs/extensiondev.rst",
+      "docs/installation.rst",
+      "docs/templating.rst",
+      "pyproject.toml",
+      "src/flask/__init__.py",
+      "src/flask/cli.py",
+      "src/flask/json/provider.py",
+      "src/flask/sansio/app.py",
+      "src/flask/sansio/blueprints.py",
+      "src/flask/typing.py",
+      "tests/test_blueprints.py",
+      "tests/test_cli.py",
+      "tests/test_templating.py",
+      "uv.lock"
+    ]
+  },
+  {
+    "id": "pr-5806",
+    "type": "pull_request",
+    "actor": "subhajitsaha01",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5806",
+    "timestamp": "2025-09-06T15:30:59Z",
+    "title": "Changed the static annotated type of select_jinja_autoescape method in src/flask/sansio/app.py",
+    "files": [
+      "src/flask/sansio/app.py"
+    ]
+  },
+  {
+    "id": "pr-5805",
+    "type": "pull_request",
+    "actor": "ShubhamCodeWiz",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5805",
+    "timestamp": "2025-09-03T13:36:12Z",
+    "title": "feat(example/blog): Add flash messages for user feedback",
+    "files": [
+      "examples/tutorial/flaskr/blog.py",
+      "notes.txt"
+    ]
+  },
+  {
+    "id": "pr-5802",
+    "type": "pull_request",
+    "actor": "umarmir",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5802",
+    "timestamp": "2025-08-27T15:56:11Z",
+    "title": "Add CodeQL scan workflow",
+    "files": [
+      ".github/workflows/codeql.yml"
+    ]
+  },
+  {
+    "id": "pr-5801",
+    "type": "pull_request",
+    "actor": "MOSAUD22",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5801",
+    "timestamp": "2025-08-26T11:46:57Z",
+    "title": "Add DEVOPS_NOTES.txt for practice",
+    "files": [
+      "DEVOPS_NOTES.txt"
+    ]
+  },
+  {
+    "id": "c-3301232",
+    "type": "commit",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "timestamp": "2025-08-19T21:09:56Z",
+    "files": [
+      ".github/workflows/pre-commit.yaml",
+      ".github/workflows/publish.yaml",
+      ".github/workflows/tests.yaml",
+      ".pre-commit-config.yaml",
+      "CHANGES.rst",
+      "docs/design.rst",
+      "docs/patterns/streaming.rst",
+      "docs/patterns/wtforms.rst",
+      "docs/quickstart.rst",
+      "docs/server.rst",
+      "docs/templating.rst",
+      "docs/web-security.rst",
+      "src/flask/helpers.py",
+      "src/flask/sansio/app.py",
+      "src/flask/sansio/blueprints.py",
+      "src/flask/templating.py",
+      "src/flask/testing.py",
+      "tests/test_helpers.py",
+      "tests/test_testing.py",
+      "uv.lock"
+    ],
+    "lines_added": 560,
+    "lines_deleted": 449,
+    "message": "Merge branch 'stable'"
+  },
+  {
+    "id": "c-85793d6",
+    "type": "commit",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "timestamp": "2025-08-19T21:03:43Z",
+    "files": [
+      "CHANGES.rst",
+      "pyproject.toml",
+      "uv.lock"
+    ],
+    "lines_added": 5,
+    "lines_deleted": 5,
+    "message": "release version 3.1.2 (#5800)"
+  },
+  {
+    "id": "c-1292419",
+    "type": "commit",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "timestamp": "2025-08-19T20:56:49Z",
+    "files": [
+      ".github/workflows/publish.yaml"
+    ],
+    "lines_added": 16,
+    "lines_deleted": 3,
+    "message": "Update GitHub Actions workflow for artifact handling (#5795)"
+  },
+  {
+    "id": "pr-5800",
+    "type": "pull_request",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5800",
+    "timestamp": "2025-08-19T20:42:29Z",
+    "title": "release version 3.1.2",
+    "files": [
+      "CHANGES.rst",
+      "pyproject.toml",
+      "uv.lock"
+    ]
+  },
+  {
+    "id": "c-2c1b30d",
+    "type": "commit",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "timestamp": "2025-08-19T20:42:11Z",
+    "files": [
+      "CHANGES.rst",
+      "pyproject.toml",
+      "uv.lock"
+    ],
+    "lines_added": 5,
+    "lines_deleted": 5,
+    "message": "release version 3.1.2"
+  },
+  {
+    "id": "c-55c6255",
+    "type": "commit",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "timestamp": "2025-08-19T20:41:24Z",
+    "files": [
+      ".github/workflows/pre-commit.yaml",
+      ".github/workflows/publish.yaml",
+      ".github/workflows/tests.yaml",
+      ".pre-commit-config.yaml",
+      "uv.lock"
+    ],
+    "lines_added": 444,
+    "lines_deleted": 398,
+    "message": "update dev dependencies"
+  },
+  {
+    "id": "c-ed1c9e9",
+    "type": "commit",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "timestamp": "2025-08-19T19:36:00Z",
+    "files": [
+      "CHANGES.rst",
+      "docs/templating.rst",
+      "src/flask/sansio/app.py",
+      "src/flask/sansio/blueprints.py",
+      "tests/test_blueprints.py",
+      "tests/test_templating.py"
+    ],
+    "lines_added": 410,
+    "lines_deleted": 112,
+    "message": "support call template_filter without parens (#5736)"
+  },
+  {
+    "id": "c-edebd37",
+    "type": "commit",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "timestamp": "2025-08-19T19:29:47Z",
+    "files": [
+      "docs/templating.rst",
+      "src/flask/sansio/app.py",
+      "src/flask/sansio/blueprints.py"
+    ],
+    "lines_added": 228,
+    "lines_deleted": 179,
+    "message": "rewrite docs, clean up typing for template decorators"
+  },
+  {
+    "id": "c-d8259eb",
+    "type": "commit",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "timestamp": "2025-08-19T17:43:16Z",
+    "files": [
+      "CHANGES.rst",
+      "docs/design.rst",
+      "docs/patterns/streaming.rst",
+      "docs/patterns/wtforms.rst",
+      "docs/quickstart.rst",
+      "docs/templating.rst",
+      "docs/web-security.rst",
+      "src/flask/sansio/app.py",
+      "src/flask/templating.py"
+    ],
+    "lines_added": 31,
+    "lines_deleted": 31,
+    "message": "use Jinja name consistently"
+  },
+  {
+    "id": "c-38b4c1e",
+    "type": "commit",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "timestamp": "2025-08-19T15:23:51Z",
+    "files": [
+      "CHANGES.rst",
+      "src/flask/helpers.py",
+      "tests/test_helpers.py"
+    ],
+    "lines_added": 63,
+    "lines_deleted": 32,
+    "message": "refactor stream_with_context for async views (#5799)"
+  },
+  {
+    "id": "pr-5799",
+    "type": "pull_request",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5799",
+    "timestamp": "2025-08-19T15:22:33Z",
+    "title": "refactor stream_with_context for async views",
+    "files": [
+      "CHANGES.rst",
+      "src/flask/helpers.py",
+      "tests/test_helpers.py"
+    ]
+  },
+  {
+    "id": "c-9822a03",
+    "type": "commit",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "timestamp": "2025-08-19T15:18:55Z",
+    "files": [
+      "CHANGES.rst",
+      "src/flask/helpers.py",
+      "tests/test_helpers.py"
+    ],
+    "lines_added": 63,
+    "lines_deleted": 32,
+    "message": "refactor stream_with_context for async views"
+  },
+  {
+    "id": "c-49b7e7b",
+    "type": "commit",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "timestamp": "2025-08-18T18:44:57Z",
+    "files": [
+      "docs/web-security.rst"
+    ],
+    "lines_added": 21,
+    "lines_deleted": 0,
+    "message": "security docs for TRUSTED_HOSTS (#5798)"
+  },
+  {
+    "id": "pr-5798",
+    "type": "pull_request",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "pr_id": "PR-5798",
+    "timestamp": "2025-08-18T18:44:00Z",
+    "title": "security docs for TRUSTED_HOSTS",
+    "files": [
+      "docs/web-security.rst"
+    ]
+  },
+  {
+    "id": "c-b228ca3",
+    "type": "commit",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "timestamp": "2025-08-18T18:42:48Z",
+    "files": [
+      "docs/web-security.rst"
+    ],
+    "lines_added": 21,
+    "lines_deleted": 0,
+    "message": "security docs for TRUSTED_HOSTS"
+  },
+  {
+    "id": "c-ff64079",
+    "type": "commit",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "timestamp": "2025-08-18T17:51:12Z",
+    "files": [
+      "docs/web-security.rst"
+    ],
+    "lines_added": 1,
+    "lines_deleted": 1,
+    "message": "update flask-talisman link"
+  },
+  {
+    "id": "c-1dfd7cd",
+    "type": "commit",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "timestamp": "2025-08-18T17:26:12Z",
+    "files": [
+      "CHANGES.rst",
+      "src/flask/helpers.py"
+    ],
+    "lines_added": 2,
+    "lines_deleted": 1,
+    "message": "use IO[bytes] instead of BinaryIO for wider compatibility (#5777)"
+  },
+  {
+    "id": "c-c56c5ec",
+    "type": "commit",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "timestamp": "2025-08-18T17:20:06Z",
+    "files": [
+      "docs/quickstart.rst"
+    ],
+    "lines_added": 6,
+    "lines_deleted": 8,
+    "message": "Docs: Fix escaping in HTML escaping example (#5742)"
+  },
+  {
+    "id": "c-7fea7cf",
+    "type": "commit",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "timestamp": "2025-08-18T17:08:07Z",
+    "files": [
+      "docs/server.rst"
+    ],
+    "lines_added": 1,
+    "lines_deleted": 1,
+    "message": "Update macOS UI reference to “System Settings” (#5723)"
+  },
+  {
+    "id": "c-24824ff",
+    "type": "commit",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "timestamp": "2025-08-18T16:56:39Z",
+    "files": [
+      "CHANGES.rst",
+      "src/flask/testing.py",
+      "tests/test_testing.py"
+    ],
+    "lines_added": 15,
+    "lines_deleted": 23,
+    "message": "push preserved contexts in correct order (#5797)"
+  },
+  {
+    "id": "c-5addaf8",
+    "type": "commit",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "timestamp": "2025-08-18T16:42:21Z",
+    "files": [
+      "CHANGES.rst",
+      "pyproject.toml",
+      "uv.lock"
+    ],
+    "lines_added": 9,
+    "lines_deleted": 3,
+    "message": "start version 3.1.2"
+  },
+  {
+    "id": "c-53b8f08",
+    "type": "commit",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "timestamp": "2025-08-18T16:41:03Z",
+    "files": [
+      "CHANGES.rst",
+      "src/flask/testing.py",
+      "tests/test_testing.py"
+    ],
+    "lines_added": 15,
+    "lines_deleted": 23,
+    "message": "push preserved contexts in correct order"
+  },
+  {
+    "id": "c-4dd52ca",
+    "type": "commit",
+    "actor": "GrantBirki",
+    "repo": "pallets/flask",
+    "timestamp": "2025-08-07T04:44:28Z",
+    "files": [
+      ".github/workflows/publish.yaml"
+    ],
+    "lines_added": 16,
+    "lines_deleted": 3,
+    "message": "Update GitHub Actions workflow for artifact handling"
+  },
+  {
+    "id": "c-d44f1c6",
+    "type": "commit",
+    "actor": "tvuotila",
+    "repo": "pallets/flask",
+    "timestamp": "2025-07-16T09:21:50Z",
+    "files": [
+      "CHANGES.rst",
+      "src/flask/helpers.py"
+    ],
+    "lines_added": 2,
+    "lines_deleted": 1,
+    "message": "relax type hint for bytes io"
+  },
+  {
+    "id": "c-85c5d93",
+    "type": "commit",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "timestamp": "2025-06-12T20:48:07Z",
+    "files": [
+      "README.md",
+      "docs/_static/flask-horizontal.svg",
+      "docs/_static/flask-icon.svg",
+      "docs/_static/flask-logo.svg",
+      "docs/_static/flask-name.svg",
+      "docs/_static/flask-vertical.svg",
+      "docs/conf.py",
+      "docs/index.rst"
+    ],
+    "lines_added": 48,
+    "lines_deleted": 52,
+    "message": "Merge branch 'stable'"
+  },
+  {
+    "id": "c-85cc710",
+    "type": "commit",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "timestamp": "2025-06-12T20:46:49Z",
+    "files": [
+      "README.md",
+      "docs/_static/flask-horizontal.svg",
+      "docs/_static/flask-icon.svg",
+      "docs/_static/flask-logo.svg",
+      "docs/_static/flask-name.svg",
+      "docs/_static/flask-vertical.svg",
+      "docs/conf.py",
+      "docs/index.rst"
+    ],
+    "lines_added": 48,
+    "lines_deleted": 52,
+    "message": "svg logo"
+  },
+  {
+    "id": "c-284273e",
+    "type": "commit",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "timestamp": "2025-06-10T20:18:26Z",
+    "files": [
+      "docs/_static/flask-horizontal.svg",
+      "docs/_static/flask-icon.svg",
+      "docs/_static/flask-vertical.svg"
+    ],
+    "lines_added": 59,
+    "lines_deleted": 3,
+    "message": "Merge branch 'stable'"
+  },
+  {
+    "id": "c-f17d986",
+    "type": "commit",
+    "actor": "davidism",
+    "repo": "pallets/flask",
+    "timestamp": "2025-06-10T20:18:15Z",
+    "files": [
+      "docs/_static/flask-horizontal.svg",
+      "docs/_static/flask-icon.svg",
+      "docs/_static/flask-vertical.svg"
+    ],
+    "lines_added": 59,
+    "lines_deleted": 3,
+    "message": "cleanup svg"
+  },
+  {
+    "id": "c-0f83958",
+    "type": "commit",
+    "actor": "Badhreesh",
+    "repo": "pallets/flask",
+    "timestamp": "2025-05-21T18:35:11Z",
+    "files": [
+      "docs/quickstart.rst"
+    ],
+    "lines_added": 6,
+    "lines_deleted": 8,
+    "message": "demonstrate escaping with query string\n\nslash in value would be interpreted as a path separator in the URL"
+  },
+  {
+    "id": "c-daf1510",
+    "type": "commit",
+    "actor": "kadai0308",
+    "repo": "pallets/flask",
+    "timestamp": "2025-05-17T04:17:18Z",
+    "files": [
+      "CHANGES.rst",
+      "docs/templating.rst",
+      "src/flask/sansio/app.py",
+      "src/flask/sansio/blueprints.py",
+      "tests/test_blueprints.py",
+      "tests/test_templating.py"
+    ],
+    "lines_added": 272,
+    "lines_deleted": 23,
+    "message": "use template_filter without parens"
+  }
+]
