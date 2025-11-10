@@ -1,6 +1,7 @@
 export type DataRecord = {
   ds: string | number | Date;
-  remaining: number;
+  remaining?: number;
+  remaining_hours?: number;
 };
 
 export interface ChartProps {

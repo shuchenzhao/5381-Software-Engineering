@@ -1,11 +1,5 @@
-import React from 'react';
-import SupersetPluginChartBurndown from '../SupersetPluginChartBurndown';
-
-export default {
-  title: 'Charts/Burndown',
-};
-
-const data = [
+// 生成于 2025-11-04 00:12:17
+export const burndownData = [
   { ds: '2025-09-01', remaining: 264 },
   { ds: '2025-09-02', remaining: 264 },
   { ds: '2025-09-03', remaining: 262 },
@@ -72,11 +66,3 @@ const data = [
   { ds: '2025-11-03', remaining: 177 },
   { ds: '2025-11-04', remaining: 177 },
 ];
-
-
-
-export const Basic = () => (
-  <div style={{ width: 600 }}>
-    <SupersetPluginChartBurndown data={data} width={600} height={300} />
-  </div>
-);
