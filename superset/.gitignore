@@ -29,7 +29,7 @@ __pycache__
 cover
 .DS_Store
 .eggs
-.env
+#.env
 .envrc
 .idea
 .mypy_cache
