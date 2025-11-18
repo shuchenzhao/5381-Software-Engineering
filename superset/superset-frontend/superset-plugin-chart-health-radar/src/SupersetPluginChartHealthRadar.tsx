@@ -16,13 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { styled } from '@superset-ui/core';
 import { SupersetPluginChartHealthRadarProps, ProjectTask } from './types';
-// 导入 useAuth hook
-import { useAuth } from '../../src/auth/AuthContext';
 
-// --- Styled Components (无修改) ---
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -204,18 +201,6 @@ const TaskPriority = styled.span<{ priority: string }>`
   font-weight: 600;
 `;
 
-const NoPermissionWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
-  background: #f0f2f5;
-  color: #595959;
-  font-size: 18px;
-  border-radius: 8px;
-`;
-
-// --- 辅助函数 (无修改) ---
 function getHealthColor(value: number, goodThreshold: number, warningThreshold: number): string {
   if (value >= goodThreshold) return '#52c41a';
   if (value >= warningThreshold) return '#faad14';
@@ -223,19 +208,17 @@ function getHealthColor(value: number, goodThreshold: number, warningThreshold: 
 }
 
 function getHealthStatus(value: number, goodThreshold: number, warningThreshold: number): string {
-  if (value >= goodThreshold) return '健康';
-  if (value >= warningThreshold) return '警告';
-  return '风险';
+  if (value >= goodThreshold) return 'Healthy';
+  if (value >= warningThreshold) return 'Warning';
+  return 'Risk';
 }
 
 function RadarChart({ data, goodThreshold, warningThreshold }: any) {
-  // ... (RadarChart 组件内部实现无修改)
   const center = { x: 200, y: 150 };
   const maxRadius = 120;
   const levels = 5;
 
   const points = useMemo(() => {
-    if (!data) return [];
     return data.map((metric: any, i: number) => {
       const angle = (Math.PI * 2 * i) / data.length - Math.PI / 2;
       const radius = (metric.value / 100) * maxRadius;
@@ -248,8 +231,6 @@ function RadarChart({ data, goodThreshold, warningThreshold }: any) {
       };
     });
   }, [data]);
-
-  if (points.length === 0) return null;
 
   const polygonPath = points.map((p: any, i: number) => 
     `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`
@@ -325,7 +306,6 @@ function RadarChart({ data, goodThreshold, warningThreshold }: any) {
   );
 }
 
-// --- 主组件 ---
 export default function SupersetPluginChartHealthRadar(props: SupersetPluginChartHealthRadarProps) {
   const {
     data,
@@ -333,140 +313,207 @@ export default function SupersetPluginChartHealthRadar(props: SupersetPluginChar
     width,
     goodThreshold = 80,
     warningThreshold = 60,
-    headerText = '项目管理看板',
+    headerText = 'Project Management Dashboard',
     boldText = true,
     headerFontSize = 'xl',
     tasks = [],
   } = props;
 
-  // --- 权限控制 ---
-  const { user, hasRole, isLoading } = useAuth();
-  const isManager = hasRole('Project_Manager');
-  const isDeveloper = hasRole('Developer');
-  const canView = isManager || isDeveloper;
+  // Load real GitHub data from fetch.json
+  const [githubTasks, setGithubTasks] = useState<ProjectTask[]>([]);
 
-  // --- 数据计算与过滤 ---
-  const overallHealth = data && data.length > 0
+  useEffect(() => {
+    // Try to load fetch.json - support multiple paths
+    const fetchPaths = [
+      // Relative paths (for production)
+      './data/fetch.json',
+      '../data/fetch.json',
+      // Absolute path (for Storybook)
+      '/superset-plugin-chart-health-radar/src/data/fetch.json',
+    ];
+
+    console.log('🔍 [HealthRadar] Starting to load GitHub data...');
+
+    const tryFetchData = async () => {
+      for (const path of fetchPaths) {
+        try {
+          console.log(`🔍 [HealthRadar] Trying path: ${path}`);
+          const response = await fetch(path);
+          console.log(`🔍 [HealthRadar] Response status for ${path}: ${response.status}`);
+          
+          if (!response.ok) continue;
+          
+          const events = await response.json();
+          console.log(`🔍 [HealthRadar] Loaded ${events.length} total events`);
+          
+          // Convert GitHub events to task format
+          const issueEvents = events.filter((e: any) => e.type === 'issue');
+          console.log(`🔍 [HealthRadar] Found ${issueEvents.length} issue events`);
+          
+          const convertedTasks: ProjectTask[] = issueEvents.map((issue: any) => {
+            // Check if there are related comments (indicates active discussion)
+            const hasComments = events.some((e: any) => 
+              e.type === 'comment' && e.issue_id === issue.issue_id
+            );
+            
+            let status: 'todo' | 'inProgress' | 'done' = 'todo';
+            
+            // Determine status based on title and activity
+            const title = issue.title?.toLowerCase() || '';
+            const body = issue.body?.toLowerCase() || '';
+            
+            // Check if completed
+            if (title.includes('close') || title.includes('resolved') || 
+                title.includes('fixed') || title.includes('done') ||
+                body.includes('fix:') || body.includes('resolved')) {
+              status = 'done';
+            }
+            // Check if in progress
+            else if (hasComments || title.includes('wip') || title.includes('progress')) {
+              status = 'inProgress';
+            }
+            
+            // Determine priority based on title keywords
+            let priority: 'high' | 'medium' | 'low' = 'medium';
+            if (title.includes('critical') || title.includes('urgent') || 
+                title.includes('bug') || title.includes('security') ||
+                title.includes('crash')) {
+              priority = 'high';
+            } else if (title.includes('enhance') || title.includes('docs') || 
+                       title.includes('refactor') || title.includes('test')) {
+              priority = 'low';
+            }
+
+            const task = {
+              id: issue.id,
+              title: issue.title || 'Untitled Issue',
+              status,
+              priority,
+              assignee: issue.actor || 'Unassigned',
+              timestamp: issue.timestamp,
+            };
+            
+            console.log(`🔍 [HealthRadar] Converted issue "${task.title}" -> status: ${status}, priority: ${priority}`);
+            return task;
+          });
+
+          console.log(`✅ [HealthRadar] Successfully loaded ${convertedTasks.length} GitHub issues from ${path}`);
+          console.log('📊 [HealthRadar] Task breakdown:', {
+            todo: convertedTasks.filter(t => t.status === 'todo').length,
+            inProgress: convertedTasks.filter(t => t.status === 'inProgress').length,
+            done: convertedTasks.filter(t => t.status === 'done').length,
+          });
+          setGithubTasks(convertedTasks);
+          return; // Exit after successful load
+        } catch (error) {
+          console.warn(`❌ [HealthRadar] Failed to load from ${path}:`, error);
+          continue;
+        }
+      }
+      console.error('❌ [HealthRadar] Failed to load GitHub data from any path, using provided tasks');
+    };
+
+    tryFetchData();
+  }, []);
+
+  // Prioritize GitHub-loaded tasks, fallback to provided tasks
+  const allTasks = githubTasks.length > 0 ? githubTasks : tasks;
+
+  const overallHealth = data.length > 0
     ? Math.round(data.reduce((sum, item) => sum + item.value, 0) / data.length)
     : 0;
 
-  // 根据角色过滤可见的任务
-  const visibleTasks = useMemo(() => {
-    if (isManager) {
-      return tasks; // 经理看到所有任务
-    }
-    if (isDeveloper && user) {
-      // 开发者只看到分配给自己的任务
-      // 假设 user.username 存储了任务分配人字段(task.assignee)对应的值
-      return tasks.filter((t: ProjectTask) => t.assignee === user.username);
-    }
-    return []; // 其他角色看不到任何任务
-  }, [tasks, isManager, isDeveloper, user]);
-
   const tasksByStatus = useMemo(() => {
     const grouped = {
-      todo: visibleTasks.filter((t: ProjectTask) => t.status === 'todo'),
-      inProgress: visibleTasks.filter((t: ProjectTask) => t.status === 'inProgress'),
-      done: visibleTasks.filter((t: ProjectTask) => t.status === 'done'),
+      todo: allTasks.filter((t: ProjectTask) => t.status === 'todo'),
+      inProgress: allTasks.filter((t: ProjectTask) => t.status === 'inProgress'),
+      done: allTasks.filter((t: ProjectTask) => t.status === 'done'),
     };
     return grouped;
-  }, [visibleTasks]);
-
-  // --- 渲染逻辑 ---
-  if (isLoading) {
-    return (
-      <Wrapper style={{ height, width }}>
-        <NoPermissionWrapper>正在加载权限信息...</NoPermissionWrapper>
-      </Wrapper>
-    );
-  }
+  }, [allTasks]);
 
   return (
     <Wrapper style={{ height, width }}>
-      <Header fontSize={headerFontSize} bold={boldText}>
-        {isManager ? `${headerText} (经理视图)` : headerText}
-      </Header>
-
-      {!canView ? (
-        <NoPermissionWrapper>🚫 您没有权限查看此看板。</NoPermissionWrapper>
-      ) : (
-        <>
-          <RadarSection>
-            <RadarTitle>📊 项目健康度总览 (整体: {overallHealth}%)</RadarTitle>
-            <RadarContainer>
-              <RadarChart 
-                data={data} 
-                goodThreshold={goodThreshold} 
-                warningThreshold={warningThreshold}
-              />
-            </RadarContainer>
-          </RadarSection>
-
-          <MetricsSection>
-            {data.map((metric, index) => {
-              const color = getHealthColor(metric.value, goodThreshold, warningThreshold);
-              const status = getHealthStatus(metric.value, goodThreshold, warningThreshold);
-              return (
-                <MetricCard key={metric.name || index} color={color}>
-                  <CardLabel>{metric.label || metric.name}</CardLabel>
-                  <CardValue color={color}>{metric.value}%</CardValue>
-                  <CardStatus color={color}>{status}</CardStatus>
-                </MetricCard>
-              );
-            })}
-          </MetricsSection>
-
-          <KanbanSection>
-            <KanbanTitle>📋 任务跟踪看板</KanbanTitle>
-            <KanbanBoard>
-              <KanbanColumn bgColor="#fff3e0">
-                <ColumnHeader>
-                  📝 待办 <TaskCount>{tasksByStatus.todo.length}</TaskCount>
-                </ColumnHeader>
-                {tasksByStatus.todo.map((task: ProjectTask, i: number) => (
-                  <TaskCard key={i}>
-                    <TaskTitle>{task.title}</TaskTitle>
-                    <TaskMeta>
-                      <TaskPriority priority={task.priority}>{task.priority}</TaskPriority>
-                      <span>{task.assignee}</span>
-                    </TaskMeta>
-                  </TaskCard>
-                ))}
-              </KanbanColumn>
-
-              <KanbanColumn bgColor="#e3f2fd">
-                <ColumnHeader>
-                  🚀 进行中 <TaskCount>{tasksByStatus.inProgress.length}</TaskCount>
-                </ColumnHeader>
-                {tasksByStatus.inProgress.map((task: ProjectTask, i: number) => (
-                  <TaskCard key={i}>
-                    <TaskTitle>{task.title}</TaskTitle>
-                    <TaskMeta>
-                      <TaskPriority priority={task.priority}>{task.priority}</TaskPriority>
-                      <span>{task.assignee}</span>
-                    </TaskMeta>
-                  </TaskCard>
-                ))}
-              </KanbanColumn>
-
-              <KanbanColumn bgColor="#e8f5e9">
-                <ColumnHeader>
-                  ✅ 已完成 <TaskCount>{tasksByStatus.done.length}</TaskCount>
-                </ColumnHeader>
-                {tasksByStatus.done.map((task: ProjectTask, i: number) => (
-                  <TaskCard key={i}>
-                    <TaskTitle>{task.title}</TaskTitle>
-                    <TaskMeta>
-                      <TaskPriority priority={task.priority}>{task.priority}</TaskPriority>
-                      <span>{task.assignee}</span>
-                    </TaskMeta>
-                  </TaskCard>
-                ))}
-              </KanbanColumn>
-            </KanbanBoard>
-          </KanbanSection>
-        </>
+      {headerText && (
+        <Header fontSize={headerFontSize} bold={boldText}>
+          {headerText}
+        </Header>
       )}
+
+      <RadarSection>
+        <RadarTitle>📊 Project Health Overview (Overall: {overallHealth}%)</RadarTitle>
+        <RadarContainer>
+          <RadarChart 
+            data={data} 
+            goodThreshold={goodThreshold} 
+            warningThreshold={warningThreshold}
+          />
+        </RadarContainer>
+      </RadarSection>
+
+      <MetricsSection>
+        {data.map((metric, index) => {
+          const color = getHealthColor(metric.value, goodThreshold, warningThreshold);
+          const status = getHealthStatus(metric.value, goodThreshold, warningThreshold);
+          return (
+            <MetricCard key={metric.name || index} color={color}>
+              <CardLabel>{metric.label || metric.name}</CardLabel>
+              <CardValue color={color}>{metric.value}%</CardValue>
+              <CardStatus color={color}>{status}</CardStatus>
+            </MetricCard>
+          );
+        })}
+      </MetricsSection>
+
+      <KanbanSection>
+        <KanbanTitle>📋 Task Tracking Board</KanbanTitle>
+        <KanbanBoard>
+          <KanbanColumn bgColor="#fff3e0">
+            <ColumnHeader>
+              📝 To Do <TaskCount>{tasksByStatus.todo.length}</TaskCount>
+            </ColumnHeader>
+            {tasksByStatus.todo.map((task: ProjectTask, i: number) => (
+              <TaskCard key={i}>
+                <TaskTitle>{task.title}</TaskTitle>
+                <TaskMeta>
+                  <TaskPriority priority={task.priority}>{task.priority}</TaskPriority>
+                  <span>{task.assignee}</span>
+                </TaskMeta>
+              </TaskCard>
+            ))}
+          </KanbanColumn>
+
+          <KanbanColumn bgColor="#e3f2fd">
+            <ColumnHeader>
+              🚀 In Progress <TaskCount>{tasksByStatus.inProgress.length}</TaskCount>
+            </ColumnHeader>
+            {tasksByStatus.inProgress.map((task: ProjectTask, i: number) => (
+              <TaskCard key={i}>
+                <TaskTitle>{task.title}</TaskTitle>
+                <TaskMeta>
+                  <TaskPriority priority={task.priority}>{task.priority}</TaskPriority>
+                  <span>{task.assignee}</span>
+                </TaskMeta>
+              </TaskCard>
+            ))}
+          </KanbanColumn>
+
+          <KanbanColumn bgColor="#e8f5e9">
+            <ColumnHeader>
+              ✅ Done <TaskCount>{tasksByStatus.done.length}</TaskCount>
+            </ColumnHeader>
+            {tasksByStatus.done.map((task: ProjectTask, i: number) => (
+              <TaskCard key={i}>
+                <TaskTitle>{task.title}</TaskTitle>
+                <TaskMeta>
+                  <TaskPriority priority={task.priority}>{task.priority}</TaskPriority>
+                  <span>{task.assignee}</span>
+                </TaskMeta>
+              </TaskCard>
+            ))}
+          </KanbanColumn>
+        </KanbanBoard>
+      </KanbanSection>
     </Wrapper>
   );
 }

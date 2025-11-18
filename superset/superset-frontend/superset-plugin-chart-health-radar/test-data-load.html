@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Data Load</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #0f0;
+        }
+        .success { color: #0f0; }
+        .error { color: #f00; }
+        .info { color: #0ff; }
+        pre {
+            background: #000;
+            padding: 10px;
+            border: 1px solid #0f0;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 GitHub Data Load Test</h1>
+    <div id="output"></div>
+
+    <script>
+        const output = document.getElementById('output');
+        
+        function log(message, type = 'info') {
+            const p = document.createElement('p');
+            p.className = type;
+            p.textContent = message;
+            output.appendChild(p);
+        }
+
+        async function testPath(path) {
+            log(`\n📂 Testing path: ${path}`, 'info');
+            try {
+                const response = await fetch(path);
+                log(`   Status: ${response.status}`, response.ok ? 'success' : 'error');
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    log(`   ✅ Success! Loaded ${data.length} events`, 'success');
+                    
+                    const issues = data.filter(e => e.type === 'issue');
+                    log(`   📋 Found ${issues.length} issues:`, 'success');
+                    
+                    issues.forEach((issue, i) => {
+                        log(`      ${i+1}. "${issue.title}" by ${issue.actor}`, 'info');
+                    });
+                    
+                    const pre = document.createElement('pre');
+                    pre.textContent = JSON.stringify(issues, null, 2);
+                    output.appendChild(pre);
+                    
+                    return true;
+                }
+                return false;
+            } catch (error) {
+                log(`   ❌ Error: ${error.message}`, 'error');
+                return false;
+            }
+        }
+
+        async function runTests() {
+            const paths = [
+                './src/data/fetch.json',
+                '../src/data/fetch.json',
+                './data/fetch.json',
+                '../data/fetch.json',
+                '../../data/fetch.json',
+                '/superset-plugin-chart-health-radar/src/data/fetch.json',
+            ];
+
+            log('🚀 Starting data load tests...', 'info');
+            log(`Current location: ${window.location.href}`, 'info');
+            
+            for (const path of paths) {
+                const success = await testPath(path);
+                if (success) {
+                    log('\n✅ FOUND WORKING PATH!', 'success');
+                    break;
+                }
+            }
+        }
+
+        runTests();
+    </script>
+</body>
+</html>

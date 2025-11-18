@@ -40,10 +40,12 @@ export interface MetricConfig {
  * Project task for kanban board
  */
 export interface ProjectTask {
+  id?: string;
   title: string;
   status: 'todo' | 'inProgress' | 'done';
   priority: 'low' | 'medium' | 'high';
   assignee: string;
+  timestamp?: string;
 }
 
 /**
